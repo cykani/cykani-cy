@@ -1,14 +1,14 @@
 // StealthService — connects to container browser via CDP and applies
-// cykani-stealth-warp wrappers (humor, constellation, telemetry, etc.)
+// cykani-stealth wrappers (humor, constellation, telemetry, etc.)
 
 export class StealthService {
   private sessions: Map<string, { session: any; disconnect: () => void }> = new Map();
 
   async setup(sessionId: string, wsEndpoint: string, entity?: any): Promise<any> {
     try {
-      // Dynamic import to avoid TypeScript errors - cykani-stealth-warp is integrated from sibling project
+      // Dynamic import to avoid TypeScript errors - cykani-stealth is integrated from sibling project
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const { connectOverCDP } = require("cykani-stealth-warp");
+      const { connectOverCDP } = require("cykani-stealth");
 
       const session = await connectOverCDP(wsEndpoint, {
         humor: true,

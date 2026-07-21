@@ -85,7 +85,7 @@ export const agentStepTask = task({
       action: payload.action,
     });
 
-    const { connectOverCDP } = await import("cykani-stealth-warp");
+    const { connectOverCDP } = await import("cykani-stealth");
 
     const entity = {
       fingerprint: payload.profile.fingerprintSeed,

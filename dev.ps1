@@ -1,24 +1,23 @@
 <#
 .SYNOPSIS
-    Start cykani dev server (Windows native).
+    Start cykani dev servers (Windows native).
 .DESCRIPTION
-    Starts the Next.js web app on port 3001.
+    Starts API on port 3000 and Web on port 3001 in separate PowerShell windows.
     In dev mode, auth is bypassed so you can browse the full UI.
-    Open http://localhost:3001 to land on the dashboard.
+    Open http://localhost:3001 to land on the site.
 .NOTES
-    API/DB/Redis are NOT started — this is UI-only preview.
-    For full stack, use WSL2: ./start.sh
+    No Docker or WSL2 required for the app stack.
 #>
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
-$webDir = Join-Path $root "apps\web"
 
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════╗" -ForegroundColor Cyan
-Write-Host "  ║       cykani dev (UI only)           ║" -ForegroundColor Cyan
-Write-Host "  ║  http://localhost:3001               ║" -ForegroundColor Cyan
-Write-Host "  ║  Auth: bypassed in dev mode          ║" -ForegroundColor Cyan
+Write-Host "  ║       cykani dev (Windows native)    ║" -ForegroundColor Cyan
+Write-Host "  ║  API:   http://localhost:3000        ║" -ForegroundColor Cyan
+Write-Host "  ║  Web:   http://localhost:3001        ║" -ForegroundColor Cyan
+Write-Host "  ║  Auth:  bypassed in dev mode        ║" -ForegroundColor Cyan
 Write-Host "  ╚══════════════════════════════════════╝" -ForegroundColor Cyan
 Write-Host ""
 
@@ -30,10 +29,14 @@ if (-not (Test-Path (Join-Path $root "node_modules"))) {
     Pop-Location
 }
 
-# Start Next.js dev server
-Push-Location $webDir
-try {
-    npx next dev -p 3001
-} finally {
-    Pop-Location
-}
+# Start API in a new window
+Write-Host "Starting API..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location "{0}"; pnpm --filter @cykani/api dev' -WindowStyle Normal
+
+Start-Sleep -Seconds 2
+
+# Start Web in a new window
+Write-Host "Starting Web..." -ForegroundColor Yellow
+Start-Process powershell -ArgumentList '-NoExit', '-Command', 'Set-Location "{0}\apps\web"; pnpm dev' -WindowStyle Normal
+
+

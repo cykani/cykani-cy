@@ -20,7 +20,7 @@ node /home/trend/Desktop/cykani-stealth/src/download.js
 
 ```bash
 pnpm --filter @cykani/api test
-CYKANI_BINARY_PATH=/path/to/chrome pnpm --filter cykani-stealth-warp test:integration
+CYKANI_BINARY_PATH=/path/to/chrome pnpm --filter cykani-stealth test:integration
 ```
 
 ## Development Workflow
@@ -30,10 +30,13 @@ CYKANI_BINARY_PATH=/path/to/chrome pnpm --filter cykani-stealth-warp test:integr
 pnpm install
 
 # Run API in dev mode
-cd apps/api && pnpm dev
+pnpm --filter @cykani/api dev
 
 # Run Web in dev mode
-cd apps/web && pnpm dev
+pnpm --filter ./apps/web dev
+
+# Or use the Windows PowerShell script:
+# .\dev.ps1
 
 # Typecheck all packages
 pnpm typecheck

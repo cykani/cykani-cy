@@ -2,8 +2,9 @@
   "name": "cykani",
   "private": true,
   "scripts": {
-    "dev": "bash start.sh",
-    "stop": "bash stop.sh",
+    "dev": "echo \"Use: .\\dev.ps1 (Windows) or ./start.sh (Git Bash)\"",
+    "dev:api": "pnpm --filter @cykani/api dev",
+    "dev:web": "pnpm --filter ./apps/web dev",
     "build": "turbo build",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",

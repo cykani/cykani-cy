@@ -33,7 +33,7 @@
 │  └─────────────────┴─────────┴─────────────────────┘ │
 │                                                      │
 │  ┌─────────────────────────────────────────────────┐ │
-│  │  cykani-stealth-warp                            │ │
+│  │  cykani-stealth                                │ │
 │  │  └─ connectOverCDP() → stealth session          │ │
 │  │  └─ Humor module (human-like behavior)          │ │
 │  │  └─ Constellation injection (stealth patches)   │ │
@@ -52,7 +52,7 @@
 | **Database** | PostgreSQL 16 with Drizzle ORM. Schema: organizations, profiles, sessions, agents, proxies, subscriptions, api_keys, usage_records. |
 | **Redis** | Caching (session cache), pub/sub (domain events), rate limiting (sliding window), BullMQ job queues. |
 | **Docker** | Launches `cykani-browser` containers with fingerprint flags. Each session = isolated browser instance with VNC + CDP ports. |
-| **Stealth** | `cykani-stealth-warp` wraps each browser with undetectable fingerprints, human-like behavior emulation, and anti-detection patches. |
+| **Stealth** | `cykani-stealth` wraps each browser with undetectable fingerprints, human-like behavior emulation, and anti-detection patches. |
 
 ### Domain Model
 
@@ -197,47 +197,60 @@ curl -X POST http://localhost:3000/v1/sessions \
 
 ## Development
 
-### Commands
+### Prerequisites
 
-```bash
-pnpm dev              # Start all services
-pnpm stop             # Stop all services
-pnpm build            # Build all packages
-pnpm lint             # Lint all packages
-pnpm typecheck        # Type check all packages
-pnpm test             # Run all tests
-pnpm db:push          # Push Drizzle schema to database
-pnpm db:studio        # Open Drizzle Studio
-```
-
-### Stealth Integration
-
-Browser sessions connect to `cykani-stealth-warp` via `connectOverCDP()` for:
-
-- **Fingerprint spoofing** per stymie seed (`--fingerprint`, `--fingerprint-platform`)
-- **Human behavior emulation** (hesitation, precision, cognitive load, mouse movements)
-- **Performance API stealth** (quantized `now()`, spoofed `memory`)
-- **Session state persistence** (cookies, localStorage, sessionStorage)
-- **GeoIP auto-resolution** from proxy IP (timezone + locale)
-
----
-
-## Deployment
-
-### Docker
-
-```bash
-docker compose -f deploy/docker-compose.databases.yml up -d
-```
-
-The API and web apps are run via `start.sh` in development. Production deployment uses the compiled `dist/` output from `pnpm build`.
-
-### Infrastructure Requirements
-
-- Docker with `cykani-browser:latest` image (or custom browser image)
+- Node.js ≥20
+- pnpm 9.15+
 - PostgreSQL 16
 - Redis 7
-- Docker socket accessible for container orchestration
+
+### Install
+
+```bash
+# Clone
+git clone <repo> cykani && cd cykani
+
+# Install dependencies
+pnpm install
+
+# Set up environment
+cp apps/api/.env.example apps/api/.env
+# Edit .env with your values
+
+# Push database schema
+pnpm db:push
+```
+
+### Windows Dev Workflow
+
+```powershell
+# Start both API + Web in separate windows
+.\dev.ps1
+
+# Or start individually in separate terminals:
+pnpm --filter @cykani/api dev   # API on http://localhost:3000
+pnpm --filter ./apps/web dev    # Web on http://localhost:3001
+```
+
+This starts:
+- **API** → `http://localhost:3000`
+- **Web** → `http://localhost:3001`
+- **Docs** → `http://localhost:3000/docs`
+- **DB** → `localhost:5432`
+- **Redis** → `localhost:6379`
+
+### Environment
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NODE_ENV` | `development` | Environment |
+| `PORT` | `3000` | API HTTP port |
+| `DATABASE_URL` | — | PostgreSQL connection string |
+| `REDIS_URL` | `redis://localhost:6379` | Redis connection string |
+| `JWT_SECRET` | — | JWT signing key (min 32 chars) |
+| `DOCKER_SOCKET` | `/var/run/docker.sock` | Docker socket path |
+| `BROWSER_IMAGE` | `cykani-browser:latest` | Browser container image |
+| `MAX_SESSIONS_PER_ORG` | `10` | Concurrent session limit |
 
 ---
 

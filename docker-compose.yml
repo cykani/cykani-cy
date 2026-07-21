@@ -1,6 +1,6 @@
-# docker-compose.yml — cykani optional services (WSL2-native app stack)
+# docker-compose.yml — cykani optional services (native host)
 #
-# The app stack (API, web, postgres, redis) runs natively in WSL2.
+# The app stack (API, web, postgres, redis) runs natively on the host OS.
 # This file contains optional services that can be added on.
 #
 # Usage:

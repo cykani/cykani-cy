@@ -1,7 +1,7 @@
 # docker-compose.browser.yml — cykani browser infrastructure
 #
 # This file contains ONLY browser-related services.
-# The app stack (API, web, postgres, redis) runs natively in WSL2.
+# The app stack (API, web, postgres, redis) runs natively on the host OS.
 #
 # Usage:
 #   docker compose -f docker-compose.browser.yml up -d
