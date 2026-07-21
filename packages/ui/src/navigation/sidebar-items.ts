@@ -6,6 +6,7 @@ import {
   Shield,
   Workflow,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export type NavBadge = "new" | "soon";
 
