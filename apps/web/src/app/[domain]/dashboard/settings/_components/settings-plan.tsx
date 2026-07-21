@@ -107,7 +107,7 @@ export function SettingsPlan() {
 
         <div className="space-y-2">
           <Label className="font-medium text-xs">Payment Provider</Label>
-          <RadioGroup value={provider} onValueChange={(v) => setProvider(v as "lemonsqueezy" | "stripe")}>
+          <RadioGroup value={provider} onValueChange={(v: "lemonsqueezy" | "stripe") => setProvider(v)}>
             <div className="flex items-center gap-2">
               <RadioGroupItem value="lemonsqueezy" id="lemonsqueezy" />
               <Label htmlFor="lemonsqueezy" className="text-xs">LemonSqueezy (subscription)</Label>
