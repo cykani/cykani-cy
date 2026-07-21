@@ -1,5 +1,11 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "LEMON_SQUEEZY_API_KEY",
+    "LEMON_SQUEEZY_WEBHOOK_SECRET",
+    "EMAIL_API_URL",
+    "EMAIL_API_KEY"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
