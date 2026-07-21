@@ -25,6 +25,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@fullcalendar/react": "^7.0.0",
     "@hookform/resolvers": "^5.4.0",
+    "@radix-ui/react-radio-group": "^1.4.4",
     "@tanstack/react-table": "^8.21.3",
     "@xyflow/react": "^12.11.1",
     "class-variance-authority": "^0.7.1",
@@ -43,12 +44,12 @@
     "react-hook-form": "^7.80.0",
     "react-resizable-panels": "^4.11.2",
     "recharts": "^3.8.0",
+    "simple-icons": "^16.24.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "vaul": "^1.1.2",
     "zod": "^4.4.3",
-    "zustand": "^5.0.14",
-    "simple-icons": "^16.24.0"
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",
