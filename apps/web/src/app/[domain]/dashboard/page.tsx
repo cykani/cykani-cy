@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
-  redirect("crm");
+export default function DashboardRoot() {
+  redirect("./settings");
 }
