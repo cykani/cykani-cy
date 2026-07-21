@@ -1,0 +1,38 @@
+---
+title: Installation
+description: Install cykani-stealth and start automating.
+---
+
+## Prerequisites
+
+- Node.js 20+ (recommended: 22)
+- npm, pnpm, or yarn
+
+## Install
+
+```bash
+pnpm add cykani-stealth
+```
+
+The patched Chromium binary auto-downloads from GitHub Releases on first launch. No server, no API key, no configuration needed.
+
+## Verify
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike();
+console.log("Session ID:", session.id);
+await session.close();
+```
+
+## Options
+
+| Variable | Description |
+|----------|-------------|
+| `CYKANI_BINARY_PATH` | Path to local Chromium binary (skip auto-download) |
+
+## Next Steps
+
+- [Quickstart](/docs/getting-started/quickstart) — First automation in 5 minutes
+- [SDK Reference](/docs/sdk/overview) — Full API documentation

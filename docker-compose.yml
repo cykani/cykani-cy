@@ -1,0 +1,64 @@
+# docker-compose.yml — cykani optional services (WSL2-native app stack)
+#
+# The app stack (API, web, postgres, redis) runs natively in WSL2.
+# This file contains optional services that can be added on.
+#
+# Usage:
+#   docker compose --profile experimental up -d
+#
+# Services:
+#   valkey    - Redis-compatible cache (port 6378)
+#   listmonk  - Newsletter / transactional email (port 9000)
+#   novnc     - Browser-based VNC client (port 6080)
+
+services:
+  valkey:
+    image: valkey/valkey:8-alpine
+    container_name: cykani-valkey
+    ports:
+      - "6378:6379"
+    volumes:
+      - cykani-valkey-data:/data
+    command: valkey-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - experimental
+
+  listmonk:
+    image: listmonk/listmonk:latest
+    container_name: cykani-listmonk
+    ports:
+      - "9000:9000"
+    environment:
+      LISTMONK_DB_HOST: host.docker.internal
+      LISTMONK_DB_PORT: 5432
+      LISTMONK_DB_USER: cykani
+      LISTMONK_DB_PASSWORD: ${LISTMONK_DB_PASSWORD:-cykani-dev}
+      LISTMONK_DB_NAME: cykani
+      LISTMONK_ADMIN_USER: admin
+      LISTMONK_ADMIN_PASSWORD: ${LISTMONK_ADMIN_PASSWORD:-changeme}
+    volumes:
+      - cykani-listmonk-data:/listmonk/data
+    profiles:
+      - experimental
+    depends_on:
+      - valkey
+
+  novnc:
+    image: cuteminded/novnc:latest
+    container_name: cykani-novnc
+    ports:
+      - "6080:6080"
+    environment:
+      VNCSERVER: host.docker.internal
+      VNCPORT: 5900
+    profiles:
+      - experimental
+
+volumes:
+  cykani-valkey-data:
+  cykani-listmonk-data:

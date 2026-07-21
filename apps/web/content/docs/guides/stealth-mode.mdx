@@ -1,0 +1,92 @@
+---
+title: Stealth Mode
+description: Configure fingerprint isolation and anti-detection features.
+---
+
+Cykani's stealth mode makes your browser instances undetectable by bot detection systems.
+
+## How It Works
+
+Each browser session gets a unique, consistent fingerprint that includes:
+
+- **Canvas fingerprint** — Randomized rendering hash
+- **WebGL fingerprint** — Spoofed vendor/renderer strings
+- **Audio fingerprint** — Randomized audio context values
+- **Navigator properties** — `webdriver` hidden, plugins spoofed
+- **Timezone/locale** — Configurable per session
+- **Font list** — OS-appropriate font enumeration
+
+## Stealth Profiles
+
+### Default
+
+Balanced stealth with good performance:
+
+```typescript
+import { strike } from "cykani-stealth";
+const session = await strike();
+```
+
+### Aggressive
+
+Maximum stealth, slightly slower:
+
+```typescript
+const session = await strike({
+  fingerprint: 424242, // deterministic seed
+  instincts: { hesitation: 0.8, precision: 0.9, curiosity: 0.5 },
+});
+```
+
+### Custom Fingerprint
+
+Fine-tune individual settings:
+
+```typescript
+const session = await strike({
+  fingerprint: 424242,
+  platform: "windows",
+  locale: "en-US",
+  timezone: "America/New_York",
+  operate: { latency: "human" },
+});
+```
+
+## Fingerprint Modes
+
+| Mode | Description |
+|------|-------------|
+| Random (default) | New fingerprint each launch |
+| Deterministic | Provide a seed for reproducible fingerprints |
+
+## Detection Evasion
+
+Cykani patches common detection vectors at the C++ level:
+
+| Detection Method | Cykani Evasion |
+|-----------------|----------------|
+| `navigator.webdriver` | Removed entirely |
+| Chrome DevTools Protocol | Patched at binary level |
+| Canvas fingerprint | Randomized per session |
+| WebGL vendor/renderer | Spoofed |
+| Audio context | Randomized |
+| Permission API | Consistent |
+
+## Testing Stealth
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike({ humor: true });
+await session.goto("https://bot.sannysoft.com");
+await session.screenshot({ path: "bot-test.png" });
+await session.close();
+```
+
+## Best Practices
+
+1. **Use a proxy** — Pass a proxy via the `proxy` option
+2. **Match timezone to proxy** — Use the `timezone` option
+3. **Rotate fingerprints** — Omit the seed for random fingerprints
+4. **Don't change fingerprints mid-session** — Creates anomalies
+5. **Use realistic viewport** — `viewport: { width: 1920, height: 1080 }`

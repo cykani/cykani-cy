@@ -1,0 +1,22 @@
+{
+  "name": "cykani",
+  "private": true,
+  "scripts": {
+    "dev": "bash start.sh",
+    "stop": "bash stop.sh",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "db:push": "cd apps/api && npx drizzle-kit push",
+    "db:studio": "cd apps/api && npx drizzle-kit studio",
+    "install:browser": "cd ../cykani-stealth && node -e 'require(\"./src/download.js\").install()'"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  }
+}

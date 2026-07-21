@@ -1,0 +1,65 @@
+---
+title: Quickstart
+description: Launch your first stealth browser session in under 5 minutes.
+---
+
+## Launch
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike({ humor: true });
+```
+
+Binary auto-downloads on first launch.
+
+## Navigate
+
+```typescript
+await session.goto("https://example.com");
+
+const title = await session.page().title();
+console.log(title);
+```
+
+## AutoPilot (No Selectors)
+
+```typescript
+await session.goto("https://example.com/login");
+
+const ap = session.autoPilot();
+await ap.signIn({
+  email: "user@example.com",
+  password: "secret",
+});
+```
+
+## Close
+
+```typescript
+await session.close();
+```
+
+## Full Example
+
+```typescript
+import { strike } from "cykani-stealth";
+
+async function main() {
+  const session = await strike({ humor: true });
+  await session.goto("https://example.com");
+
+  const title = await session.page().title();
+  console.log("Page title:", title);
+
+  await session.close();
+}
+
+main();
+```
+
+## Next Steps
+
+- [SDK Reference](/docs/sdk/overview) — Full API
+- [Presets](/docs/sdk/presets) — Pre-configured profiles
+- [AutoPilot](/docs/sdk/autopilot) — Heuristic automation

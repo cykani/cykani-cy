@@ -1,0 +1,97 @@
+---
+title: AutoPilot
+description: Heuristic automation — no selectors needed.
+---
+
+AutoPilot uses heuristics to interact with pages without writing selectors. It figures out what to click, where to type, and how to navigate.
+
+## Basic Usage
+
+```typescript
+const session = await strike({ humor: true });
+const ap = session.autoPilot();
+```
+
+## Sign In
+
+```typescript
+await ap.signIn({
+  email: "user@example.com",
+  password: "secret",
+});
+```
+
+AutoPilot finds the email/password fields and submit button automatically.
+
+## Search
+
+```typescript
+await ap.search("cykani stealth");
+```
+
+Finds the search input, types the query, and submits.
+
+## Pagination
+
+```typescript
+await ap.paginate("next");
+await ap.paginate("previous");
+await ap.paginate(3); // page 3
+```
+
+## Form Filling
+
+```typescript
+await ap.fillForm({
+  email: "user@example.com",
+  password: "secret",
+  name: "John Doe",
+  phone: "+1234567890",
+});
+```
+
+Maps field names to inputs automatically.
+
+## Find and Interact
+
+```typescript
+await ap.findAndFill("email", "user@example.com");
+await ap.findAndClick("submit");
+await ap.findAndSelect("country", "United States");
+```
+
+## How It Works
+
+AutoPilot analyzes the page structure:
+
+1. **Page type detection** — login, signup, search, form, listing, article
+2. **Element discovery** — finds inputs, buttons, links by context
+3. **Action planning** — determines the right sequence of actions
+4. **Execution** — performs actions with human-like timing
+
+## Page Types
+
+| Type | Detection |
+|------|-----------|
+| `login` | Email/password fields + submit |
+| `signup` | Registration form fields |
+| `search` | Search input + submit |
+| `form` | Multiple input fields |
+| `listing` | Grid/list of items |
+| `article` | Long-form content |
+| `captcha` | CAPTCHA challenge detected |
+| `generic` | Unknown page type |
+
+## Limitations
+
+AutoPilot works best with standard page layouts. For complex or custom UIs, use DOM-first methods:
+
+```typescript
+// DOM-first (explicit selectors)
+await session.click("#my-button");
+await session.fill("#my-input", "value");
+
+// AutoPilot (heuristic)
+await ap.findAndClick("submit");
+await ap.findAndFill("email", "value");
+```

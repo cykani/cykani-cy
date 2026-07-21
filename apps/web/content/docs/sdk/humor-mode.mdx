@@ -1,0 +1,86 @@
+---
+title: Humor Mode
+description: Human-like behavior system — Bezier curves, hesitation, idle movements.
+---
+
+Humor mode replaces Playwright's robotic methods with humanized versions. Mouse movements follow Bezier curves, clicks have cognitive hesitation, and idle moments include micro-movements.
+
+## Enable Humor
+
+```typescript
+const session = await strike({ humor: true });
+```
+
+Or per-action:
+
+```typescript
+await session.click("#btn", {
+  humor: { hesitation: 0.9, precision: 0.99 },
+});
+
+await session.type("#input", "text", {
+  humor: { latency: "sluggish" },
+});
+```
+
+## Behaviors
+
+### strikeMove
+
+Mouse movements follow Bezier curves with 15% distraction drift. The cursor doesn't move in straight lines — it curves, overshoots, and corrects.
+
+```typescript
+await session.click("#btn");
+// Cursor follows a natural curve to the button
+```
+
+### cognitiveHesitation
+
+Pause before actions, proportional to page complexity. Complex pages trigger longer pauses as if the user is reading.
+
+```typescript
+await session.click("#submit");
+// Brief pause while "reading" the form
+```
+
+### idleMicroMovement
+
+Tiny cursor jitter between actions. Real users don't hold the mouse perfectly still.
+
+```typescript
+// Between actions, cursor makes small random movements
+```
+
+### coffeeBreak
+
+8% chance of a 2-7 second idle with micro-movements. Mimics a user pausing to think or sip coffee.
+
+```typescript
+// Occasionally, the session pauses for a few seconds
+```
+
+## Latency Profiles
+
+| Profile | Speed | Description |
+|---------|-------|-------------|
+| `human` | Normal | Default human-like timing |
+| `sluggish` | Slow | Longer pauses, slower typing |
+| `organic` | Variable | Mixed speeds, more natural |
+| `robotic` | Fast | Minimal delays (less stealthy) |
+
+## Per-Action Override
+
+```typescript
+// Fast click, slow type
+await session.click("#btn", { humor: { latency: "robotic" } });
+await session.type("#input", "text", { humor: { latency: "sluggish" } });
+```
+
+## Without Humor
+
+Without `humor: true`, methods use standard Playwright behavior — fast, precise, detectable.
+
+```typescript
+const session = await strike(); // no humor
+await session.click("#btn"); // instant, straight-line movement
+```

@@ -1,0 +1,81 @@
+---
+title: SDK Overview
+description: The cykani-stealth SDK — stealth browser automation in one line.
+---
+
+The `cykani-stealth` npm package is the primary way to interact with Cykani. It wraps Playwright with 26 C++ stealth patches, human-like behavior, and three automation layers.
+
+## Install
+
+```bash
+pnpm add cykani-stealth
+```
+
+Binary auto-downloads on first run.
+
+## Launch a Session
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike({ humor: true, fingerprint: 7 });
+await session.goto("https://example.com");
+await session.close();
+```
+
+That's it. One line to a stealth browser.
+
+## What You Get
+
+- **26 C++ stealth patches** — patched at the Chromium binary level
+- **Fingerprint isolation** — canvas, WebGL, audio, timezone all randomized
+- **Human-like behavior** — Bezier mouse curves, cognitive hesitation, idle micro-movements
+- **Three automation layers** — DOM selectors, heuristic (no selectors), autonomous browsing
+- **CDP connection** — connect to any running browser via Chrome DevTools Protocol
+
+## Core API
+
+```typescript
+const session = await strike({
+  humor: true,              // enable humanized behavior
+  fingerprint: 424242,      // deterministic seed (1-999999)
+  platform: "windows",      // windows | macos | linux
+  locale: "en-US",
+  timezone: "America/New_York",
+  proxy: "http://user:pass@host:port",
+  viewport: { width: 1920, height: 1080 },
+  userDataDir: "/tmp/my-profile",
+  extensions: ["./path/to/ext"],
+  geoip: true,              // auto-resolve timezone from proxy
+  operate: { latency: "human", headless: true, timeout: 30000 },
+  instincts: { hesitation: 0.5, precision: 0.7, curiosity: 0.3 },
+  dynamics: { entropy: 0.4, inertia: 0.5 },
+});
+```
+
+## Session Methods
+
+| Method | Description |
+|--------|-------------|
+| `session.goto(url)` | Navigate to URL |
+| `session.click(selector)` | Click element |
+| `session.fill(selector, value)` | Fill input |
+| `session.type(selector, text)` | Type with human delay |
+| `session.scroll(opts)` | Scroll page |
+| `session.read()` | Smart scroll + hover through content |
+| `session.screenshot(opts)` | Take screenshot |
+| `session.autoPilot()` | Heuristic automation (no selectors) |
+| `session.autonomous()` | Self-driving browser |
+| `session.brain()` | EntityBrain instance |
+| `session.cookies()` | CookieJar |
+| `session.record()` | Action recorder |
+| `session.har()` | HAR object |
+| `session.exportHar(path)` | Export HAR file |
+| `session.close()` | Close session |
+
+## Next Steps
+
+- [Presets](/docs/sdk/presets) — Pre-configured behavior profiles
+- [AutoPilot](/docs/sdk/autopilot) — Heuristic automation without selectors
+- [Humor Mode](/docs/sdk/humor-mode) — Human-like behavior system
+- [CDP Connection](/docs/sdk/cdp-connection) — Connect to remote browsers

@@ -1,0 +1,128 @@
+---
+title: "Proxy Rotation Best Practices for Web Scraping"
+description: "How to rotate proxies effectively without getting blocked."
+date: "2026-07-05"
+category: "Tutorials"
+author: "Cykani Team"
+---
+
+Proxy rotation is essential for web scraping, but doing it wrong gets you blocked faster than not using proxies at all.
+
+## The Basics
+
+### Sticky vs Rotating
+
+**Sticky sessions** keep the same IP for the duration of a session. Use when:
+
+- You need to maintain login state
+- The site tracks IP changes
+- You're performing multi-step workflows
+
+**Rotating sessions** change IP on each session. Use when:
+
+- Scraping paginated content
+- Making many requests to the same endpoint
+- The site doesn't require session state
+
+```typescript
+import { strike } from "cykani-stealth";
+
+// Sticky — one IP for the whole session
+const session = await strike({
+  proxy: "http://user:pass@residential-proxy:8080",
+});
+```
+
+## Geographic Targeting
+
+### Single Country
+
+```typescript
+const session = await strike({
+  proxy: "http://user:pass@us-residential:8080",
+});
+```
+
+### Multi-Country Rotation
+
+```typescript
+const proxies = [
+  "http://user:pass@us-proxy:8080",
+  "http://user:pass@uk-proxy:8080",
+  "http://user:pass@de-proxy:8080",
+];
+
+for (const proxy of proxies) {
+  const session = await strike({ proxy });
+  await session.goto("https://example.com");
+  await session.close();
+}
+```
+
+## Common Mistakes
+
+### 1. Wrong Proxy Type
+
+Use residential proxies for:
+
+- Social media scraping
+- E-commerce price monitoring
+- Ad verification
+
+Use datacenter proxies for:
+
+- High-throughput scraping
+- API testing
+- Speed-critical tasks
+
+### 2. Mismatched Fingerprint
+
+If your proxy is in Japan but your browser fingerprint says "Windows US English", you get flagged.
+
+```typescript
+const session = await strike({
+  proxy: "http://user:pass@jp-proxy:8080",
+  locale: "ja-JP",
+  timezone: "Asia/Tokyo",
+});
+```
+
+### 3. Too Fast
+
+Even with rotating IPs, making requests too quickly triggers rate limits.
+
+```typescript
+const session = await strike({ humor: true });
+
+for (const url of urls) {
+  await session.goto(url);
+  await new Promise((r) => setTimeout(r, 2000 + Math.random() * 3000));
+}
+```
+
+### 4. Not Handling Captchas
+
+```typescript
+for (let attempt = 0; attempt < 3; attempt++) {
+  const session = await strike({
+    proxy: "http://user:pass@new-ip:8080",
+  });
+
+  await session.goto("https://example.com");
+  // Check for captcha...
+  // If detected, close and retry with new IP
+
+  await session.close();
+}
+```
+
+## Performance Tips
+
+1. **Reuse sessions** — Each launch has overhead
+2. **Close sessions promptly** — Free up resources
+3. **Monitor IP reputation** — Some IPs get flagged
+4. **Cache responses** — Avoid unnecessary requests
+
+## Conclusion
+
+Proxy rotation is not just about changing IPs. It's about maintaining consistency between your IP, fingerprint, and behavior. Get all three right, and you'll stay undetected.

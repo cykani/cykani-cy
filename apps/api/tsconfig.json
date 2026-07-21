@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "ES2022.Error"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@cykani/db": ["../../packages/db/src"],
+      "@cykani/db/*": ["../../packages/db/src/*"],
+      "@cykani/redis": ["../../packages/redis/src"],
+      "@cykani/redis/*": ["../../packages/redis/src/*"],
+      "@cykani/vnc": ["../../packages/vnc/src"],
+      "@cykani/vnc/*": ["../../packages/vnc/src/*"],
+      "@cykani/types": ["../../packages/types/src"],
+      "@cykani/types/*": ["../../packages/types/src/*"]
+    },
+    "types": ["node"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,86 @@
+---
+title: "Stealth Browser Detection in 2026: What Still Works"
+description: "A deep dive into modern bot detection techniques and how to evade them."
+date: "2026-07-10"
+category: "Engineering"
+author: "Cykani Team"
+---
+
+Bot detection in 2026 is sophisticated. It's not just checking a single flag — it's aggregating signals across multiple layers. Here's what detection systems look for and what still works.
+
+## Detection Layers
+
+### 1. JavaScript API Detection
+
+The simplest layer. Detection systems check for automation artifacts:
+
+- `navigator.webdriver` — still checked, but easy to patch
+- `window.chrome` — missing in headless browsers
+- `navigator.plugins` — empty in automation
+
+**Evasion**: Patch at the binary level, not JavaScript. JS patches get detected by checking prototype chains.
+
+### 2. Canvas Fingerprinting
+
+Every browser renders canvas slightly differently. Automation tools often produce identical canvas fingerprints across sessions.
+
+**Evasion**: Randomize canvas rendering per session. Cykani modifies the rendering pipeline at the C++ level.
+
+### 3. WebGL Analysis
+
+WebGL exposes GPU information. Detection systems check:
+
+- Vendor/renderer strings
+- Supported extensions
+- Shader compilation patterns
+
+**Evasion**: Spoof vendor/renderer to match real GPU profiles. Rotate across sessions.
+
+### 4. Behavioral Analysis
+
+The hardest layer to beat. Detection systems track:
+
+- Mouse movement patterns (straight lines = bot)
+- Click timing (too fast = bot)
+- Scroll behavior (too smooth = bot)
+- Keystroke timing (too consistent = bot)
+
+**Evasion**: Human-like behavior modeling. Bezier curves for mouse movement, cognitive hesitation, idle micro-movements.
+
+### 5. Network Analysis
+
+Detection systems analyze:
+
+- TLS fingerprint (JA3/JA4)
+- HTTP/2 fingerprint
+- IP reputation
+- Request timing
+
+**Evasion**: Use residential proxies, rotate IPs, match TLS fingerprint to browser version.
+
+## What Still Works in 2026
+
+1. **Binary-level patches** — JS patches get detected
+2. **Per-session fingerprints** — Same fingerprint across sessions gets flagged
+3. **Residential proxies** — Datacenter IPs are easily detected
+4. **Behavioral modeling** — Straight lines and instant clicks are dead
+5. **Consistency** — Mismatched timezone/proxy/location triggers detection
+
+## Testing Your Setup
+
+Always test against multiple detection services:
+
+- bot.sannysoft.com
+- browserscan.net
+- creepjs
+- fingerprintjs
+
+Run the Cykani stealth check:
+
+```bash
+node examples/stealth-check.js
+```
+
+## Conclusion
+
+Bot detection is an arms race. The only way to stay ahead is to patch at the lowest level possible and model human behavior accurately. That's what Cykani does.

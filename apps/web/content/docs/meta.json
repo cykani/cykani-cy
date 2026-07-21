@@ -1,0 +1,17 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "installation",
+    "quickstart",
+    "---SDK Reference---",
+    "sdk/overview",
+    "sdk/presets",
+    "sdk/autopilot",
+    "sdk/humor-mode",
+    "sdk/cdp-connection",
+    "---Guides---",
+    "guides/stealth-mode"
+  ]
+}

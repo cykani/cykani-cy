@@ -1,0 +1,46 @@
+---
+title: Introduction
+description: Stealth browser automation for AI agents — local, self-hosted, undetectable.
+---
+
+Cykani is a stealth browser automation SDK. It wraps Playwright with 26 C++ binary-level stealth patches, human-like behavior modeling, and three automation layers.
+
+## What It Does
+
+Bot detection is everywhere. Every automated browser leaves traces — canvas fingerprints, WebGL rendering artifacts, straight mouse movements, instant clicks. Cykani patches Chromium at the binary level and layers human-like behavior on top.
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike({ humor: true });
+await session.goto("https://example.com");
+await session.close();
+```
+
+## Key Features
+
+- **C++ binary patches** — 26 stealth patches at the Chromium level (not JavaScript)
+- **Fingerprint isolation** — canvas, WebGL, audio, timezone randomized per session
+- **Human-like behavior** — Bezier mouse curves, cognitive hesitation, idle micro-movements
+- **Three automation layers** — DOM selectors, heuristic (no selectors), autonomous browsing
+- **CDP connection** — connect to any browser instance running Chrome DevTools Protocol
+- **Zero config** — binary auto-downloads from GitHub Releases, no server needed
+
+## Architecture
+
+```
+strike(entity)
+  ├── chromium.launch()         — C++ patched binary (26 stealth patches)
+  ├── EntityBrain               — seeded PRNG, Bezier curves
+  ├── Choreographer             — stealth injection, observer, DSL
+  │     ├── walkOut()           — humor patching
+  │     ├── CdpWorld()          — CDP isolated world (stealth DOM queries)
+  │     └── walkOutContext()    — patch all pages in context
+  └── Session Proxy             — 28 methods + autoPilot + autonomous
+```
+
+## Quick Links
+
+- [Installation](/docs/getting-started/installation) — Install the SDK
+- [Quickstart](/docs/getting-started/quickstart) — First session in 5 minutes
+- [SDK Reference](/docs/sdk/overview) — Full SDK documentation

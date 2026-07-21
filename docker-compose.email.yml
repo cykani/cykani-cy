@@ -1,0 +1,31 @@
+# docker-compose.email.yml — Listmonk email service
+#
+# Usage:
+#   docker compose -f docker-compose.email.yml up -d
+#   docker compose -f docker-compose.email.yml down
+#
+# Access:
+#   Web UI: http://localhost:9000
+#   Default login: admin / changeme (change on first login)
+
+services:
+  listmonk:
+    image: listmonk/listmonk:latest
+    container_name: cykani-listmonk
+    ports:
+      - "9000:9000"
+    environment:
+      - LISTMONK_APP_DB_DIALECT=postgres
+      - LISTMONK_APP_DB_HOST=host.docker.internal
+      - LISTMONK_APP_DB_PORT=5432
+      - LISTMONK_APP_DB_DATABASE=cykani
+      - LISTMONK_APP_DB_USER=postgres
+      - LISTMONK_APP_DB_PASSWORD=postgres
+      - LISTMONK_APP_ADMIN_EMAIL=admin@cykani.app
+      - LISTMONK_APP_ADMIN_PASSWORD=changeme
+    volumes:
+      - listmonk-data:/listmonk/data
+    restart: unless-stopped
+
+volumes:
+  listmonk-data:

@@ -1,0 +1,54 @@
+---
+title: CDP Connection
+description: Connect to any running browser instance via Chrome DevTools Protocol.
+---
+
+Connect cykani-stealth to any browser that exposes a CDP endpoint — a local instance, a remote browser, or your own infrastructure.
+
+```typescript
+import { connectOverCDP } from "cykani-stealth";
+
+const session = await connectOverCDP("http://127.0.0.1:9222", {
+  humor: true,
+});
+```
+
+## Options
+
+```typescript
+const session = await connectOverCDP("http://127.0.0.1:9222", {
+  humor: true,
+  fingerprint: 424242,
+  viewport: { width: 1920, height: 1080 },
+});
+```
+
+## Use Cases
+
+### Local Browser
+
+```typescript
+const session = await connectOverCDP("http://127.0.0.1:9222", { humor: true });
+```
+
+### Remote Browser
+
+```typescript
+const session = await connectOverCDP("http://10.0.0.1:9222", { humor: true });
+```
+
+### Multiple Connections
+
+```typescript
+const urls = ["http://127.0.0.1:9222", "http://127.0.0.1:9223"];
+
+for (const url of urls) {
+  const session = await connectOverCDP(url, { humor: true });
+  await session.goto("https://example.com");
+  await session.close();
+}
+```
+
+## CDP vs strike()
+
+Use `strike()` for local automation (auto-downloads binary, zero config). Use `connectOverCDP()` when you already have a browser running.

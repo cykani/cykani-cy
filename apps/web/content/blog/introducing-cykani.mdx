@@ -1,0 +1,68 @@
+---
+title: "Introducing Cykani: Stealth Browser Automation for AI Agents"
+description: "Why we built Cykani and what it means for browser automation."
+date: "2026-07-15"
+category: "Product"
+author: "Cykani Team"
+---
+
+Browser automation is broken. Every tool gets detected. Puppeteer leaves fingerprints. Playwright gets caught. The moment you automate a browser, bot detection systems flag you.
+
+We built Cykani to fix this.
+
+## The Problem
+
+Bot detection has evolved. It's no longer just checking `navigator.webdriver`. Modern detection systems analyze:
+
+- Canvas fingerprints
+- WebGL rendering patterns
+- Audio context signatures
+- Mouse movement patterns
+- Keystroke timing
+- Scroll behavior
+
+Every automation tool leaves traces. The detection wins.
+
+## Our Approach
+
+Cykani patches Chromium at the C++ level. 26 stealth patches that modify the binary itself, not just the JavaScript layer. When a detection system queries the browser, it sees a real user's fingerprint — not an automation tool's.
+
+But patches alone aren't enough. Real users move their mouse in curves, not straight lines. They hesitate before clicking. They take coffee breaks. Cykani's humor mode adds human-like behavior on top of the stealth patches.
+
+## Three Layers
+
+We designed three automation layers for different use cases:
+
+**DOM-First** — Standard Playwright selectors. When you know exactly what to click.
+
+```typescript
+await session.click("#submit");
+await session.fill("#email", "user@example.com");
+```
+
+**AutoPilot** — Heuristic automation. No selectors needed. Tell it what to do, and it figures out how.
+
+```typescript
+const ap = session.autoPilot();
+await ap.signIn({ email: "user@example.com", password: "secret" });
+```
+
+**Autonomous** — Self-driving browser. Point it at a page and let it browse naturally.
+
+```typescript
+const auto = session.autonomous();
+await auto.act(30000); // browse for 30 seconds
+```
+
+## What's Next
+
+We're launching with:
+
+- Local SDK (`cykani-stealth`) for self-hosted automation
+- Cloud API for managed browser sessions (coming soon)
+- Proxy rotation in 190+ countries
+- Session persistence across restarts
+
+This is just the beginning. We're building the infrastructure layer for AI agents that need to browse the web.
+
+Try it out: `pnpm add cykani-stealth`

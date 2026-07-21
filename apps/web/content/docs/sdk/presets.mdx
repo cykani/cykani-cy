@@ -1,0 +1,70 @@
+---
+title: Presets
+description: Pre-configured behavior profiles for different use cases.
+---
+
+Presets configure hesitation, precision, latency, and humor in one call.
+
+## Available Presets
+
+| Preset | Hesitation | Precision | Latency | Humor | Use Case |
+|--------|-----------|-----------|---------|-------|----------|
+| `strike()` | 0.5 | 0.7 | human | off | General automation |
+| `highTrust()` | 0.8 | 0.95 | human | off | High-security sites |
+| `aggressive()` | 0.1 | 0.5 | robotic | off | Speed over stealth |
+| `natural()` | 0.5 | 0.7 | organic | yes | Human-like browsing |
+| `stealth()` | 0.5 | 0.7 | human | yes | Maximum stealth |
+| `humorLaunch()` | 0.5 | 0.7 | human | yes | Fun demos |
+
+## Usage
+
+```typescript
+import { strike, highTrust, aggressive, natural, stealth } from "cykani-stealth";
+
+// Default — balanced stealth and speed
+const s1 = await strike();
+
+// High security — slow, precise, mimics real user
+const s2 = await highTrust();
+
+// Aggressive — fast, less stealthy
+const s3 = await aggressive();
+
+// Natural — human-like with humor
+const s4 = await natural();
+
+// Stealth — maximum anti-detection
+const s5 = await stealth();
+```
+
+## Custom Configuration
+
+Override preset defaults with entity config:
+
+```typescript
+const session = await strike({
+  humor: true,
+  fingerprint: 424242,
+  proxy: "http://user:pass@host:port",
+  instincts: {
+    hesitation: 0.8,  // slower, more human
+    precision: 0.9,   // more accurate clicks
+    curiosity: 0.5,   // explores page more
+  },
+});
+```
+
+## Instincts Explained
+
+| Instinct | Range | Description |
+|----------|-------|-------------|
+| `hesitation` | 0-1 | Pause before actions (0 = none, 1 = long) |
+| `precision` | 0-1 | Click accuracy (0 = random, 1 = pixel-perfect) |
+| `curiosity` | 0-1 | Page exploration (0 = minimal, 1 = thorough) |
+
+## Dynamics
+
+| Dynamic | Range | Description |
+|---------|-------|-------------|
+| `entropy` | 0-1 | Randomness in behavior (0 = predictable, 1 = chaotic) |
+| `inertia` | 0-1 | Momentum in movements (0 = stop-and-go, 1 = smooth) |
