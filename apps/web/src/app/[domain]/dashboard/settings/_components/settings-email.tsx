@@ -1,10 +1,12 @@
+"use client";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 import { Label } from "@cykani/ui/label";
 import { Input } from "@cykani/ui/input";
 import { Button } from "@cykani/ui/button";
 import { useState } from "react";
 
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
+import { ComingSoonOverlay } from "../../_components/coming-soon-overlay";
 
 export function SettingsEmail() {
   const [enabled, setEnabled] = useState(false);
