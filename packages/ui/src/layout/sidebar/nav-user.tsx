@@ -1,6 +1,8 @@
 "use client";
 
-import { CircleUser, CreditCard, EllipsisVertical, LogOut, MessageSquareDot } from "lucide-react";
+import Link from "next/link";
+
+import { CreditCard, EllipsisVertical, LogOut, Settings } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@cykani/ui/avatar";
 import {
@@ -15,15 +17,17 @@ import {
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@cykani/ui/sidebar";
 import { getInitials } from "@cykani/lib/utils";
 
-export function NavUser({
-  user,
-}: {
-  readonly user: {
+interface NavUserProps {
+  user: {
     readonly name: string;
     readonly email: string;
-    readonly avatar: string;
+    readonly image: string;
   };
-}) {
+  slug: string;
+  onSignOut: () => void;
+}
+
+export function NavUser({ user, slug, onSignOut }: NavUserProps) {
   const { isMobile } = useSidebar();
 
   return (
@@ -36,7 +40,7 @@ export function NavUser({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar || undefined} alt={user.name} />
+                <AvatarImage src={user.image || undefined} alt={user.name} />
                 <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -55,7 +59,7 @@ export function NavUser({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar || undefined} alt={user.name} />
+                  <AvatarImage src={user.image || undefined} alt={user.name} />
                   <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
@@ -66,21 +70,21 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <CircleUser />
-                Account
+              <DropdownMenuItem asChild>
+                <Link prefetch={false} href={`/${slug}/dashboard/settings/general`} className="flex items-center gap-2">
+                  <Settings />
+                  Settings
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <MessageSquareDot />
-                Notifications
+              <DropdownMenuItem asChild>
+                <Link prefetch={false} href={`/${slug}/dashboard/settings/billing`} className="flex items-center gap-2">
+                  <CreditCard />
+                  Billing
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onSignOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

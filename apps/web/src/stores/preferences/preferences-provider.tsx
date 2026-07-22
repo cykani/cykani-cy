@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
 import { type FontKey, fontRegistry } from "@cykani/lib/fonts/registry";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@cykani/lib/preferences/layout";
 import { THEME_MODE_VALUES, THEME_PRESET_VALUES } from "@cykani/lib/preferences/theme";
 import { applyThemeMode, subscribeToSystemTheme } from "@cykani/lib/preferences/theme-utils";
+import { usePathname } from "next/navigation";
 import { type StoreApi, useStore } from "zustand";
 
 import { createPreferencesStore, type PreferencesState } from "./preferences-store";
@@ -68,6 +69,8 @@ export const PreferencesStoreProvider = ({
   );
 
   const domSnapshotRef = useRef<Partial<PreferencesState> | null>(null);
+  const pathname = usePathname();
+  const isDashboardPage = useMemo(() => /^\/[^\/]+\/dashboard/.test(pathname), [pathname]);
 
   useEffect(() => {
     const domState = readDomState();
@@ -83,12 +86,14 @@ export const PreferencesStoreProvider = ({
   useEffect(() => {
     let unsubscribeMedia: (() => void) | undefined;
 
-    const applyFromMode = (mode: PreferencesState["themeMode"]) => {
+    const applyEffectiveMode = (savedMode: PreferencesState["themeMode"]) => {
       unsubscribeMedia?.();
-      const resolved = applyThemeMode(mode);
+
+      const modeToApply = isDashboardPage ? savedMode : "dark";
+      const resolved = applyThemeMode(modeToApply);
       store.setState((prev) => ({ ...prev, resolvedThemeMode: resolved }));
 
-      if (mode === "system") {
+      if (modeToApply === "system" && isDashboardPage) {
         unsubscribeMedia = subscribeToSystemTheme(() => {
           const next = applyThemeMode("system");
           store.setState((prev) => ({ ...prev, resolvedThemeMode: next }));
@@ -97,17 +102,17 @@ export const PreferencesStoreProvider = ({
     };
 
     const startMode = domSnapshotRef.current?.themeMode ?? store.getState().themeMode;
-    applyFromMode(startMode);
+    applyEffectiveMode(startMode);
 
     const unsubscribeStore = store.subscribe((s, p) => {
-      if (s.themeMode !== p.themeMode) applyFromMode(s.themeMode);
+      if (s.themeMode !== p.themeMode) applyEffectiveMode(s.themeMode);
     });
 
     return () => {
       unsubscribeMedia?.();
       unsubscribeStore();
     };
-  }, [store]);
+  }, [store, isDashboardPage]);
 
   return <PreferencesStoreContext.Provider value={store}>{children}</PreferencesStoreContext.Provider>;
 };

@@ -13,7 +13,8 @@
     "./local-storage.client": "./src/local-storage.client.ts",
     "./fonts/*": "./src/fonts/*.ts",
     "./preferences/*": "./src/preferences/*.ts",
-    "./hooks/*": "./src/hooks/*.ts"
+    "./hooks/*": "./src/hooks/*.ts",
+    "./validators/*": "./src/validators/*.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",

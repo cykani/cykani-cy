@@ -7,7 +7,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import { db } from "@cykani/db/client";
-import { organizations, memberships, authAccounts, authSessionsTbl, authUsers, authVerificationTokens } from "@cykani/db/schema";
+import { authAccounts, authSessionsTbl, authUsers, authVerificationTokens } from "@cykani/db/schema";
 
 declare module "next-auth" {
   interface Session {
@@ -28,6 +28,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     verificationTokensTable: authVerificationTokens,
   }),
   session: { strategy: "jwt" },
+  pages: {
+    signIn: "/sign-in",
+    newUser: "/new",
+  },
   providers: [
     Credentials({
       name: "credentials",
@@ -69,12 +73,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user }) {
       if (!user.id) return false;
-      const existing = await db.select().from(memberships).where(eq(memberships.userId, user.id)).limit(1);
-      if (existing.length === 0) {
-        const orgId = crypto.randomUUID();
-        await db.insert(organizations).values({ id: orgId, name: user.name || user.email?.split("@")[0] || "My Org", ownerId: user.id });
-        await db.insert(memberships).values({ orgId, userId: user.id, role: "owner" });
-      }
       return true;
     },
     jwt({ token, user }) {

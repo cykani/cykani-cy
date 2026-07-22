@@ -8,6 +8,7 @@ function generateId(): string {
 export const organizations = pgTable("organizations", {
   id: text("id").primaryKey().$defaultFn(generateId),
   name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
   plan: text("plan").notNull().default("free"),
   ownerId: text("owner_id").notNull(),
   stripeCustomerId: text("stripe_customer_id"),
@@ -15,6 +16,7 @@ export const organizations = pgTable("organizations", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (table) => [
   index("idx_organizations_owner_id").on(table.ownerId),
+  uniqueIndex("idx_organizations_slug").on(table.slug),
 ]);
 
 export const memberships = pgTable("memberships", {

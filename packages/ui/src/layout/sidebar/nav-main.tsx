@@ -71,7 +71,7 @@ export interface NavGroup {
 
 interface NavMainProps {
   readonly items: readonly NavGroup[];
-  readonly domain: string;
+  readonly slug: string;
 }
 
 interface NavItemProps {
@@ -121,12 +121,12 @@ function hasSubItems(item: NavMainItem): item is NavMainParentItem {
   return "subItems" in item && Boolean((item as NavMainParentItem).subItems?.length);
 }
 
-export function NavMain({ items, domain }: NavMainProps) {
+export function NavMain({ items, slug }: NavMainProps) {
   const path = usePathname();
 
   const prefix = (url: string) => {
-    if (url.startsWith(`/${domain}/`) || url.startsWith("/auth/") || url.startsWith("/api/")) return url;
-    return `/${domain}${url}`;
+    if (url.startsWith(`/${slug}/`) || url.startsWith("/auth/") || url.startsWith("/api/")) return url;
+    return `/${slug}${url}`;
   };
 
   const isItemActive = (item: NavMainItem) => {

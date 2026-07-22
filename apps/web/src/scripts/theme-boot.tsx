@@ -91,6 +91,12 @@ export function ThemeBootScript() {
         var sidebarVariant = rawSidebarVariant || DEFAULTS.sidebar_variant;
         var sidebarCollapsible = rawSidebarCollapsible || DEFAULTS.sidebar_collapsible;
 
+        var isDashboardPage = /^\/[^\/]+\/dashboard/.test(window.location.pathname);
+        if (!isDashboardPage) {
+          mode = "dark";
+          resolvedMode = "dark";
+        }
+
         root.classList.toggle("dark", resolvedMode === "dark");
         root.setAttribute("data-theme-mode", mode);
         root.setAttribute("data-theme-preset", preset);

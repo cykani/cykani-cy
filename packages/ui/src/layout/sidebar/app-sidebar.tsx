@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import { useShallow } from "zustand/react/shallow";
 
 import {
@@ -15,22 +16,24 @@ import {
   SidebarMenuItem,
 } from "@cykani/ui/sidebar";
 import { APP_CONFIG } from "@/config/app-config";
-import { rootUser } from "@/data/users";
 import { sidebarItems } from "@cykani/ui/navigation/sidebar-items";
+import { settingsNavItems } from "@cykani/ui/navigation/settings-items";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import { NavMain } from "./nav-main";
+import { NavSettings } from "./nav-settings";
 import { NavUser } from "./nav-user";
 import { SidebarSupportCard } from "./sidebar-support-card";
 
-function getDomainFromPath(pathname: string): string {
-  const segment = pathname.split("/").filter(Boolean)[0];
-  return segment || "default";
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  slug: string;
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ slug, ...props }: AppSidebarProps) {
   const pathname = usePathname();
-  const domain = getDomainFromPath(pathname);
+  const isSettings = pathname.startsWith(`/${slug}/dashboard/settings`);
+  const { data: session } = useSession();
+  const user = session?.user;
 
   const { sidebarVariant, sidebarCollapsible, isSynced } = usePreferencesStore(
     useShallow((s) => ({
@@ -49,7 +52,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link prefetch={false} href={`/${domain}/dashboard/default`} className="flex items-center gap-2">
+              <Link prefetch={false} href={`/${slug}/dashboard`} className="flex items-center gap-2">
                 <Image src="/logo_black.png" alt="Cykani" width={32} height={32} className="h-8 w-auto shrink-0" />
                 <span className="font-semibold text-base">{APP_CONFIG.name}</span>
               </Link>
@@ -58,11 +61,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={sidebarItems} domain={domain} />
+        {isSettings ? (
+          <NavSettings items={settingsNavItems} slug={slug} />
+        ) : (
+          <NavMain items={sidebarItems} slug={slug} />
+        )}
       </SidebarContent>
       <SidebarFooter>
         <SidebarSupportCard />
-        <NavUser user={rootUser} />
+        <NavUser
+          user={{
+            name: user?.name || "User",
+            email: user?.email || "",
+            image: user?.image || "",
+          }}
+          slug={slug}
+          onSignOut={() => signOut({ callbackUrl: "/sign-in" })}
+        />
       </SidebarFooter>
     </Sidebar>
   );

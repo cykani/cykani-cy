@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 
+import { SessionProvider } from "next-auth/react";
+
 import type { FontKey } from "@cykani/lib/fonts/registry";
 import type { ContentLayout, NavbarStyle } from "@cykani/lib/preferences/layout";
 import type { ThemeMode, ThemePreset } from "@cykani/lib/preferences/theme";
@@ -21,17 +23,19 @@ interface ProvidersProps {
 
 export function Providers({ children, themeMode, themePreset, contentLayout, navbarStyle, font }: ProvidersProps) {
   return (
-    <TooltipProvider>
-      <PreferencesStoreProvider
-        themeMode={themeMode}
-        themePreset={themePreset}
-        contentLayout={contentLayout}
-        navbarStyle={navbarStyle}
-        font={font}
-      >
-        {children}
-        <Toaster />
-      </PreferencesStoreProvider>
-    </TooltipProvider>
+    <SessionProvider>
+      <TooltipProvider>
+        <PreferencesStoreProvider
+          themeMode={themeMode}
+          themePreset={themePreset}
+          contentLayout={contentLayout}
+          navbarStyle={navbarStyle}
+          font={font}
+        >
+          {children}
+          <Toaster />
+        </PreferencesStoreProvider>
+      </TooltipProvider>
+    </SessionProvider>
   );
 }

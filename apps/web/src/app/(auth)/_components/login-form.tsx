@@ -51,7 +51,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   };
 
   const handleOAuth = async (provider: string) => {
-    await signIn(provider, { redirect: true });
+    await signIn(provider, { redirect: true, callbackUrl: "/new" });
   };
 
   return (

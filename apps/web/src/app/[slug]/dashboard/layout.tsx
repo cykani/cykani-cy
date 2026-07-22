@@ -14,7 +14,13 @@ import { getPreference } from "@/server/server-actions";
 
 import { DashboardHeaderControls } from "./_components/dashboard-header-controls";
 
-export default async function Layout({ children }: Readonly<{ children: ReactNode }>) {
+interface Props {
+  children: ReactNode;
+  params: Promise<{ slug: string }>;
+}
+
+export default async function Layout({ children, params }: Props) {
+  const { slug } = await params;
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get("sidebar_state")?.value !== "false";
   const [variant, collapsible] = await Promise.all([
@@ -31,7 +37,7 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
         } as React.CSSProperties
       }
     >
-      <AppSidebar variant={variant} collapsible={collapsible} />
+      <AppSidebar variant={variant} collapsible={collapsible} slug={slug} />
       <SidebarInset
         className={cn(
           "[html[data-content-layout=centered]_&>*]:mx-auto",
@@ -57,11 +63,10 @@ export default async function Layout({ children }: Readonly<{ children: ReactNod
               />
             </div>
             <div className="flex items-center gap-2">
-              <DashboardHeaderControls />
+              <DashboardHeaderControls slug={slug} />
             </div>
           </div>
         </header>
-        {/* Pages can set data-content-padding="false" to render full-bleed app layouts. */}
         <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden p-4 has-data-[content-padding=false]:p-0 md:p-6 md:has-data-[content-padding=false]:p-0">
           {children}
         </div>

@@ -1,4 +1,4 @@
-import { ComingSoonOverlay } from "@/app/dashboard/_components/coming-soon-overlay";
+import { ComingSoonOverlay } from "@/app/[slug]/dashboard/_components/coming-soon-overlay";
 
 import { Chat } from "./_components/chat";
 import { conversations } from "./_components/data";

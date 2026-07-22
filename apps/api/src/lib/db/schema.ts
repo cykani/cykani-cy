@@ -4,11 +4,12 @@ import { relations } from "drizzle-orm";
 function gid() { return nanoid(); }
 
 export const organizations = pgTable("organizations", {
-  id: text("id").primaryKey().$defaultFn(gid), name: text("name").notNull(), plan: text("plan").notNull().default("free"),
+  id: text("id").primaryKey().$defaultFn(gid), name: text("name").notNull(), slug: text("slug").notNull().unique(),
+  plan: text("plan").notNull().default("free"),
   ownerId: text("owner_id").notNull(), stripeCustomerId: text("stripe_customer_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
-}, (t) => [index("idx_org_owner").on(t.ownerId)]);
+}, (t) => [index("idx_org_owner").on(t.ownerId), uniqueIndex("idx_org_slug").on(t.slug)]);
 
 export const memberships = pgTable("memberships", {
   id: text("id").primaryKey().$defaultFn(gid), orgId: text("org_id").notNull().references(() => organizations.id),

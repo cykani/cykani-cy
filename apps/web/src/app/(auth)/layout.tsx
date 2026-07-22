@@ -1,29 +1,22 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
-import Link from "next/link";
 
-import { APP_CONFIG } from "@/config/app-config";
+import Image from "next/image";
 
 export default function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <main className="dark flex min-h-dvh flex-col bg-[#08090B] text-[#EDEDED] font-mono">
-      <div className="flex flex-1 items-center justify-center px-6 py-12">
-        <div className="flex w-full max-w-[420px] flex-col">
-          <Link href="/" className="mb-12 flex items-center gap-3">
-            <Image src="/logo_black.png" alt={APP_CONFIG.name} width={36} height={36} className="h-9 w-auto invert" />
-            <span className="text-xl font-bold tracking-tight">{APP_CONFIG.name}</span>
-          </Link>
-          {children}
+    <main>
+      <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">
+        <div className="relative order-2 hidden h-full overflow-hidden rounded-3xl bg-black lg:flex">
+          <Image
+            src="/auth-illustration.png"
+            alt=""
+            fill
+            className="object-cover opacity-90"
+            priority
+          />
+          <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10" />
         </div>
-      </div>
-      <div className="border-t border-[#1A1D23] px-6 py-4">
-        <div className="mx-auto flex max-w-[420px] items-center justify-between text-xs text-[#5C5F66]">
-          <span>{APP_CONFIG.copyright}</span>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="hover:text-[#EDEDED] transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-[#EDEDED] transition-colors">Terms</Link>
-          </div>
-        </div>
+        <div className="relative order-1 flex h-full">{children}</div>
       </div>
     </main>
   );

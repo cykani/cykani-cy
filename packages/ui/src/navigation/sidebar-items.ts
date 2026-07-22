@@ -2,7 +2,6 @@ import {
   Bot,
   Globe,
   Monitor,
-  Settings,
   Shield,
   Workflow,
 } from "lucide-react";
@@ -90,12 +89,6 @@ export const sidebarItems: NavGroup[] = [
         icon: Workflow,
         badge: "soon",
         disabled: true,
-      },
-      {
-        id: "settings",
-        title: "Settings",
-        url: "/dashboard/settings",
-        icon: Settings,
       },
     ],
   },
