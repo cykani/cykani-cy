@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/unauthorized", "/api/health"];
+const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/login", "/register"];
 
 const SITE_PREFIXES = ["/pricing", "/docs", "/blog"];
 
@@ -43,18 +43,13 @@ export default auth((req) => {
 
   const isLoggedIn = !!req.auth;
 
-  if (pathname.includes("/auth/")) {
-    if (isLoggedIn) {
-      return NextResponse.redirect(new URL(`/${domainSegment}/dashboard/default`, req.url));
-    }
+  if (isLoggedIn) {
     return NextResponse.next();
   }
 
-  if (!isLoggedIn) {
-    const loginUrl = new URL(`/${domainSegment}/auth/login`, req.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
+  const loginUrl = new URL(`/${domainSegment}/login`, req.url);
+  loginUrl.searchParams.set("redirect", pathname);
+  return NextResponse.redirect(loginUrl);
 
   return NextResponse.next();
 });
