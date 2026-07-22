@@ -73,7 +73,7 @@ export function CtaSection() {
             </div>
           ))}
           <div className={styles.ctaRow}>
-            <Link href="/default/dashboard/default" className={styles.ctaPrimary}>
+            <Link href="/app/register" className={styles.ctaPrimary}>
               Start For Free
             </Link>
             <Link href="/docs" className={styles.ctaSecondary}>
