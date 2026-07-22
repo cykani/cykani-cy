@@ -1,6 +1,6 @@
+import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { tasks } from "./_components/data";
 import { Tasks } from "./_components/tasks";
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 
 export default function Page() {
   return (

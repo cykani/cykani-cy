@@ -131,6 +131,47 @@ export const subscriptions = pgTable("subscriptions", {
   uniqueIndex("idx_subscriptions_stripe_id").on(table.stripeSubscriptionId),
 ]);
 
+export const authUsers = pgTable("auth_users", {
+  id: text("id").primaryKey().$defaultFn(generateId),
+  name: text("name"),
+  email: text("email").notNull().unique(),
+  emailVerified: timestamp("email_verified", { withTimezone: true }),
+  image: text("image"),
+  passwordHash: text("password_hash"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const authAccounts = pgTable("auth_accounts", {
+  id: text("id").primaryKey().$defaultFn(generateId),
+  userId: text("user_id").notNull().references(() => authUsers.id, { onDelete: "cascade" }),
+  type: text("type").notNull().default("oauth"),
+  provider: text("provider").notNull(),
+  providerAccountId: text("provider_account_id").notNull(),
+  refresh_token: text("refresh_token"),
+  access_token: text("access_token"),
+  expires_at: integer("expires_at"),
+  token_type: text("token_type"),
+  scope: text("scope"),
+  id_token: text("id_token"),
+  session_state: text("session_state"),
+}, (table) => [
+  uniqueIndex("idx_auth_accounts_provider").on(table.provider, table.providerAccountId),
+]);
+
+export const authSessionsTbl = pgTable("auth_sessions", {
+  sessionToken: text("session_token").primaryKey(),
+  userId: text("user_id").notNull().references(() => authUsers.id, { onDelete: "cascade" }),
+  expires: timestamp("expires_at", { withTimezone: true }).notNull(),
+});
+
+export const authVerificationTokens = pgTable("auth_verification_tokens", {
+  id: text("id").primaryKey().$defaultFn(generateId),
+  identifier: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  expires: timestamp("expires_at", { withTimezone: true }).notNull(),
+});
+
 export type OrganizationRow = typeof organizations.$inferSelect;
 export type ProfileRow = typeof profiles.$inferSelect;
 export type SessionRow = typeof sessions.$inferSelect;

@@ -1,0 +1,29 @@
+.wrapper {
+  position: relative;
+}
+
+.railLeft,
+.railRight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.035);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.railLeft {
+  left: 48px;
+}
+
+.railRight {
+  right: 48px;
+}
+
+@media (max-width: 900px) {
+  .railLeft,
+  .railRight {
+    display: none;
+  }
+}

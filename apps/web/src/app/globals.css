@@ -1,3 +1,7 @@
+@import "@cykani/styles/presets/brutalist";
+@import "@cykani/styles/presets/soft-pop";
+@import "@cykani/styles/presets/tangerine";
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -6,9 +10,6 @@
 @source "../../../../packages/lib/src";
 
 /* Theme preset styles: these override CSS variables based on the selected data-theme-preset */
-@import "@cykani/styles/presets/brutalist";
-@import "@cykani/styles/presets/soft-pop";
-@import "@cykani/styles/presets/tangerine";
 
 @custom-variant dark (&:is(.dark *));
 

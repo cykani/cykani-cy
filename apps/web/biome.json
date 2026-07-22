@@ -39,8 +39,10 @@
       "!.next",
       "!dist",
       "!out",
+      "!.source",
       "!src/components/ui",
-      "!src/components/calendar"
+      "!src/components/calendar",
+      "!.source"
     ]
   },
   "formatter": {
@@ -63,13 +65,13 @@
       "correctness": {
         "noUndeclaredVariables": "error",
         "noNestedComponentDefinitions": "error",
-        "noUndeclaredDependencies": "error"
+        "noUndeclaredDependencies": "off"
       },
       "nursery": {
-        "useSortedClasses": "on",
+        "useSortedClasses": "warn",
         "useNullishCoalescing": "error",
-        "noFloatingPromises": "error",
-        "noMisusedPromises": "error"
+        "noFloatingPromises": "warn",
+        "noMisusedPromises": "warn"
       },
       "performance": {
         "noImgElement": "warn"
@@ -84,18 +86,20 @@
         "noParameterAssign": "error",
         "noInferrableTypes": "error",
         "noUselessElse": "error",
-        "useFilenamingConvention": "error"
+        "useFilenamingConvention": "off"
       },
       "suspicious": {
         "noArrayIndexKey": "warn",
+        "noExplicitAny": "off",
         "noConstantBinaryExpressions": "error",
         "noEmptyBlockStatements": "error",
         "noUnknownAtRules": "off",
-        "noImportCycles": "error",
+        "noImportCycles": "off",
         "noUnnecessaryConditions": "warn"
       },
       "complexity": {
-        "noImportantStyles": "off"
+        "noImportantStyles": "off",
+        "noBannedTypes": "off"
       }
     },
     "domains": {

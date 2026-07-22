@@ -15,7 +15,11 @@ export default function LoginPage() {
           <p className="text-muted-foreground text-sm">Please enter your details to login.</p>
         </div>
         <div className="space-y-4">
-          <LoginForm onSuccess={() => { window.location.href = "/dashboard"; }} />
+          <LoginForm
+            onSuccess={() => {
+              window.location.href = "/dashboard";
+            }}
+          />
         </div>
       </div>
 

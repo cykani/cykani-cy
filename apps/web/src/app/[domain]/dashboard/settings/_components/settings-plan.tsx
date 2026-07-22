@@ -1,12 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
+import { api } from "@cykani/lib/api/client";
 import { Button } from "@cykani/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 import { Label } from "@cykani/ui/label";
 import { RadioGroup, RadioGroupItem } from "@cykani/ui/radio-group";
-import { useEffect, useState } from "react";
-
-import { api } from "@cykani/lib/api/client";
 
 interface PlanData {
   id: string;
@@ -25,10 +25,7 @@ export function SettingsPlan() {
   useEffect(() => {
     async function load() {
       try {
-        const [orgRes, plansRes] = await Promise.all([
-          api.orgs.me(),
-          api.billing.plans(),
-        ]);
+        const [orgRes, plansRes] = await Promise.all([api.orgs.me(), api.billing.plans()]);
         setOrg(orgRes.org);
         setPlans(plansRes.plans);
         setError(null);
@@ -67,7 +64,7 @@ export function SettingsPlan() {
           <CardDescription>Current subscription plan</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">Loading plan...</p>
+          <p className="text-muted-foreground text-sm">Loading plan...</p>
         </CardContent>
       </Card>
     );
@@ -81,7 +78,7 @@ export function SettingsPlan() {
           <CardDescription>Current subscription plan</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-red-500">{error}</p>
+          <p className="text-red-500 text-sm">{error}</p>
         </CardContent>
       </Card>
     );
@@ -99,7 +96,7 @@ export function SettingsPlan() {
         <div className="flex items-center justify-between">
           <div>
             <p className="font-medium">{currentPlan?.name ?? "Free"}</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               {currentPlan?.limits.maxSessions} sessions / {currentPlan?.limits.maxProfiles} profiles
             </p>
           </div>
@@ -110,11 +107,15 @@ export function SettingsPlan() {
           <RadioGroup value={provider} onValueChange={(v: "lemonsqueezy" | "stripe") => setProvider(v)}>
             <div className="flex items-center gap-2">
               <RadioGroupItem value="lemonsqueezy" id="lemonsqueezy" />
-              <Label htmlFor="lemonsqueezy" className="text-xs">LemonSqueezy (subscription)</Label>
+              <Label htmlFor="lemonsqueezy" className="text-xs">
+                LemonSqueezy (subscription)
+              </Label>
             </div>
             <div className="flex items-center gap-2">
               <RadioGroupItem value="stripe" id="stripe" />
-              <Label htmlFor="stripe" className="text-xs">Stripe (subscription)</Label>
+              <Label htmlFor="stripe" className="text-xs">
+                Stripe (subscription)
+              </Label>
             </div>
           </RadioGroup>
         </div>
@@ -135,15 +136,9 @@ export function SettingsPlan() {
           </div>
         )}
 
-        <div className="pt-4 border-t">
-          <p className="text-xs text-muted-foreground mb-2">
-            Prefer to support the project? Donate via Ko-fi:
-          </p>
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-          >
+        <div className="border-t pt-4">
+          <p className="mb-2 text-muted-foreground text-xs">Prefer to support the project? Donate via Ko-fi:</p>
+          <Button variant="outline" size="sm" asChild>
             <a href="https://ko-fi.com/your-username" target="_blank" rel="noopener noreferrer">
               Donate on Ko-fi
             </a>

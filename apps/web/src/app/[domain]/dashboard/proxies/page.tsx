@@ -1,8 +1,8 @@
 import { api } from "@cykani/lib/api/client";
 
+import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { ProxyGrid } from "./_components/proxy-grid";
 import { ProxyStats } from "./_components/proxy-stats";
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 
 export default async function ProxiesPage() {
   let proxies: any[] = [];

@@ -1,10 +1,11 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
-import { Label } from "@cykani/ui/label";
-import { Input } from "@cykani/ui/input";
-import { Button } from "@cykani/ui/button";
 import { useState } from "react";
+
+import { Button } from "@cykani/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Input } from "@cykani/ui/input";
+import { Label } from "@cykani/ui/label";
 
 import { ComingSoonOverlay } from "../../_components/coming-soon-overlay";
 
@@ -21,13 +22,9 @@ export function SettingsEmail() {
         <div className="flex items-center justify-between">
           <div>
             <Label className="font-medium text-xs">Email Service</Label>
-            <p className="text-xs text-muted-foreground">Enable transactional emails (license keys, receipts)</p>
+            <p className="text-muted-foreground text-xs">Enable transactional emails (license keys, receipts)</p>
           </div>
-          <Button
-            variant={enabled ? "default" : "outline"}
-            size="sm"
-            onClick={() => setEnabled(!enabled)}
-          >
+          <Button variant={enabled ? "default" : "outline"} size="sm" onClick={() => setEnabled(!enabled)}>
             {enabled ? "Enabled" : "Disabled"}
           </Button>
         </div>
@@ -45,8 +42,8 @@ export function SettingsEmail() {
 
         <ComingSoonOverlay>
           <div className="space-y-2">
-            <p className="text-xs text-muted-foreground">Email service requires Listmonk to be running.</p>
-            <code className="text-xs bg-muted px-2 py-1 rounded">docker compose -f docker-compose.email.yml up -d</code>
+            <p className="text-muted-foreground text-xs">Email service requires Listmonk to be running.</p>
+            <code className="rounded bg-muted px-2 py-1 text-xs">docker compose -f docker-compose.email.yml up -d</code>
           </div>
         </ComingSoonOverlay>
       </CardContent>

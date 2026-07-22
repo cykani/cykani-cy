@@ -1,11 +1,11 @@
 "use client";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 import { useEffect, useState } from "react";
 
 import { api } from "@cykani/lib/api/client";
+import { Badge } from "@cykani/ui/badge";
+import { Button } from "@cykani/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 
 interface ApiKeyItem {
   id: string;
@@ -38,7 +38,7 @@ export function SettingsApiKeys() {
 
   useEffect(() => {
     load();
-  }, []);
+  }, [load]);
 
   async function handleCreate() {
     if (!newKeyName.trim()) return;
@@ -71,18 +71,13 @@ export function SettingsApiKeys() {
         <CardDescription>Manage your API keys for programmatic access</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
 
         {newKeyRaw && (
-          <div className="p-3 border rounded-lg bg-muted/50">
-            <p className="text-xs font-medium mb-1">New API key (save it now, it won&apos;t be shown again)</p>
-            <code className="text-xs break-all">{newKeyRaw}</code>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mt-2"
-              onClick={() => setNewKeyRaw(null)}
-            >
+          <div className="rounded-lg border bg-muted/50 p-3">
+            <p className="mb-1 font-medium text-xs">New API key (save it now, it won&apos;t be shown again)</p>
+            <code className="break-all text-xs">{newKeyRaw}</code>
+            <Button variant="ghost" size="sm" className="mt-2" onClick={() => setNewKeyRaw(null)}>
               Dismiss
             </Button>
           </div>
@@ -94,7 +89,7 @@ export function SettingsApiKeys() {
             value={newKeyName}
             onChange={(e) => setNewKeyName(e.target.value)}
             placeholder="Key name"
-            className="flex-1 text-xs px-3 py-1.5 border rounded-md bg-background"
+            className="flex-1 rounded-md border bg-background px-3 py-1.5 text-xs"
           />
           <Button size="sm" disabled={creating || !newKeyName.trim()} onClick={handleCreate}>
             {creating ? "Creating..." : "Create Key"}
@@ -102,32 +97,26 @@ export function SettingsApiKeys() {
         </div>
 
         {loading ? (
-          <p className="text-sm text-muted-foreground">Loading API keys...</p>
+          <p className="text-muted-foreground text-sm">Loading API keys...</p>
         ) : (
           <div className="space-y-2">
             {keys.map((key) => (
-              <div key={key.id} className="flex items-center justify-between p-3 border rounded-lg">
+              <div key={key.id} className="flex items-center justify-between rounded-lg border p-3">
                 <div>
                   <p className="font-medium text-sm">{key.name}</p>
-                  <p className="text-xs text-muted-foreground font-mono">
+                  <p className="font-mono text-muted-foreground text-xs">
                     ck_{key.id.slice(0, 8)}...{key.id.slice(-4)}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">Active</Badge>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleRevoke(key.id)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => handleRevoke(key.id)}>
                     Revoke
                   </Button>
                 </div>
               </div>
             ))}
-            {keys.length === 0 && (
-              <p className="text-sm text-muted-foreground text-center py-4">No API keys yet.</p>
-            )}
+            {keys.length === 0 && <p className="py-4 text-center text-muted-foreground text-sm">No API keys yet.</p>}
           </div>
         )}
       </CardContent>

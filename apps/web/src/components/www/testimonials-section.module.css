@@ -1,0 +1,87 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  max-width: 960px;
+  margin: 48px auto 0;
+}
+
+.card {
+  padding: 40px 32px;
+  background: #08090b;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quoteIcon {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 32px;
+  line-height: 1;
+  color: #3f3f46;
+  user-select: none;
+}
+
+.quote {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #a1a1aa;
+  margin: 0;
+  flex: 1;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 600;
+  color: #52525b;
+  flex-shrink: 0;
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ededed;
+}
+
+.role {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 500;
+  color: #52525b;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 32px 24px;
+  }
+}

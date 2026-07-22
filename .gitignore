@@ -2,10 +2,12 @@ node_modules
 dist
 .next
 .turbo
+.source
 *.tsbuildinfo
 .env
 .env.local
 .env.*.local
+.env.vercel
 *.db
 *.db-journal
 

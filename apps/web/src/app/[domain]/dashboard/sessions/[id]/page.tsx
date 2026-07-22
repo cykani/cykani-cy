@@ -9,7 +9,7 @@ export default async function SessionDetailPage({ params }: { params: Promise<{ 
     <div className="@container/main flex flex-col gap-4 md:gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Session {id}</h1>
+          <h1 className="font-bold text-3xl">Session {id}</h1>
           <p className="text-muted-foreground">Browser session details and VNC viewer</p>
         </div>
       </div>

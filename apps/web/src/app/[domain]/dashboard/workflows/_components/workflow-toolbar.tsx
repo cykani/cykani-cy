@@ -5,7 +5,6 @@ import { Button } from "@cykani/ui/button";
 import { Separator } from "@cykani/ui/separator";
 import type { LucideIcon } from "lucide-react";
 import {
-  Bot,
   Brain,
   Camera,
   Clock,
@@ -179,7 +178,7 @@ export function WorkflowToolbar() {
     <div className="flex items-center justify-between gap-4">
       {/* Left: Title */}
       <div className="flex items-center gap-3">
-        <h1 className="text-2xl font-bold tracking-tight">Workflow Builder</h1>
+        <h1 className="font-bold text-2xl tracking-tight">Workflow Builder</h1>
         <Badge variant="outline" className="text-xs">
           Draft
         </Badge>
@@ -193,14 +192,14 @@ export function WorkflowToolbar() {
             <div
               key={`${node.type}-${node.label}`}
               className={cn(
-                "flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 cursor-grab active:cursor-grabbing transition-colors",
+                "flex cursor-grab items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-colors active:cursor-grabbing",
                 node.color,
               )}
               draggable
               onDragStart={(e) => onDragStart(e, node.type, node.label)}
             >
               <Icon className="size-3.5" />
-              <span className="text-xs font-medium whitespace-nowrap">{node.label}</span>
+              <span className="whitespace-nowrap font-medium text-xs">{node.label}</span>
             </div>
           );
         })}
@@ -229,10 +228,10 @@ export function WorkflowToolbar() {
         </div>
 
         <Button variant="outline" size="sm" className="h-8">
-          <Save className="size-3.5 mr-1.5" /> Save
+          <Save className="mr-1.5 size-3.5" /> Save
         </Button>
         <Button size="sm" className="h-8 bg-emerald-600 hover:bg-emerald-700">
-          <Play className="size-3.5 mr-1.5" /> Run
+          <Play className="mr-1.5 size-3.5" /> Run
         </Button>
       </div>
     </div>

@@ -1,6 +1,5 @@
-import { Label } from "@cykani/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@cykani/ui/toggle-group";
+"use client";
+
 import { type FontKey, fontOptions } from "@cykani/lib/fonts/registry";
 import type { ContentLayout, NavbarStyle, SidebarCollapsible, SidebarVariant } from "@cykani/lib/preferences/layout";
 import {
@@ -14,6 +13,10 @@ import { PREFERENCE_DEFAULTS } from "@cykani/lib/preferences/preferences-config"
 import { persistPreference } from "@cykani/lib/preferences/preferences-storage";
 import { THEME_PRESET_OPTIONS, type ThemeMode, type ThemePreset } from "@cykani/lib/preferences/theme";
 import { applyThemePreset } from "@cykani/lib/preferences/theme-utils";
+import { Label } from "@cykani/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
+import { ToggleGroup, ToggleGroupItem } from "@cykani/ui/toggle-group";
+
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 export function SettingsAppearance() {
@@ -110,8 +113,7 @@ export function SettingsAppearance() {
                     <span
                       className="size-2.5 rounded-full"
                       style={{
-                        backgroundColor:
-                          (themeMode ?? "light") === "dark" ? preset.primary.dark : preset.primary.light,
+                        backgroundColor: (themeMode ?? "light") === "dark" ? preset.primary.dark : preset.primary.light,
                       }}
                     />
                     {preset.label}
@@ -244,7 +246,7 @@ export function SettingsAppearance() {
         <button
           type="button"
           onClick={handleRestore}
-          className="inline-flex items-center justify-center rounded-md border px-3 py-1.5 text-xs font-medium shadow-sm transition-colors hover:bg-muted"
+          className="inline-flex items-center justify-center rounded-md border px-3 py-1.5 font-medium text-xs shadow-sm transition-colors hover:bg-muted"
         >
           Restore Defaults
         </button>

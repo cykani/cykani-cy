@@ -1,0 +1,11 @@
+.art {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 14px;
+  line-height: 1.2;
+  color: #52525b;
+  letter-spacing: 0;
+  user-select: none;
+}

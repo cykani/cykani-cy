@@ -1,9 +1,9 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 import { useEffect, useState } from "react";
 
 import { api } from "@cykani/lib/api/client";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
 
 interface UsageData {
   sessions: { active: number; limit: number };
@@ -79,7 +79,10 @@ export function SettingsUsage() {
                     const summary = parsed.summary;
                     return {
                       ...prev,
-                      sessions: { active: summary.sessions?.active ?? prev.sessions.active, limit: prev.sessions.limit },
+                      sessions: {
+                        active: summary.sessions?.active ?? prev.sessions.active,
+                        limit: prev.sessions.limit,
+                      },
                       profiles: { count: summary.profiles?.count ?? prev.profiles.count, limit: prev.profiles.limit },
                       agentSteps: { count: prev.agentSteps.count, limit: prev.agentSteps.limit },
                     };
@@ -94,7 +97,7 @@ export function SettingsUsage() {
           }
         }
       })
-      .catch(() => {});
+      .catch(() => { /* SSE connection error, will retry */ });
 
     return () => {
       aborted = true;
@@ -110,7 +113,7 @@ export function SettingsUsage() {
           <CardDescription>Your current usage and limits</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground">Loading usage data...</p>
+          <p className="text-muted-foreground text-sm">Loading usage data...</p>
         </CardContent>
       </Card>
     );
@@ -124,7 +127,7 @@ export function SettingsUsage() {
           <CardDescription>Your current usage and limits</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-red-500">{error}</p>
+          <p className="text-red-500 text-sm">{error}</p>
         </CardContent>
       </Card>
     );
@@ -153,7 +156,7 @@ export function SettingsUsage() {
                 {item.current} / {item.limit}
               </span>
             </div>
-            <div className="w-full h-2 bg-secondary rounded-full">
+            <div className="h-2 w-full rounded-full bg-secondary">
               <div
                 className="h-full bg-primary transition-all duration-500"
                 style={{ width: `${Math.min((item.current / item.limit) * 100, 100)}%` }}

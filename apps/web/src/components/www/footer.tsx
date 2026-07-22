@@ -1,15 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { APP_CONFIG } from "@/config/app-config";
 
+import styles from "./footer.module.css";
+
 const links = [
   {
     title: "Product",
     items: [
-      { name: "Features", href: "/#features" },
+      { name: "Products", href: "/products" },
+      { name: "Clients", href: "/clients" },
       { name: "Pricing", href: "/pricing" },
-      { name: "Changelog", href: "#" },
     ],
   },
   {
@@ -17,43 +21,40 @@ const links = [
     items: [
       { name: "Documentation", href: "/docs" },
       { name: "API Reference", href: "/docs" },
-      { name: "Status", href: "#" },
+      { name: "Changelog", href: "/changelog" },
     ],
   },
   {
     title: "Company",
     items: [
-      { name: "About", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Contact", href: "#" },
+      { name: "About", href: "/about" },
+      { name: "Blog", href: "/blog" },
+      { name: "Contact", href: "/contact" },
     ],
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/40 bg-background">
-      <div className="mx-auto max-w-6xl px-6 py-12 md:py-16">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2 font-bold text-lg text-foreground">
-              <Image src="/logo_black.png" alt="Cykani" width={24} height={24} className="h-6 w-auto" />
+    <footer className={styles.footer}>
+      <div className={styles.inner}>
+        <div className={styles.grid}>
+          <div className={styles.brandCol}>
+            <Link href="/" scroll={false} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className={styles.logo}>
+              <Image src="/logo_black.png" alt="Cykani" width={32} height={32} className={styles.logoImg} />
               {APP_CONFIG.name}
             </Link>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
+            <p className={styles.description}>
               Stealth browser automation with anti-fingerprint capabilities.
             </p>
           </div>
           {links.map((group) => (
             <div key={group.title}>
-              <h3 className="font-medium text-sm text-foreground">{group.title}</h3>
-              <ul className="mt-3 space-y-2">
+              <h3 className={styles.groupTitle}>{group.title}</h3>
+              <ul className={styles.linkList}>
                 {group.items.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
+                    <Link href={item.href} className={styles.link}>
                       {item.name}
                     </Link>
                   </li>
@@ -62,8 +63,16 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-border/40 pt-8">
-          <p className="text-xs text-muted-foreground">{APP_CONFIG.copyright}</p>
+        <div className={styles.bottom}>
+          <p className={styles.copyright}>{APP_CONFIG.copyright}</p>
+          <div className={styles.legal}>
+            <Link href="/privacy" className={styles.legalLink}>
+              Privacy
+            </Link>
+            <Link href="/terms" className={styles.legalLink}>
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

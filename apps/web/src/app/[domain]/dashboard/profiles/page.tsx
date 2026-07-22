@@ -1,8 +1,8 @@
 import { api } from "@cykani/lib/api/client";
 
+import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { ProfileGrid } from "./_components/profile-grid";
 import { ProfileStats } from "./_components/profile-stats";
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 
 export default async function ProfilesPage() {
   let profiles: any[] = [];

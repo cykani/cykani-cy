@@ -9,34 +9,34 @@ export function SessionStats({ sessions = [] }: { sessions?: any[] }) {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Sessions</CardTitle>
+          <CardTitle className="font-medium text-sm">Total Sessions</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{sessions.length}</div>
+          <div className="font-bold text-2xl">{sessions.length}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Running</CardTitle>
+          <CardTitle className="font-medium text-sm">Running</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-green-500">{running}</div>
+          <div className="font-bold text-2xl text-green-500">{running}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Idle</CardTitle>
+          <CardTitle className="font-medium text-sm">Idle</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-yellow-500">{idle}</div>
+          <div className="font-bold text-2xl text-yellow-500">{idle}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Error</CardTitle>
+          <CardTitle className="font-medium text-sm">Error</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-red-500">{error}</div>
+          <div className="font-bold text-2xl text-red-500">{error}</div>
         </CardContent>
       </Card>
     </div>

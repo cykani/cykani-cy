@@ -1,8 +1,8 @@
 import { api } from "@cykani/lib/api/client";
 
+import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { AgentList } from "./_components/agent-list";
 import { AgentStats } from "./_components/agent-stats";
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 
 export default async function AgentsPage() {
   let agents: any[] = [];

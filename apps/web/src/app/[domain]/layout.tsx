@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
 
-import { redirect } from "next/navigation";
-
 interface DomainLayoutProps {
   children: ReactNode;
   params: Promise<{ domain: string }>;

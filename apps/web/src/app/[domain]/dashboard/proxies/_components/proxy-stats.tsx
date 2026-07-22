@@ -11,34 +11,34 @@ export function ProxyStats({ proxies = [] }: { proxies?: any[] }) {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Proxies</CardTitle>
+          <CardTitle className="font-medium text-sm">Total Proxies</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{proxies.length}</div>
+          <div className="font-bold text-2xl">{proxies.length}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Active</CardTitle>
+          <CardTitle className="font-medium text-sm">Active</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-green-500">{active}</div>
+          <div className="font-bold text-2xl text-green-500">{active}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Avg Response</CardTitle>
+          <CardTitle className="font-medium text-sm">Avg Response</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{Math.round(avgResponse)}ms</div>
+          <div className="font-bold text-2xl">{Math.round(avgResponse)}ms</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Countries</CardTitle>
+          <CardTitle className="font-medium text-sm">Countries</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{countries}</div>
+          <div className="font-bold text-2xl">{countries}</div>
         </CardContent>
       </Card>
     </div>

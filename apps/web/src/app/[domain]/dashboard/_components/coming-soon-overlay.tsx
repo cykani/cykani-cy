@@ -14,9 +14,7 @@ export function ComingSoonOverlay({ children, className }: ComingSoonOverlayProp
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="rounded-lg border bg-background/80 px-6 py-4 text-center backdrop-blur-sm">
           <p className="font-medium text-muted-foreground text-sm">Coming Soon</p>
-          <p className="mt-1 text-muted-foreground/70 text-xs">
-            This page is under development
-          </p>
+          <p className="mt-1 text-muted-foreground/70 text-xs">This page is under development</p>
         </div>
       </div>
     </div>

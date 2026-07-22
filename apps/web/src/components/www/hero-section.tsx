@@ -6,20 +6,7 @@ import Link from "next/link";
 
 import { DitherShader } from "@/components/ui/dither-shader";
 
-function generateBgImage(): string {
-  if (typeof document === "undefined") return "";
-  const c = document.createElement("canvas");
-  c.width = 1200;
-  c.height = 800;
-  const ctx = c.getContext("2d")!;
-  const g = ctx.createRadialGradient(600, 400, 50, 600, 400, 600);
-  g.addColorStop(0, "#13141a");
-  g.addColorStop(0.5, "#0c0d10");
-  g.addColorStop(1, "#08090b");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 1200, 800);
-  return c.toDataURL("image/png");
-}
+const HERO_BG = "/ascii-hero-1.png";
 
 const TERMINAL_LINES = [
   { type: "comment", text: "# Start a new session" },
@@ -46,16 +33,13 @@ const FEATURES = [
   { icon: "◓", label: "CDP Native" },
 ];
 
+const TRUST_LOGOS = ["Acme Corp", "Globex", "Soylent", "Initech", "Stark Industries"];
+
 export function HeroSection() {
-  const [bgSrc, setBgSrc] = useState("");
   const [visibleLines, setVisibleLines] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const [spotPos, setSpotPos] = useState({ x: 50, y: 50 });
-
-  useEffect(() => {
-    setBgSrc(generateBgImage());
-  }, []);
 
   useEffect(() => {
     if (visibleLines >= TERMINAL_LINES.length) return;
@@ -74,22 +58,20 @@ export function HeroSection() {
 
   return (
     <section className={styles.hero}>
-      <div className={styles.ditherBg}>
-        {bgSrc && (
-          <DitherShader
-            src={bgSrc}
-            ditherMode="bayer"
-            colorMode="duotone"
-            primaryColor="#08090b"
-            secondaryColor="#1a1b1f"
-            gridSize={3}
-            animated
-            animationSpeed={0.08}
-            brightness={0}
-            contrast={1.6}
-            className="h-full w-full"
-          />
-        )}
+      <div className={styles.ditherContainer}>
+        <DitherShader
+          src={HERO_BG}
+          ditherMode="bayer"
+          colorMode="duotone"
+          primaryColor="#08090b"
+          secondaryColor="#1a1b1f"
+          gridSize={3}
+          animated
+          animationSpeed={0.08}
+          brightness={0}
+          contrast={1.6}
+          className="h-full w-full"
+        />
       </div>
 
       <div className={styles.bgGrid} />
@@ -134,6 +116,7 @@ export function HeroSection() {
             className={styles.terminal}
             ref={terminalRef}
             onMouseMove={handleTerminalMouse}
+            role="presentation"
             style={
               {
                 "--spot-x": `${spotPos.x}%`,
@@ -184,6 +167,11 @@ export function HeroSection() {
             <span className={styles.badgeLabel}>Session Start</span>
           </div>
         </div>
+      </div>
+
+      <div className={styles.scrollIndicator}>
+        <span className={styles.scrollLabel}>Scroll</span>
+        <div className={styles.scrollChevron} />
       </div>
     </section>
   );

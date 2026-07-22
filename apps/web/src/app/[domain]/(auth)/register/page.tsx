@@ -15,7 +15,11 @@ export default function RegisterPage() {
           <p className="text-muted-foreground text-sm">Please enter your details to register.</p>
         </div>
         <div className="space-y-4">
-          <RegisterForm onSuccess={() => { window.location.href = "/dashboard"; }} />
+          <RegisterForm
+            onSuccess={() => {
+              window.location.href = "/dashboard";
+            }}
+          />
         </div>
       </div>
 

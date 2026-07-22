@@ -23,6 +23,14 @@
       "collections/*": ["./.source/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts", "../../packages/ui/src/types.d.ts", "../../packages/lib/src/types.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts",
+    "../../packages/ui/src/types.d.ts",
+    "../../packages/lib/src/types.d.ts"
+  ],
   "exclude": ["node_modules", "src/instrumentation.ts"]
 }

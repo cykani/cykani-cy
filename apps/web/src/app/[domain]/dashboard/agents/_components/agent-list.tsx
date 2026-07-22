@@ -24,16 +24,16 @@ export function AgentList({ agents = [] }: { agents?: Agent[] }) {
       </CardHeader>
       <CardContent>
         {agents.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-8">No agents yet.</p>
+          <p className="py-8 text-center text-muted-foreground text-sm">No agents yet.</p>
         ) : (
           <div className="space-y-4">
             {agents.map((agent) => (
-              <div key={agent.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={agent.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div className="flex items-center gap-4">
                   <Badge className={statusColors[agent.status] ?? "bg-gray-500/20 text-gray-500"}>{agent.status}</Badge>
                   <div>
                     <p className="font-medium">{agent.task?.goal ?? "Unnamed agent"}</p>
-                    <p className="text-sm text-muted-foreground">{agent.steps?.length ?? 0} steps</p>
+                    <p className="text-muted-foreground text-sm">{agent.steps?.length ?? 0} steps</p>
                   </div>
                 </div>
                 <Button variant="outline" size="sm">

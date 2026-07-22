@@ -22,25 +22,25 @@ export function ProxyGrid({ proxies = [] }: { proxies?: any[] }) {
       </CardHeader>
       <CardContent>
         {proxies.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-8">No proxies yet.</p>
+          <p className="py-8 text-center text-muted-foreground text-sm">No proxies yet.</p>
         ) : (
           <div className="space-y-4">
             {proxies.map((proxy) => (
-              <div key={proxy.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={proxy.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div className="flex items-center gap-4">
                   <Badge className={statusColors[proxy.status] ?? "bg-gray-500/20 text-gray-500"}>{proxy.status}</Badge>
                   <div>
                     <p className="font-medium">{proxy.name}</p>
-                    <p className="text-sm text-muted-foreground font-mono">{proxy.url}</p>
+                    <p className="font-mono text-muted-foreground text-sm">{proxy.url}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <Badge className={protocolColors[proxy.protocol] ?? ""} variant="outline">
                     {proxy.protocol}
                   </Badge>
-                  {proxy.country && <span className="text-xs text-muted-foreground">{proxy.country}</span>}
+                  {proxy.country && <span className="text-muted-foreground text-xs">{proxy.country}</span>}
                   {proxy.responseTimeMs && (
-                    <span className="text-xs text-muted-foreground">{proxy.responseTimeMs}ms</span>
+                    <span className="text-muted-foreground text-xs">{proxy.responseTimeMs}ms</span>
                   )}
                   <Button variant="outline" size="sm">
                     Edit

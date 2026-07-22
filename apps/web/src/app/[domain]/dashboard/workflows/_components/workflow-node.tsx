@@ -1,39 +1,24 @@
 "use client";
 
-import { memo, useState } from "react";
+import { memo } from "react";
 
 import { cn, getInitials } from "@cykani/lib/utils";
 import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
 import { Badge } from "@cykani/ui/badge";
-import { Progress } from "@cykani/ui/progress";
 import { Separator } from "@cykani/ui/separator";
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import type { LucideIcon } from "lucide-react";
 import {
-  ArrowUpRight,
   BadgeCheck,
   Bot,
-  Brain,
   CheckCircle2,
   Clock,
-  Code,
-  Database,
   FileOutput,
-  Flame,
   GitBranch,
   Globe,
-  Hourglass,
   Loader2,
-  Mail,
   Minus,
-  MousePointer,
   Play,
-  Send,
-  Sparkles,
-  Timer,
-  Type,
-  Variable,
-  Webhook,
   XCircle,
   Zap,
 } from "lucide-react";
@@ -153,13 +138,13 @@ export const WorkflowNode = memo(function WorkflowNode({ data, selected }: NodeP
               .map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between gap-3">
                   <span className="text-muted-foreground text-xs capitalize">{key}</span>
-                  <span className="truncate text-muted-foreground text-xs font-mono max-w-[140px]">
+                  <span className="max-w-[140px] truncate font-mono text-muted-foreground text-xs">
                     {String(value)}
                   </span>
                 </div>
               ))}
             {Object.keys(config).length > 3 && (
-              <span className="text-xs text-muted-foreground/60">+{Object.keys(config).length - 3} more</span>
+              <span className="text-muted-foreground/60 text-xs">+{Object.keys(config).length - 3} more</span>
             )}
           </div>
         ) : (
@@ -195,7 +180,7 @@ export const WorkflowNode = memo(function WorkflowNode({ data, selected }: NodeP
           {status === "completed" && (
             <div className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
               <BadgeCheck className="size-3.5" />
-              <span className="text-xs font-medium">Done</span>
+              <span className="font-medium text-xs">Done</span>
             </div>
           )}
         </div>

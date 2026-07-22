@@ -9,34 +9,34 @@ export function ProfileStats({ profiles = [] }: { profiles?: any[] }) {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Profiles</CardTitle>
+          <CardTitle className="font-medium text-sm">Total Profiles</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{profiles.length}</div>
+          <div className="font-bold text-2xl">{profiles.length}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Windows</CardTitle>
+          <CardTitle className="font-medium text-sm">Windows</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{windows}</div>
+          <div className="font-bold text-2xl">{windows}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">macOS</CardTitle>
+          <CardTitle className="font-medium text-sm">macOS</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{macos}</div>
+          <div className="font-bold text-2xl">{macos}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Linux</CardTitle>
+          <CardTitle className="font-medium text-sm">Linux</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{linux}</div>
+          <div className="font-bold text-2xl">{linux}</div>
         </CardContent>
       </Card>
     </div>

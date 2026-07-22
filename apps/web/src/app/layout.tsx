@@ -11,9 +11,35 @@ import { Providers } from "./providers";
 
 import "./globals.css";
 
+const SITE_URL = "https://cykani.com";
+
 export const metadata: Metadata = {
   title: APP_CONFIG.meta.title,
   description: APP_CONFIG.meta.description,
+  metadataBase: new URL(SITE_URL),
+  openGraph: {
+    type: "website",
+    siteName: APP_CONFIG.name,
+    title: APP_CONFIG.meta.title,
+    description: APP_CONFIG.meta.description,
+    url: SITE_URL,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: APP_CONFIG.meta.title,
+    description: APP_CONFIG.meta.description,
+    creator: "@cykani",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/icon0.svg",
+    apple: "/apple-icon.png",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

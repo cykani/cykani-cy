@@ -11,7 +11,6 @@ import {
   type Edge,
   MiniMap,
   type Node,
-  Panel,
   ReactFlow,
   useReactFlow,
 } from "@xyflow/react";

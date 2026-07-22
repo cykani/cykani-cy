@@ -14,34 +14,34 @@ export function AgentStats({ agents = [] }: { agents?: Agent[] }) {
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Agents</CardTitle>
+          <CardTitle className="font-medium text-sm">Total Agents</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{agents.length}</div>
+          <div className="font-bold text-2xl">{agents.length}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Running</CardTitle>
+          <CardTitle className="font-medium text-sm">Running</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-blue-500">{running}</div>
+          <div className="font-bold text-2xl text-blue-500">{running}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Completed</CardTitle>
+          <CardTitle className="font-medium text-sm">Completed</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-green-500">{completed}</div>
+          <div className="font-bold text-2xl text-green-500">{completed}</div>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Failed</CardTitle>
+          <CardTitle className="font-medium text-sm">Failed</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-red-500">{failed}</div>
+          <div className="font-bold text-2xl text-red-500">{failed}</div>
         </CardContent>
       </Card>
     </div>

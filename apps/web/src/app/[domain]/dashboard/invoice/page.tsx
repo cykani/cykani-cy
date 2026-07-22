@@ -1,8 +1,8 @@
 import { Button } from "@cykani/ui/button";
 import { Save, Send } from "lucide-react";
 
-import { Invoice } from "./_components/invoice";
 import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
+import { Invoice } from "./_components/invoice";
 
 export default function Page() {
   return (

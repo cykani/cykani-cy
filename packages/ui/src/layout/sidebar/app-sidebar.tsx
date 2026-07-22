@@ -50,7 +50,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link prefetch={false} href={`/${domain}/dashboard/default`} className="flex items-center gap-2">
-                <Image src="/logo_black.png" alt="Cykani" width={20} height={20} className="h-5 w-auto shrink-0" />
+                <Image src="/logo_black.png" alt="Cykani" width={32} height={32} className="h-8 w-auto shrink-0" />
                 <span className="font-semibold text-base">{APP_CONFIG.name}</span>
               </Link>
             </SidebarMenuButton>

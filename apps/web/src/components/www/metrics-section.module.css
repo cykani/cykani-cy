@@ -1,0 +1,73 @@
+.wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.ditherBg {
+  position: absolute;
+  inset: 0;
+  left: 48px;
+  right: 48px;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 720px;
+  margin: 0 auto;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 900px) {
+  .ditherBg {
+    left: 0;
+    right: 0;
+  }
+}
+
+.metric {
+  padding: 48px 24px;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.value {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 36px;
+  font-weight: 700;
+  color: #ededed;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  color: #52525b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric {
+    padding: 32px 24px;
+  }
+
+  .value {
+    font-size: 28px;
+  }
+}

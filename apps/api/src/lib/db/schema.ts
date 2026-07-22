@@ -99,7 +99,7 @@ export const authUsers = pgTable("auth_users", {
   id: text("id").primaryKey().$defaultFn(gid),
   email: text("email").notNull().unique(),
   emailVerified: timestamp("email_verified", { withTimezone: true }),
-  passwordHash: text("password_hash").notNull(),
+  passwordHash: text("password_hash"),
   name: text("name"),
   image: text("image"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -109,31 +109,26 @@ export const authUsers = pgTable("auth_users", {
 export const authAccounts = pgTable("auth_accounts", {
   id: text("id").primaryKey().$defaultFn(gid),
   userId: text("user_id").notNull().references(() => authUsers.id, { onDelete: "cascade" }),
+  type: text("type").notNull().default("oauth"),
   provider: text("provider").notNull(),
   providerAccountId: text("provider_account_id").notNull(),
-  accessToken: text("access_token"),
-  refreshToken: text("refresh_token"),
-  expiresAt: timestamp("expires_at", { withTimezone: true }),
-  tokenType: text("token_type"),
+  refresh_token: text("refresh_token"),
+  access_token: text("access_token"),
+  expires_at: integer("expires_at"),
+  token_type: text("token_type"),
   scope: text("scope"),
-  idToken: text("id_token"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  id_token: text("id_token"),
+  session_state: text("session_state"),
 }, (t) => [uniqueIndex("idx_auth_account_provider").on(t.provider, t.providerAccountId)]);
 
 export const authSessions = pgTable("auth_sessions", {
-  id: text("id").primaryKey().$defaultFn(gid),
+  sessionToken: text("session_token").primaryKey(),
   userId: text("user_id").notNull().references(() => authUsers.id, { onDelete: "cascade" }),
-  sessionToken: text("session_token").notNull().unique(),
-  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  expires: timestamp("expires_at", { withTimezone: true }).notNull(),
 });
 
 export const authVerificationTokens = pgTable("auth_verification_tokens", {
-  id: text("id").primaryKey().$defaultFn(gid),
-  email: text("email").notNull(),
+  identifier: text("email").notNull(),
   token: text("token").notNull().unique(),
-  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  expires: timestamp("expires_at", { withTimezone: true }).notNull(),
 });

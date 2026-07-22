@@ -20,18 +20,18 @@ export function SessionList({ sessions = [] }: { sessions?: any[] }) {
       </CardHeader>
       <CardContent>
         {sessions.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-8">No sessions yet. Create one to get started.</p>
+          <p className="py-8 text-center text-muted-foreground text-sm">No sessions yet. Create one to get started.</p>
         ) : (
           <div className="space-y-4">
             {sessions.map((session) => (
-              <div key={session.id} className="flex items-center justify-between p-4 border rounded-lg">
+              <div key={session.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div className="flex items-center gap-4">
                   <Badge className={statusColors[session.status] ?? "bg-gray-500/20 text-gray-500"}>
                     {session.status}
                   </Badge>
                   <div>
                     <p className="font-medium">{session.profileId}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {session.startedAt
                         ? `Started ${new Date(session.startedAt).toLocaleTimeString()}`
                         : "Not started"}

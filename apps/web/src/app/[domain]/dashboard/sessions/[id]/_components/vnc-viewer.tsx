@@ -59,7 +59,7 @@ export function VNCViewer({ sessionId }: { sessionId: string }) {
   useEffect(() => {
     connect();
     return () => wsRef.current?.close();
-  }, [sessionId]);
+  }, [connect]);
 
   const statusColors: Record<ConnectionStatus, string> = {
     connecting: "bg-yellow-500/20 text-yellow-500",
@@ -79,24 +79,24 @@ export function VNCViewer({ sessionId }: { sessionId: string }) {
           </Button>
           {status === "disconnected" && (
             <Button variant="outline" size="sm" onClick={connect}>
-              <RefreshCw className="size-4 mr-1" /> Reconnect
+              <RefreshCw className="mr-1 size-4" /> Reconnect
             </Button>
           )}
         </div>
       </CardHeader>
       <CardContent>
         <div className={`relative rounded-lg border bg-black ${isFullscreen ? "h-[800px]" : "h-[600px]"}`}>
-          <canvas ref={canvasRef} className="w-full h-full" width={1280} height={800} />
+          <canvas ref={canvasRef} className="h-full w-full" width={1280} height={800} />
           <div className="absolute bottom-4 left-4 flex items-center gap-3">
-            <span className="text-xs text-muted-foreground">Session: {sessionId}</span>
-            {status === "connected" && <span className="text-xs text-green-400">● Live</span>}
+            <span className="text-muted-foreground text-xs">Session: {sessionId}</span>
+            {status === "connected" && <span className="text-green-400 text-xs">● Live</span>}
           </div>
           {status === "error" && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/80">
               <div className="text-center">
-                <p className="text-red-400 mb-2">Connection failed</p>
+                <p className="mb-2 text-red-400">Connection failed</p>
                 <Button variant="outline" size="sm" onClick={connect}>
-                  <RefreshCw className="size-4 mr-1" /> Retry
+                  <RefreshCw className="mr-1 size-4" /> Retry
                 </Button>
               </div>
             </div>

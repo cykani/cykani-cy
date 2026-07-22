@@ -31,7 +31,7 @@ export function ProfileGrid({ profiles = [] }: { profiles?: any[] }) {
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">Seed: {profile.fingerprintSeed}</span>
+                <span className="text-muted-foreground text-sm">Seed: {profile.fingerprintSeed}</span>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
                     Edit

@@ -10,11 +10,19 @@
 }
 
 /* Background */
-.ditherBg {
+.ditherContainer {
   position: absolute;
   inset: 0;
+  left: 48px;
+  right: 48px;
   z-index: 0;
-  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .ditherContainer {
+    left: 0;
+    right: 0;
+  }
 }
 
 .bgGrid {
@@ -405,7 +413,92 @@
   letter-spacing: 0.03em;
 }
 
+/* Scroll indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeInUp 1s ease 2s forwards;
+}
+
+.scrollLabel {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #52525b;
+  text-transform: uppercase;
+}
+
+.scrollChevron {
+  width: 16px;
+  height: 16px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.15);
+  transform: rotate(45deg);
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* Trust bar */
+.trustBar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.trustLabel {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #52525b;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.trustLogos {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.trustLogo {
+  font-family: var(--font-jetbrains-mono), var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 500;
+  color: #3f3f46;
+  letter-spacing: 0.02em;
+}
+
 /* Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: rotate(45deg) translateY(0);
+  }
+  50% {
+    transform: rotate(45deg) translateY(4px);
+  }
+}
+
 @keyframes blink {
   0%,
   100% {
@@ -490,7 +583,8 @@
 
   .badge1,
   .badge2,
-  .tag {
+  .tag,
+  .scrollIndicator {
     display: none;
   }
 }
@@ -517,7 +611,9 @@
   .badge1,
   .badge2,
   .statusDot,
-  .lampGlow {
+  .lampGlow,
+  .scrollIndicator,
+  .scrollChevron {
     animation: none !important;
     transition: none !important;
   }

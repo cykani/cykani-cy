@@ -1,8 +1,8 @@
 import { api } from "@cykani/lib/api/client";
 
+import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { SessionList } from "./_components/session-list";
 import { SessionStats } from "./_components/session-stats";
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 
 export default async function SessionsPage() {
   let sessions: any[] = [];

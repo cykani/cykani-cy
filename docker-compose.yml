@@ -1,64 +1,77 @@
-# docker-compose.yml — cykani optional services (native host)
-#
-# The app stack (API, web, postgres, redis) runs natively on the host OS.
-# This file contains optional services that can be added on.
-#
-# Usage:
-#   docker compose --profile experimental up -d
-#
-# Services:
-#   valkey    - Redis-compatible cache (port 6378)
-#   listmonk  - Newsletter / transactional email (port 9000)
-#   novnc     - Browser-based VNC client (port 6080)
-
 services:
-  valkey:
-    image: valkey/valkey:8-alpine
-    container_name: cykani-valkey
+  postgres:
+    image: postgres:16-alpine
+    container_name: cykani-pg
     ports:
-      - "6378:6379"
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${PG_PASSWORD:-1234}"
+      POSTGRES_DB: cykani
     volumes:
-      - cykani-valkey-data:/data
-    command: valkey-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+      - cykani-pg-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "valkey-cli", "ping"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
-    profiles:
-      - experimental
 
-  listmonk:
-    image: listmonk/listmonk:latest
-    container_name: cykani-listmonk
+  redis:
+    image: redis:7-alpine
+    container_name: cykani-redis
     ports:
-      - "9000:9000"
-    environment:
-      LISTMONK_DB_HOST: host.docker.internal
-      LISTMONK_DB_PORT: 5432
-      LISTMONK_DB_USER: cykani
-      LISTMONK_DB_PASSWORD: ${LISTMONK_DB_PASSWORD:-cykani-dev}
-      LISTMONK_DB_NAME: cykani
-      LISTMONK_ADMIN_USER: admin
-      LISTMONK_ADMIN_PASSWORD: ${LISTMONK_ADMIN_PASSWORD:-changeme}
+      - "6379:6379"
     volumes:
-      - cykani-listmonk-data:/listmonk/data
-    profiles:
-      - experimental
-    depends_on:
-      - valkey
+      - cykani-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  novnc:
-    image: cuteminded/novnc:latest
-    container_name: cykani-novnc
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: cykani-api
+    restart: unless-stopped
     ports:
-      - "6080:6080"
+      - "${API_PORT:-3000}:3000"
     environment:
-      VNCSERVER: host.docker.internal
-      VNCPORT: 5900
-    profiles:
-      - experimental
+      NODE_ENV: "${NODE_ENV:-production}"
+      PORT: "3000"
+      DATABASE_URL: "${DATABASE_URL}"
+      REDIS_URL: "${REDIS_URL:-redis://redis:6379}"
+      JWT_SECRET: "${JWT_SECRET}"
+      API_KEY_SECRET: "${API_KEY_SECRET}"
+      CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:3001}"
+      DOCKER_SOCKET: "${DOCKER_SOCKET:-/var/run/docker.sock}"
+      BROWSER_IMAGE: "${BROWSER_IMAGE:-cykani-browser:latest}"
+      MAX_SESSIONS_PER_ORG: "${MAX_SESSIONS_PER_ORG:-10}"
+      LOG_LEVEL: "${LOG_LEVEL:-info}"
+      STRIPE_SECRET_KEY: "${STRIPE_SECRET_KEY:-}"
+      STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
+      LEMON_SQUEEZY_API_KEY: "${LEMON_SQUEEZY_API_KEY:-}"
+      LEMON_SQUEEZY_WEBHOOK_SECRET: "${LEMON_SQUEEZY_WEBHOOK_SECRET:-}"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: cykani-web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-3001}:3000"
+    environment:
+      NODE_ENV: "${NODE_ENV:-production}"
+      DATABASE_URL: "${DATABASE_URL}"
+      AUTH_URL: "${AUTH_URL:-http://localhost:3001}"
+      AUTH_SECRET: "${AUTH_SECRET}"
+      AUTH_GOOGLE_ID: "${AUTH_GOOGLE_ID}"
+      AUTH_GOOGLE_SECRET: "${AUTH_GOOGLE_SECRET}"
+      AUTH_GITHUB_ID: "${AUTH_GITHUB_ID}"
+      AUTH_GITHUB_SECRET: "${AUTH_GITHUB_SECRET}"
 
 volumes:
-  cykani-valkey-data:
-  cykani-listmonk-data:
+  cykani-pg-data:
+  cykani-redis-data:
