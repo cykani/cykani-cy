@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 
 import { cookies } from "next/headers";
 
+export const dynamic = "force-dynamic";
+
 import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from "@cykani/lib/preferences/layout";
 import { cn } from "@cykani/lib/utils";
 import { AppSidebar } from "@cykani/ui/layout/sidebar/app-sidebar";

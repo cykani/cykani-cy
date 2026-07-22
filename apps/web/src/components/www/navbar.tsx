@@ -168,13 +168,13 @@ export function SiteNavbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <Link
-            href="/app/login"
+            href="/sign-in"
             className="rounded-lg border border-border/60 bg-background px-4 py-2 font-medium text-foreground text-sm transition-colors hover:bg-accent"
           >
             Sign In
           </Link>
           <Link
-            href="/app/register"
+            href="/sign-up"
             className="rounded-lg bg-foreground px-4 py-2 font-medium text-background text-sm transition-opacity hover:opacity-90"
           >
             Get Started
@@ -230,14 +230,14 @@ export function SiteNavbar() {
               )}
               <div className="flex flex-col gap-2 pt-4">
                 <Link
-                  href="/app/login"
+                  href="/sign-in"
                   onClick={() => setMobileOpen(false)}
                   className="block rounded-lg border border-border/60 px-4 py-2 text-center font-medium text-foreground text-sm transition-colors hover:bg-accent"
                 >
                   Sign In
                 </Link>
                 <Link
-                  href="/app/register"
+                  href="/sign-up"
                   onClick={() => setMobileOpen(false)}
                   className="block rounded-lg bg-foreground px-4 py-2 text-center font-medium text-background text-sm"
                 >

@@ -1,4 +1,4 @@
-import { ComingSoonOverlay } from "@/app/[domain]/dashboard/_components/coming-soon-overlay";
+import { ComingSoonOverlay } from "@/app/dashboard/_components/coming-soon-overlay";
 import { getValueFromCookie } from "@/server/server-actions";
 
 import { mails } from "./_components/data";

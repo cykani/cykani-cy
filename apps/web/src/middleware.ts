@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/login", "/register"];
+const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/sign-in", "/sign-up"];
 
 const SITE_PREFIXES = ["/pricing", "/docs", "/blog"];
 
@@ -30,26 +30,17 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  const segments = pathname.split("/").filter(Boolean);
-  const domainSegment = segments[0];
-
-  if (!domainSegment) {
-    return NextResponse.next();
-  }
-
-  if (process.env.NODE_ENV === "development") {
+  if (!pathname || pathname === "/") {
     return NextResponse.next();
   }
 
   const isLoggedIn = !!req.auth;
 
-  if (isLoggedIn) {
-    return NextResponse.next();
+  if (!isLoggedIn) {
+    const loginUrl = new URL("/sign-in", req.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
   }
-
-  const loginUrl = new URL(`/${domainSegment}/login`, req.url);
-  loginUrl.searchParams.set("redirect", pathname);
-  return NextResponse.redirect(loginUrl);
 
   return NextResponse.next();
 });
