@@ -1,176 +1,211 @@
-# Cykani
+<br />
+<p align="center">
+<a href="https://cykani.dev">
+  <img src="apps/web/public/logo_black.png" alt="Cykani Logo" width="100">
+</a>
+</p>
 
-**Browser automation platform.** Launch undetectable, fingerprinted browser sessions in Docker containers — controlled via REST API, automated by AI agents, and streamed over VNC.
+<h3 align="center"><b>Cykani</b></h3>
+<p align="center">
+    <b>The stealth browser platform for AI agents & automation.</b> <br />
+    Undetectable by design. Built for scale.
+</p>
 
-> Built with [Hono](https://hono.dev), [Next.js](https://nextjs.org), [Drizzle ORM](https://orm.drizzle.team), [Redis](https://redis.io), [Docker](https://docker.com), and [Turborepo](https://turbo.build).
+<div align="center">
 
----
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://typescriptlang.org)
+[![Discord](https://img.shields.io/discord/cykani?label=discord)](https://discord.gg/cykani)
+[![GitHub stars](https://img.shields.io/github/stars/cykani/cykani-stealth)](https://github.com/cykani/cykani-stealth)
 
-## Architecture
+</div>
 
-```
-┌─────────────────────────────────────────────────────┐
-│                    Cykani SDK                        │
-│                                                      │
-│  ┌──────────┐  ┌──────────────┐  ┌────────────────┐ │
-│  │  Hono    │  │  Next.js 16  │  │  Trigger.dev   │ │
-│  │  API     │  │  Studio UI   │  │  Background    │ │
-│  │  :3000   │  │  :3001       │  │  Jobs          │ │
-│  └────┬─────┘  └──────────────┘  └───────┬────────┘ │
-│       │                                   │          │
-│  ┌────▼───────────────────────────────────▼────────┐ │
-│  │           Container (DI) + Routes               │ │
-│  │  /v1/sessions · /v1/profiles · /v1/agents       │ │
-│  │  /v1/proxies · /v1/orgs · /v1/billing           │ │
-│  │  /v1/analytics · /v1/realtime (SSE)             │ │
-│  └─────────────────────┬───────────────────────────┘ │
-│                        │                              │
-│  ┌─────────────────────▼───────────────────────────┐ │
-│  │  Docker Engine  │  Redis  │  PostgreSQL 16      │ │
-│  │  (cykani-browser│  (cache,│  (Drizzle ORM)      │ │
-│  │   containers)   │  pubsub,│                     │ │
-│  │                 │  queue) │                     │ │
-│  └─────────────────┴─────────┴─────────────────────┘ │
-│                                                      │
-│  ┌─────────────────────────────────────────────────┐ │
-│  │  cykani-stealth                                │ │
-│  │  └─ connectOverCDP() → stealth session          │ │
-│  │  └─ Humor module (human-like behavior)          │ │
-│  │  └─ Constellation injection (stealth patches)   │ │
-│  │  └─ Fingerprint by seed + proxy geoip           │ │
-│  └─────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────┘
-```
+<h4 align="center">
+    <a href="https://cykani.dev/pricing" target="_blank">Buy Now</a>  ·
+    <a href="https://cykani.dev/docs" target="_blank">Documentation</a>  ·
+    <a href="https://cykani.dev" target="_blank">Website</a> ·
+    <a href="https://github.com/cykani/cykani-stealth" target="_blank">SDK</a>
+</h4>
 
-### Services
+## Highlights
 
-| Component | Description |
-|-----------|-------------|
-| **API** | Hono HTTP server. REST API for sessions, profiles, agents, proxies, orgs, billing, analytics. Real-time SSE streaming. OpenAPI docs at `/docs`. |
-| **Web** | Next.js 16 admin dashboard (studio-admin). shadcn/ui + Radix UI + Tailwind CSS v4. |
-| **Trigger** | Trigger.dev background tasks — session launch (Docker), session cleanup, agent step execution via CDP. |
-| **Database** | PostgreSQL 16 with Drizzle ORM. Schema: organizations, profiles, sessions, agents, proxies, subscriptions, api_keys, usage_records. |
-| **Redis** | Caching (session cache), pub/sub (domain events), rate limiting (sliding window), BullMQ job queues. |
-| **Docker** | Launches `cykani-browser` containers with fingerprint flags. Each session = isolated browser instance with VNC + CDP ports. |
-| **Stealth** | `cykani-stealth` wraps each browser with undetectable fingerprints, human-like behavior emulation, and anti-detection patches. |
+[Cykani](https://cykani.dev) is a stealth browser automation platform that makes your automation invisible. Instead of fighting bot detection, Cykani patches Chromium at the C++ level — websites can't tell it from a real browser.
 
-### Domain Model
+Under the hood, it manages sessions, fingerprints, proxies, and browser processes:
 
-```
-Organization
-  ├── Profiles (fingerprint config: seed, platform, viewport, locale, proxy)
-  ├── Sessions (browser instances: Docker container + VNC + CDP)
-  │     └── Agents (AI step execution over CDP)
-  ├── Proxies (HTTP/HTTPS/SOCKS5 per profile)
-  ├── Subscriptions (plan, Stripe billing)
-  ├── Usage Records (session minutes, agent steps)
-  └── API Keys (scoped access)
-```
+- **26 C++ Stealth Patches** — Canvas, WebGL, audio, fonts, GPU, timezone all patched before compilation
+- **Passes Every Detection Test** — Cloudflare Turnstile, reCAPTCHA v3, FingerprintJS, Akamai, BrowserScan
+- **Human-Like Behavior** — Bezier mouse curves, cognitive hesitation, idle micro-movements, coffee breaks
+- **Session Persistence** — Cookies, localStorage, IndexedDB preserved across sessions
+- **Proxy Network** — Residential & datacenter proxies across 190+ countries with auto-rotation
+- **AI Agents** — Autonomous browser automation with heuristic decision-making
+- **CDP Compatible** — Works with Playwright, Puppeteer, or any CDP client
+- **Enterprise Dashboard** — Manage teams, billing, API keys, and analytics
 
-### Session Lifecycle
+> Cykani is in active development. Your feedback helps us improve. Join the conversation on [Discord](https://discord.gg/cykani) or open a [GitHub issue](https://github.com/cykani/cykani-cy/issues).
 
-```
-idle → launching → running → stopping → stopped
-                                └──→ error
-```
+### Make sure to give us a star ⭐
 
-- **launching**: DockerEngine pulls image, starts container, assigns ports
-- **running**: Browser accessible via CDP (`ws://host:cdpPort`) + VNC (`ws://host:vncPort`)
-- **stopping**: StealthService disconnects, container destroyed, ports freed
+[![Star on GitHub](https://img.shields.io/badge/Star-GitHub-yellow?style=for-the-badge&logo=github&logoColor=white)](https://github.com/cykani/cykani-stealth)
 
----
+## Quick Deploy
 
-## Getting Started
+| Deployment | Link |
+|------------|------|
+| Vercel (Marketing + Dashboard) | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/cykani/cykani-cy) |
+| Docker (Full Stack) | [![Deploy with Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/cykani/cykani-cy#docker) |
+| cykani-stealth SDK | [![npm](https://img.shields.io/badge/npm-cykani--stealth-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/cykani-stealth) |
 
-### Prerequisites
+## Running Locally
 
-- Node.js ≥20
-- pnpm 9.15+
-- Docker + Docker Compose
-- PostgreSQL 16
-- Redis 7
+### Docker
 
-### Install
+The simplest way to run Cykani locally:
 
 ```bash
-# Clone
-git clone <repo> cykani && cd cykani
+# Clone the repo
+git clone https://github.com/cykani/cykani-cy.git
+cd cykani-cy
+
+# Start infrastructure (PostgreSQL + Redis)
+docker compose up -d postgres redis
 
 # Install dependencies
 pnpm install
 
-# Start databases (PostgreSQL + Redis)
-docker compose -f deploy/docker-compose.databases.yml up -d
-
-# Set up environment
-cp apps/api/.env.example apps/api/.env
-# Edit .env with your values
-
 # Push database schema
-pnpm db:push
+cd apps/api && pnpm db:push && cd ../..
 
-# Start development
+# Start dev servers
 pnpm dev
 ```
 
 This starts:
+- **Marketing Site** → `http://localhost:3001`
 - **API** → `http://localhost:3000`
-- **Web** → `http://localhost:3001`
-- **Docs** → `http://localhost:3000/docs`
-- **DB** → `localhost:5432`
-- **Redis** → `localhost:6379`
+- **API Docs** → `http://localhost:3000/docs`
 
-### Environment
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `NODE_ENV` | `development` | Environment |
-| `PORT` | `3000` | API HTTP port |
-| `DATABASE_URL` | — | PostgreSQL connection string |
-| `REDIS_URL` | `redis://localhost:6379` | Redis connection string |
-| `JWT_SECRET` | — | JWT signing key (min 32 chars) |
-| `DOCKER_SOCKET` | `/var/run/docker.sock` | Docker socket path |
-| `BROWSER_IMAGE` | `cykani-browser:latest` | Browser container image |
-| `MAX_SESSIONS_PER_ORG` | `10` | Concurrent session limit |
-
----
-
-## Packages
-
-| Package | Description |
-|---------|-------------|
-| `@cykani/api` | Hono API server — routes, services, DI container |
-| `studio-admin` | Next.js 16 admin dashboard |
-| `@cykani/db` | Drizzle ORM schema + PostgreSQL client |
-| `@cykani/redis` | Redis client, pub/sub, rate limiter, BullMQ queues |
-| `@cykani/types` | Shared TypeScript types |
-| `@cykani/vnc` | NoVNC WebSocket proxy |
-| `@cykani/config` | Shared tsconfig |
-| `@cykani/trigger` | Trigger.dev background tasks |
-
----
-
-## API Overview
-
-All routes under `/v1/`. Authenticated via JWT (`Authorization: Bearer <token>`) or API key (`X-API-Key: ck_...`).
-
-| Endpoint | Methods | Description |
-|----------|---------|-------------|
-| `/v1/sessions` | GET, POST | List / create browser sessions |
-| `/v1/profiles` | GET, POST | List / create fingerprint profiles |
-| `/v1/agents` | GET, POST | List / create automation agents |
-| `/v1/proxies` | GET, POST | List / create proxy configurations |
-| `/v1/orgs` | GET, POST | Organization management |
-| `/v1/billing` | GET, POST | Subscription plans + Stripe checkout |
-| `/v1/analytics` | GET | Usage analytics |
-| `/v1/realtime` | GET | SSE event stream |
-| `/health` | GET | Health check |
-| `/docs` | GET | Swagger UI |
-
-### Creating a Session
+### Quick Start with SDK
 
 ```bash
-# Create a profile first
+# Install the stealth SDK
+npm install cykani-stealth
+```
+
+```javascript
+import { strike } from 'cykani-stealth';
+
+// Launch a stealth session
+const session = await strike({ humor: true, fingerprint: 42 });
+
+// Browse like a human
+await session.goto('https://example.com');
+await session.autoPilot().signIn({ 
+  email: 'user@site.com', 
+  password: 'secret' 
+});
+
+await session.close();
+```
+
+## Usage
+
+There are three ways to use Cykani:
+
+1. **[SDK](#sdk-usage)** — Direct integration with Playwright/Puppeteer
+2. **[REST API](#rest-api)** — HTTP endpoints for session management
+3. **[Dashboard](#dashboard)** — Web UI for team management
+
+### SDK Usage
+
+The `cykani-stealth` SDK is a drop-in Playwright replacement with stealth patches.
+
+<details open>
+<summary><b>Basic Session</b></summary>
+
+```javascript
+import { strike, highTrust, aggressive } from 'cykani-stealth';
+
+// Default stealth mode
+const session = await strike();
+await session.goto('https://example.com');
+
+// High trust mode (slower, more human-like)
+const safe = await highTrust();
+await safe.goto('https://sensitive-site.com');
+
+// Aggressive mode (fast, minimal delay)
+const fast = await aggressive();
+await fast.goto('https://target.com');
+```
+</details>
+
+<details>
+<summary><b>AutoPilot (No Selectors)</b></summary>
+
+```javascript
+const session = await strike({ humor: true });
+const ap = session.autoPilot();
+
+await ap.signIn({ email: 'user@site.com', password: 'pass' });
+await ap.search('cykani stealth');
+await ap.paginate('next');
+await ap.findAndFill('email', 'user@site.com');
+await ap.findAndClick('submit');
+```
+</details>
+
+<details>
+<summary><b>Autonomous Browsing</b></summary>
+
+```javascript
+const session = await strike();
+const auto = session.autonomous();
+
+// Browse naturally for 30 seconds
+await auto.act(30000);
+
+// Analyze page and get recommendations
+const analysis = await auto.analyze();
+console.log(analysis.pageType); // "login", "captcha", "article", etc.
+```
+</details>
+
+<details>
+<summary><b>CDP Connection</b></summary>
+
+```javascript
+import { connectOverCDP } from 'cykani-stealth';
+
+const session = await connectOverCDP('http://127.0.0.1:9222', { humor: true });
+await session.goto('https://example.com');
+await session.close();
+```
+</details>
+
+### REST API
+
+All routes under `/v1/`. Authenticated via JWT or API key.
+
+<details open>
+<summary><b>Create a Session</b></summary>
+
+```bash
+curl -X POST http://localhost:3000/v1/sessions \
+  -H "Authorization: Bearer <jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "profileId": "<profile-id>",
+    "proxy": "http://user:pass@host:port"
+  }'
+```
+</details>
+
+<details>
+<summary><b>Create a Profile</b></summary>
+
+```bash
 curl -X POST http://localhost:3000/v1/profiles \
   -H "Authorization: Bearer <jwt>" \
   -H "Content-Type: application/json" \
@@ -181,79 +216,97 @@ curl -X POST http://localhost:3000/v1/profiles \
     "locale": "en-US",
     "timezone": "America/New_York"
   }'
-
-# Launch a session
-curl -X POST http://localhost:3000/v1/sessions \
-  -H "Authorization: Bearer <jwt>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "profileId": "<profile-id>"
-  }'
-
-# Response includes containerId, cdpPort, vncPort, vncPassword
 ```
+</details>
 
----
-
-## Development
-
-### Prerequisites
-
-- Node.js ≥20
-- pnpm 9.15+
-- PostgreSQL 16
-- Redis 7
-
-### Install
+<details>
+<summary><b>List Plans</b></summary>
 
 ```bash
-# Clone
-git clone <repo> cykani && cd cykani
+curl http://localhost:3000/v1/billing/plans
+```
+</details>
 
-# Install dependencies
-pnpm install
+### Dashboard
 
-# Set up environment
-cp apps/api/.env.example apps/api/.env
-# Edit .env with your values
+The Next.js dashboard provides:
 
-# Push database schema
-pnpm db:push
+- **Organization Management** — Create workspaces, invite team members
+- **Billing** — Upgrade plans, manage subscriptions via Lemon Squeezy
+- **API Keys** — Generate and manage programmatic access keys
+- **Settings** — Appearance, email, usage tracking
+
+Access at `http://localhost:3001` after starting dev servers.
+
+## Architecture
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                      CYKANI PLATFORM                         │
+│                                                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │  Marketing   │  │  Dashboard   │  │  REST API        │  │
+│  │  Next.js 16  │  │  Next.js 16  │  │  Hono            │  │
+│  │  Landing +   │  │  Auth, Orgs, │  │  Sessions,       │  │
+│  │  Docs        │  │  Billing     │  │  Profiles,       │  │
+│  │              │  │              │  │  Agents, Proxies │  │
+│  └──────────────┘  └──────────────┘  └──────────────────┘  │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │                    Infrastructure                      │   │
+│  │  PostgreSQL 16  │  Redis 7  │  Docker Engine         │   │
+│  │  (Neon/Supabase) │ (Upstash) │ (cykani-browser)      │   │
+│  └──────────────────────────────────────────────────────┘   │
+│                                                              │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │                 cykani-stealth SDK                    │   │
+│  │  26 C++ stealth patches · Fingerprint isolation       │   │
+│  │  Human-like behavior · GeoIP auto-detection           │   │
+│  │  Playwright/Puppeteer/CDP compatible                  │   │
+│  └──────────────────────────────────────────────────────┘   │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### Windows Dev Workflow
+## Pricing
 
-```powershell
-# Start both API + Web in separate windows
-.\dev.ps1
+| Plan | Price | Sessions | Features |
+|------|-------|----------|----------|
+| **Free** | $0 | 3 | Fingerprint signals, community support |
+| **Pro** | $19/mo | 25 | GeoIP rotation, HAR export, priority support |
+| **Enterprise** | $79/mo | Unlimited | Custom configs, SSO/SAML, SLA, on-prem |
 
-# Or start individually in separate terminals:
-pnpm --filter @cykani/api dev   # API on http://localhost:3000
-pnpm --filter ./apps/web dev    # Web on http://localhost:3001
-```
+[**Buy Now →**](https://cykani.dev/pricing) · Card, PayPal, Alipay, crypto (USDT, USDC, BTC, ETH)
 
-This starts:
-- **API** → `http://localhost:3000`
-- **Web** → `http://localhost:3001`
-- **Docs** → `http://localhost:3000/docs`
-- **DB** → `localhost:5432`
-- **Redis** → `localhost:6379`
+## Tech Stack
 
-### Environment
+| Layer | Technology |
+|-------|-----------|
+| **Frontend** | Next.js 16, React 19, Tailwind CSS v4, shadcn/ui |
+| **Backend** | Hono, TypeScript, Drizzle ORM |
+| **Database** | PostgreSQL 16 (Neon for production) |
+| **Cache** | Redis 7 (Upstash for production) |
+| **Auth** | NextAuth v5 (Google, GitHub, Email) |
+| **Payments** | Lemon Squeezy (120+ payment methods) |
+| **Build** | Turborepo, pnpm workspaces |
+| **Deploy** | Vercel (frontend), Docker (backend) |
+| **Stealth** | cykani-stealth (26 C++ patches) |
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `NODE_ENV` | `development` | Environment |
-| `PORT` | `3000` | API HTTP port |
-| `DATABASE_URL` | — | PostgreSQL connection string |
-| `REDIS_URL` | `redis://localhost:6379` | Redis connection string |
-| `JWT_SECRET` | — | JWT signing key (min 32 chars) |
-| `DOCKER_SOCKET` | `/var/run/docker.sock` | Docker socket path |
-| `BROWSER_IMAGE` | `cykani-browser:latest` | Browser container image |
-| `MAX_SESSIONS_PER_ORG` | `10` | Concurrent session limit |
+## Contributing
 
----
+We welcome contributions! Here's how to get started:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing`)
+5. Open a Pull Request
+
+Join our [Discord](https://discord.gg/cykani) for discussion.
 
 ## License
 
-Private · All rights reserved.
+[MIT License](LICENSE) — Free for commercial use.
+
+---
+
+Made with precision by the [Cykani](https://cykani.dev) team.
