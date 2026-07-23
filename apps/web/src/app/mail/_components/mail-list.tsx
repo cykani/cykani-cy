@@ -1,6 +1,6 @@
-import { cn } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { ScrollArea } from "@cykani/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { ScrollArea } from "@/ui/scroll-area";
 import { differenceInDays } from "date-fns/differenceInDays";
 import { format } from "date-fns/format";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";

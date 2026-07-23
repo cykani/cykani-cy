@@ -6,8 +6,8 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
-import { db } from "@cykani/db/client";
-import { authAccounts, authSessionsTbl, authUsers, authVerificationTokens } from "@cykani/db/schema";
+import { db } from "@/db/client";
+import { authAccounts, authSessionsTbl, authUsers, authVerificationTokens } from "@/db/schema";
 
 declare module "next-auth" {
   interface Session {

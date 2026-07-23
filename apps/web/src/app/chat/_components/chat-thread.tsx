@@ -1,9 +1,9 @@
 "use client";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarBadge, AvatarFallback } from "@cykani/ui/avatar";
-import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@cykani/ui/bubble";
-import { Button } from "@cykani/ui/button";
+import { cn, getInitials } from "@/lib/utils";
+import { Avatar, AvatarBadge, AvatarFallback } from "@/ui/avatar";
+import { Bubble, BubbleContent, BubbleGroup, BubbleReactions } from "@/ui/bubble";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +11,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "@cykani/ui/input-group";
-import { Marker, MarkerContent } from "@cykani/ui/marker";
-import { Message, MessageAvatar, MessageContent, MessageFooter } from "@cykani/ui/message";
+} from "@/ui/dropdown-menu";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupTextarea } from "@/ui/input-group";
+import { Marker, MarkerContent } from "@/ui/marker";
+import { Message, MessageAvatar, MessageContent, MessageFooter } from "@/ui/message";
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -22,10 +22,10 @@ import {
   MessageScrollerItem,
   MessageScrollerProvider,
   MessageScrollerViewport,
-} from "@cykani/ui/message-scroller";
-import { Separator } from "@cykani/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cykani/ui/tabs";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@cykani/ui/tooltip";
+} from "@/ui/message-scroller";
+import { Separator } from "@/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 import {
   AlarmClock,
   ArrowLeft,

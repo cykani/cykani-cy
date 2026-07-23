@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@cykani/lib/utils";
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Checkbox } from "@cykani/ui/checkbox";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Checkbox } from "@/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
+} from "@/ui/dropdown-menu";
 import type { Column, ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, ArrowUpDown, MoreHorizontal, RotateCcw } from "lucide-react";
 

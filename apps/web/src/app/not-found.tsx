@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-import { Button } from "@cykani/ui/button";
+import { Button } from "@/ui/button";
 
 export default function NotFound() {
   return (

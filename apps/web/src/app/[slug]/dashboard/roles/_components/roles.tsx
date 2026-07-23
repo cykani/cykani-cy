@@ -3,11 +3,11 @@
 
 import { useState } from "react";
 
-import { Alert, AlertAction, AlertDescription, AlertTitle } from "@cykani/ui/alert";
-import { Button } from "@cykani/ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { Alert, AlertAction, AlertDescription, AlertTitle } from "@/ui/alert";
+import { Button } from "@/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/ui/tabs";
 import {
   type ColumnFiltersState,
   getCoreRowModel,

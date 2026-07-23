@@ -4,10 +4,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { Pencil } from "lucide-react";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Checkbox } from "@cykani/ui/checkbox";
-import { cn } from "@cykani/lib/utils";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Checkbox } from "@/ui/checkbox";
+import { cn } from "@/lib/utils";
 
 import type { ProfileRow } from "./schema";
 

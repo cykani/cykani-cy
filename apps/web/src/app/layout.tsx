@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { fontVars } from "@cykani/lib/fonts/registry";
-import { PREFERENCE_DEFAULTS } from "@cykani/lib/preferences/preferences-config";
+import { fontVars } from "@/lib/fonts/registry";
+import { PREFERENCE_DEFAULTS } from "@/lib/preferences/preferences-config";
 import type { Metadata } from "next";
 
 import { APP_CONFIG } from "@/config/app-config";

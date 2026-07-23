@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { SidebarProvider } from "@cykani/ui/sidebar";
+import { SidebarProvider } from "@/ui/sidebar";
 
 import { ChatHeader } from "./_components/chat-header";
 import { ChatSidebar } from "./_components/chat-sidebar";

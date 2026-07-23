@@ -2,15 +2,15 @@
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 
-import { type FontKey, fontRegistry } from "@cykani/lib/fonts/registry";
+import { type FontKey, fontRegistry } from "@/lib/fonts/registry";
 import {
   CONTENT_LAYOUT_VALUES,
   NAVBAR_STYLE_VALUES,
   SIDEBAR_COLLAPSIBLE_VALUES,
   SIDEBAR_VARIANT_VALUES,
-} from "@cykani/lib/preferences/layout";
-import { THEME_MODE_VALUES, THEME_PRESET_VALUES } from "@cykani/lib/preferences/theme";
-import { applyThemeMode, subscribeToSystemTheme } from "@cykani/lib/preferences/theme-utils";
+} from "@/lib/preferences/layout";
+import { THEME_MODE_VALUES, THEME_PRESET_VALUES } from "@/lib/preferences/theme";
+import { applyThemeMode, subscribeToSystemTheme } from "@/lib/preferences/theme-utils";
 import { usePathname } from "next/navigation";
 import { type StoreApi, useStore } from "zustand";
 

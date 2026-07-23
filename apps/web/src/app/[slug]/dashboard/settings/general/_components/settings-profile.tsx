@@ -1,9 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
-import { Input } from "@cykani/ui/input";
-import { Label } from "@cykani/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/ui/card";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
 
 export function SettingsProfile() {
   const { data: session } = useSession();

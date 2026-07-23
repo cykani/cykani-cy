@@ -1,5 +1,5 @@
-import { Button } from "@cykani/ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
+import { Button } from "@/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
 import { Bell, MessageSquarePlus, Search, Settings } from "lucide-react";
 
 export function ChatHeader() {

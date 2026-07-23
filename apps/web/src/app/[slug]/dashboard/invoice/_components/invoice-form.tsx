@@ -1,5 +1,5 @@
-import { Separator } from "@cykani/ui/separator";
-import { Tabs, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { Separator } from "@/ui/separator";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 
 import { ClientSelector } from "./client-selector";
 import { InvoiceAdjustments } from "./invoice-adjustments";

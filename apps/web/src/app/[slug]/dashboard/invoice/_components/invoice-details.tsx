@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Button } from "@cykani/ui/button";
-import { Calendar } from "@cykani/ui/calendar";
-import { Field, FieldGroup, FieldLabel } from "@cykani/ui/field";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Popover, PopoverContent, PopoverTrigger } from "@cykani/ui/popover";
+import { Button } from "@/ui/button";
+import { Calendar } from "@/ui/calendar";
+import { Field, FieldGroup, FieldLabel } from "@/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover";
 import { format, parseISO } from "date-fns";
 import { CalendarIcon, Hash } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";

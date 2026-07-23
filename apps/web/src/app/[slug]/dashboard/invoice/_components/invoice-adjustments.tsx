@@ -1,6 +1,6 @@
-import { Field, FieldLabel } from "@cykani/ui/field";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
+import { Field, FieldLabel } from "@/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import { type InvoiceFormValues, invoiceTaxOptions } from "./data";

@@ -15,16 +15,16 @@ import {
 } from "@tanstack/react-table";
 import { ChevronDownIcon, ListFilter } from "lucide-react";
 
-import { Button } from "@cykani/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Button } from "@/ui/button";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { Input } from "@cykani/ui/input";
+} from "@/ui/dropdown-menu";
+import { Input } from "@/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -33,8 +33,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@cykani/ui/pagination";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@cykani/ui/table";
+} from "@/ui/pagination";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
 
 import { profilesColumns } from "./opportunities-table/columns";
 import profilesData from "./opportunities-table/data.json";

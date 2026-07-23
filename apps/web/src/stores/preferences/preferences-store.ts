@@ -1,7 +1,7 @@
-import type { FontKey } from "@cykani/lib/fonts/registry";
-import type { ContentLayout, NavbarStyle, SidebarCollapsible, SidebarVariant } from "@cykani/lib/preferences/layout";
-import { PREFERENCE_DEFAULTS } from "@cykani/lib/preferences/preferences-config";
-import type { ResolvedThemeMode, ThemeMode, ThemePreset } from "@cykani/lib/preferences/theme";
+import type { FontKey } from "@/lib/fonts/registry";
+import type { ContentLayout, NavbarStyle, SidebarCollapsible, SidebarVariant } from "@/lib/preferences/layout";
+import { PREFERENCE_DEFAULTS } from "@/lib/preferences/preferences-config";
+import type { ResolvedThemeMode, ThemeMode, ThemePreset } from "@/lib/preferences/theme";
 import { createStore } from "zustand/vanilla";
 
 export type PreferencesState = {

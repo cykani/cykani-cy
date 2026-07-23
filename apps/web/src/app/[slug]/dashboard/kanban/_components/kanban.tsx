@@ -2,11 +2,11 @@
 
 import * as React from "react";
 
-import { Button } from "@cykani/ui/button";
-import { ButtonGroup, ButtonGroupSeparator } from "@cykani/ui/button-group";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@cykani/ui/dropdown-menu";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Tabs, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { Button } from "@/ui/button";
+import { ButtonGroup, ButtonGroupSeparator } from "@/ui/button-group";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 import {
   closestCorners,
   DndContext,

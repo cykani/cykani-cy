@@ -1,6 +1,6 @@
-import { cn, formatCurrency } from "@cykani/lib/utils";
-import { Button } from "@cykani/ui/button";
-import { Input } from "@cykani/ui/input";
+import { cn, formatCurrency } from "@/lib/utils";
+import { Button } from "@/ui/button";
+import { Input } from "@/ui/input";
 import {
   closestCenter,
   DndContext,

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button } from "@cykani/ui/button";
-import { Checkbox } from "@cykani/ui/checkbox";
-import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@cykani/ui/field";
-import { Input } from "@cykani/ui/input";
+import { Button } from "@/ui/button";
+import { Checkbox } from "@/ui/checkbox";
+import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@/ui/field";
+import { Input } from "@/ui/input";
 import { standardSchemaResolver as zodResolver } from "@hookform/resolvers/standard-schema";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";

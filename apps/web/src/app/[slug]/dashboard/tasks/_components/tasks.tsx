@@ -3,7 +3,7 @@
 
 import * as React from "react";
 
-import { cn } from "@cykani/lib/utils";
+import { cn } from "@/lib/utils";
 import {
   Pagination,
   PaginationContent,
@@ -12,9 +12,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@cykani/ui/pagination";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@cykani/ui/table";
+} from "@/ui/pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
 import {
   type ColumnFiltersState,
   flexRender,

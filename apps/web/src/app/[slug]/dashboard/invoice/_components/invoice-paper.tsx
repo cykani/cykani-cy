@@ -1,4 +1,4 @@
-import { formatCurrency } from "@cykani/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 
 import {
   getInvoiceDiscount,

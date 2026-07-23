@@ -1,11 +1,11 @@
 "use client";
 
-import { getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Separator } from "@cykani/ui/separator";
-import { Tabs, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { getInitials } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Separator } from "@/ui/separator";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 import {
   Building2,
   Calendar,

@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 
 export function ProxyStats({ proxies = [] }: { proxies?: any[] }) {
   const active = proxies.filter((p) => p.status === "active").length;

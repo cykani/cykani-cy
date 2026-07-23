@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@cykani/ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Separator } from "@cykani/ui/separator";
-import { SidebarTrigger } from "@cykani/ui/sidebar";
+import { Button } from "@/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Separator } from "@/ui/separator";
+import { SidebarTrigger } from "@/ui/sidebar";
 import { Ellipsis, RotateCcw, Search, SlidersHorizontal } from "lucide-react";
 
 import type { Mail } from "./data";

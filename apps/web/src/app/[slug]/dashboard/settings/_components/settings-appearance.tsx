@@ -1,21 +1,21 @@
 "use client";
 
-import { type FontKey, fontOptions } from "@cykani/lib/fonts/registry";
-import type { ContentLayout, NavbarStyle, SidebarCollapsible, SidebarVariant } from "@cykani/lib/preferences/layout";
+import { type FontKey, fontOptions } from "@/lib/fonts/registry";
+import type { ContentLayout, NavbarStyle, SidebarCollapsible, SidebarVariant } from "@/lib/preferences/layout";
 import {
   applyContentLayout,
   applyFont,
   applyNavbarStyle,
   applySidebarCollapsible,
   applySidebarVariant,
-} from "@cykani/lib/preferences/layout-utils";
-import { PREFERENCE_DEFAULTS } from "@cykani/lib/preferences/preferences-config";
-import { persistPreference } from "@cykani/lib/preferences/preferences-storage";
-import { THEME_PRESET_OPTIONS, type ThemeMode, type ThemePreset } from "@cykani/lib/preferences/theme";
-import { applyThemePreset } from "@cykani/lib/preferences/theme-utils";
-import { Label } from "@cykani/ui/label";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@cykani/ui/toggle-group";
+} from "@/lib/preferences/layout-utils";
+import { PREFERENCE_DEFAULTS } from "@/lib/preferences/preferences-config";
+import { persistPreference } from "@/lib/preferences/preferences-storage";
+import { THEME_PRESET_OPTIONS, type ThemeMode, type ThemePreset } from "@/lib/preferences/theme";
+import { applyThemePreset } from "@/lib/preferences/theme-utils";
+import { Label } from "@/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
 
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 

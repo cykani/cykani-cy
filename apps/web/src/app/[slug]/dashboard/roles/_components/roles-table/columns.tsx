@@ -1,8 +1,8 @@
 "use client";
 "use no memo";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
+} from "@/ui/dropdown-menu";
 import type { ColumnDef } from "@tanstack/react-table";
 import { MoreVertical } from "lucide-react";
 

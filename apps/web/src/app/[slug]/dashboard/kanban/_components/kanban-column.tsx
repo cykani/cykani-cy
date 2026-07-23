@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@cykani/lib/utils";
-import { Button } from "@cykani/ui/button";
+import { cn } from "@/lib/utils";
+import { Button } from "@/ui/button";
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { GripVertical, MoreVertical, Plus } from "lucide-react";
 

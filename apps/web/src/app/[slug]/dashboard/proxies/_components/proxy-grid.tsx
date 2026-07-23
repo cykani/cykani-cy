@@ -1,6 +1,6 @@
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 
 const statusColors: Record<string, string> = {
   active: "bg-green-500/20 text-green-500",

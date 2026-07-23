@@ -2,10 +2,10 @@
 
 import * as React from "react";
 
-import { Button } from "@cykani/ui/button";
-import { ButtonGroup } from "@cykani/ui/button-group";
-import { EventCalendarViews } from "@cykani/ui/components/event-calendar-views";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
+import { Button } from "@/ui/button";
+import { ButtonGroup } from "@/ui/button-group";
+import { EventCalendarViews } from "@/ui/components/event-calendar-views";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
 import { useCalendarController } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/react/daygrid";
 import interactionPlugin from "@fullcalendar/react/interaction";

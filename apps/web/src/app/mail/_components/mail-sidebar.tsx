@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Button } from "@cykani/ui/button";
+import { cn, getInitials } from "@/lib/utils";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,8 +14,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { Separator } from "@cykani/ui/separator";
+} from "@/ui/dropdown-menu";
+import { Separator } from "@/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -28,8 +28,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@cykani/ui/sidebar";
-import { ToggleGroup, ToggleGroupItem } from "@cykani/ui/toggle-group";
+} from "@/ui/sidebar";
+import { ToggleGroup, ToggleGroupItem } from "@/ui/toggle-group";
 import { Check, EllipsisVertical, LogOut, PenLine, Settings2, UserPlus, UsersRound } from "lucide-react";
 
 import { accounts, type MailNavItem, mailNavigation } from "./data";

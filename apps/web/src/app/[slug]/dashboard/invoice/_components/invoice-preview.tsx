@@ -2,8 +2,8 @@
 
 import * as React from "react";
 
-import { Button } from "@cykani/ui/button";
-import { ButtonGroup } from "@cykani/ui/button-group";
+import { Button } from "@/ui/button";
+import { ButtonGroup } from "@/ui/button-group";
 import { Download, Printer } from "lucide-react";
 
 import { INVOICE_PAPER_HEIGHT, INVOICE_PAPER_SCALE, INVOICE_PAPER_WIDTH, type InvoiceFormValues } from "./data";

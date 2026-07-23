@@ -4,11 +4,11 @@ import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from "@cykani/lib/preferences/layout";
-import { cn } from "@cykani/lib/utils";
-import { AppSidebar } from "@cykani/ui/layout/sidebar/app-sidebar";
-import { Separator } from "@cykani/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@cykani/ui/sidebar";
+import { SIDEBAR_COLLAPSIBLE_VALUES, SIDEBAR_VARIANT_VALUES } from "@/lib/preferences/layout";
+import { cn } from "@/lib/utils";
+import { AppSidebar } from "@/ui/layout/sidebar/app-sidebar";
+import { Separator } from "@/ui/separator";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/ui/sidebar";
 
 import { getPreference } from "@/server/server-actions";
 

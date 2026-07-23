@@ -1,8 +1,8 @@
 "use client";
 
-import { getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { SimpleIcon } from "@cykani/ui/components/simple-icon";
+import { getInitials } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { SimpleIcon } from "@/ui/components/simple-icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +11,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { Separator } from "@cykani/ui/separator";
+} from "@/ui/dropdown-menu";
+import { Separator } from "@/ui/separator";
 import {
   Sidebar,
   SidebarContent,
@@ -24,7 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@cykani/ui/sidebar";
+} from "@/ui/sidebar";
 import { EllipsisVertical, LogOut, Settings, UserRound } from "lucide-react";
 import { siFacebook, siInstagram, siWhatsapp } from "simple-icons";
 

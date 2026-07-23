@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { ScrollArea } from "@cykani/ui/scroll-area";
-import { Separator } from "@cykani/ui/separator";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { ScrollArea } from "@/ui/scroll-area";
+import { Separator } from "@/ui/separator";
 import { CheckCircle2, History, Pause, Play, PlayIcon, Plus, XCircle } from "lucide-react";
 
 import { sampleWorkflows } from "./data";

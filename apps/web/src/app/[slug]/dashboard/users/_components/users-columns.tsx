@@ -1,18 +1,18 @@
 "use client";
 "use no memo";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount } from "@cykani/ui/avatar";
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Checkbox } from "@cykani/ui/checkbox";
+import { cn, getInitials } from "@/lib/utils";
+import { Avatar, AvatarBadge, AvatarFallback, AvatarGroup, AvatarGroupCount } from "@/ui/avatar";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Checkbox } from "@/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
+} from "@/ui/dropdown-menu";
 import type { ColumnDef } from "@tanstack/react-table";
 import { parse } from "date-fns";
 import { Check, Clock, MoreHorizontal, X } from "lucide-react";

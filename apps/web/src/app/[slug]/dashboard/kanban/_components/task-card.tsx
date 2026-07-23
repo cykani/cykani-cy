@@ -1,10 +1,10 @@
 "use client";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { Badge } from "@cykani/ui/badge";
-import { Progress } from "@cykani/ui/progress";
-import { Separator } from "@cykani/ui/separator";
+import { cn, getInitials } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { Badge } from "@/ui/badge";
+import { Progress } from "@/ui/progress";
+import { Separator } from "@/ui/separator";
 import {
   ArrowUpRight,
   BadgeCheck,

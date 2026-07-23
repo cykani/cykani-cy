@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@cykani/ui/button";
-import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@cykani/ui/field";
-import { Input } from "@cykani/ui/input";
+import { Button } from "@/ui/button";
+import { Field, FieldContent, FieldError, FieldGroup, FieldLabel } from "@/ui/field";
+import { Input } from "@/ui/input";
 import { toast } from "sonner";
 
-import { validateSlug, slugify } from "@cykani/lib/validators/slug";
+import { validateSlug, slugify } from "@/lib/validators/slug";
 
 export function CreateWorkspaceForm() {
   const router = useRouter();

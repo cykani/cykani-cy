@@ -3,12 +3,12 @@
 
 import * as React from "react";
 
-import { Button } from "@cykani/ui/button";
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@cykani/ui/input-group";
-import { Kbd } from "@cykani/ui/kbd";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { Tabs, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { Button } from "@/ui/button";
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/ui/card";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/ui/input-group";
+import { Kbd } from "@/ui/kbd";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 import {
   type ColumnFiltersState,
   getCoreRowModel,

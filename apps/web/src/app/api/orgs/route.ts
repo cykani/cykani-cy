@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 
-import { db } from "@cykani/db/client";
-import { organizations, memberships } from "@cykani/db/schema";
-import { validateSlug, slugify } from "@cykani/lib/validators/slug";
+import { db } from "@/db/client";
+import { organizations, memberships } from "@/db/schema";
+import { validateSlug, slugify } from "@/lib/validators/slug";
 import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {

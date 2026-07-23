@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 
 export function SessionInfo({ sessionId }: { sessionId: string }) {
   return (

@@ -1,4 +1,4 @@
-import { api } from "@cykani/lib/api/client";
+import { api } from "@/lib/api/client";
 
 import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
 import { ProfileGrid } from "./_components/profile-grid";

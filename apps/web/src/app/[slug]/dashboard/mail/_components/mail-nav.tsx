@@ -2,7 +2,7 @@
 
 import { Check, EllipsisVertical, PenLine } from "lucide-react";
 
-import { Button } from "@cykani/ui/button";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +13,10 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { ScrollArea } from "@cykani/ui/scroll-area";
-import { Separator } from "@cykani/ui/separator";
-import { cn, getInitials } from "@cykani/lib/utils";
+} from "@/ui/dropdown-menu";
+import { ScrollArea } from "@/ui/scroll-area";
+import { Separator } from "@/ui/separator";
+import { cn, getInitials } from "@/lib/utils";
 
 import type { MailNavItem } from "./data";
 import { mailNavigation } from "./data";

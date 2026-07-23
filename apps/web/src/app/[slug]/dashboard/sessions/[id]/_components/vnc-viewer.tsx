@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Maximize2, Minimize2, RefreshCw } from "lucide-react";
 
 type ConnectionStatus = "connecting" | "connected" | "disconnected" | "error";

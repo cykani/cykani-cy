@@ -1,8 +1,8 @@
-import { getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { Button } from "@cykani/ui/button";
-import { Field, FieldLabel } from "@cykani/ui/field";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
+import { getInitials } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { Button } from "@/ui/button";
+import { Field, FieldLabel } from "@/ui/field";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
 import { Plus } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 

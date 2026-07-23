@@ -1,0 +1,19 @@
+declare module "next/font/google" {
+  export const Inter: any;
+  export const Geist: any;
+  export const Geist_Mono: any;
+  export const DM_Sans: any;
+  export const Figtree: any;
+  export const JetBrains_Mono: any;
+  export const Lora: any;
+  export const Merriweather: any;
+  export const Noto_Sans: any;
+  export const Noto_Serif: any;
+  export const Nunito_Sans: any;
+  export const Outfit: any;
+  export const Playfair_Display: any;
+  export const Public_Sans: any;
+  export const Raleway: any;
+  export const Roboto: any;
+  export const Roboto_Slab: any;
+}

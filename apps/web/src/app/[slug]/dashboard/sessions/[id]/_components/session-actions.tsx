@@ -1,5 +1,5 @@
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
+import { Button } from "@/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 
 export function SessionActions({ sessionId }: { sessionId: string }) {
   return (

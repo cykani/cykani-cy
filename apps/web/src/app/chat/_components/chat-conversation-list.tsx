@@ -1,13 +1,13 @@
 "use client";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarBadge, AvatarFallback } from "@cykani/ui/avatar";
-import { Button } from "@cykani/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@cykani/ui/collapsible";
-import { ScrollArea } from "@cykani/ui/scroll-area";
-import { Separator } from "@cykani/ui/separator";
-import { useSidebar } from "@cykani/ui/sidebar";
-import { Tabs, TabsList, TabsTrigger } from "@cykani/ui/tabs";
+import { cn, getInitials } from "@/lib/utils";
+import { Avatar, AvatarBadge, AvatarFallback } from "@/ui/avatar";
+import { Button } from "@/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/ui/collapsible";
+import { ScrollArea } from "@/ui/scroll-area";
+import { Separator } from "@/ui/separator";
+import { useSidebar } from "@/ui/sidebar";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
 import { ChevronDown, Filter, PanelRightClose, PanelRightOpen, Pin } from "lucide-react";
 
 import type { Conversation } from "./data";

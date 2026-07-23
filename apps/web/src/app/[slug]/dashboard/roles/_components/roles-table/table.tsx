@@ -3,8 +3,8 @@
 
 import { useMemo } from "react";
 
-import { cn } from "@cykani/lib/utils";
-import { Badge } from "@cykani/ui/badge";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/ui/badge";
 import {
   Pagination,
   PaginationContent,
@@ -12,9 +12,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@cykani/ui/pagination";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@cykani/ui/table";
+} from "@/ui/pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
 import { flexRender, type Table as TableType } from "@tanstack/react-table";
 
 import type { Role } from "./data";

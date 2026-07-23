@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@cykani/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface ComingSoonOverlayProps {
   children: React.ReactNode;

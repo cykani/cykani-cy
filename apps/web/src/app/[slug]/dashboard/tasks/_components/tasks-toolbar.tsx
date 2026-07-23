@@ -1,8 +1,8 @@
 "use client";
 "use no memo";
 
-import { cn } from "@cykani/lib/utils";
-import { Button } from "@cykani/ui/button";
+import { cn } from "@/lib/utils";
+import { Button } from "@/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -11,8 +11,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { Input } from "@cykani/ui/input";
+} from "@/ui/dropdown-menu";
+import { Input } from "@/ui/input";
 import type { Table } from "@tanstack/react-table";
 import { Settings2, X } from "lucide-react";
 

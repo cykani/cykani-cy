@@ -2,9 +2,9 @@
 
 import * as React from "react";
 
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@cykani/ui/drawer";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@cykani/ui/resizable";
-import { useSidebar } from "@cykani/ui/sidebar";
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/ui/drawer";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/ui/resizable";
+import { useSidebar } from "@/ui/sidebar";
 
 import type { Mail } from "./data";
 import { mails } from "./data";

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
-import { Input } from "@cykani/ui/input";
-import { Label } from "@cykani/ui/label";
+import { Button } from "@/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/ui/card";
+import { Input } from "@/ui/input";
+import { Label } from "@/ui/label";
 
 import { ComingSoonOverlay } from "../../_components/coming-soon-overlay";
 

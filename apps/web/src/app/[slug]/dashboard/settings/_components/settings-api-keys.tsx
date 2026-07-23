@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import { api } from "@cykani/lib/api/client";
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
+import { api } from "@/lib/api/client";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/ui/card";
 
 interface ApiKeyItem {
   id: string;

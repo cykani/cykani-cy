@@ -1,4 +1,4 @@
-import { Button } from "@cykani/ui/button";
+import { Button } from "@/ui/button";
 import { Save, Send } from "lucide-react";
 
 import { ComingSoonOverlay } from "../_components/coming-soon-overlay";

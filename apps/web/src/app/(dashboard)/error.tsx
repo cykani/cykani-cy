@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { Button } from "@cykani/ui/button";
+import { Button } from "@/ui/button";
 
 export default function DashboardError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {

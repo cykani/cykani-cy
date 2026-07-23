@@ -2,10 +2,10 @@
 
 import { memo } from "react";
 
-import { cn, getInitials } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { Badge } from "@cykani/ui/badge";
-import { Separator } from "@cykani/ui/separator";
+import { cn, getInitials } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { Badge } from "@/ui/badge";
+import { Separator } from "@/ui/separator";
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import type { LucideIcon } from "lucide-react";
 import {

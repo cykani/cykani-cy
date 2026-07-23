@@ -1,8 +1,8 @@
 "use client";
 
-import { Badge } from "@cykani/ui/badge";
-import { Button } from "@cykani/ui/button";
-import { Separator } from "@cykani/ui/separator";
+import { Badge } from "@/ui/badge";
+import { Button } from "@/ui/button";
+import { Separator } from "@/ui/separator";
 import type { LucideIcon } from "lucide-react";
 import {
   Brain,

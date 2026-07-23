@@ -2,10 +2,10 @@
 
 import * as React from "react";
 
-import { setClientCookie } from "@cykani/lib/cookie.client";
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@cykani/ui/drawer";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@cykani/ui/resizable";
-import { useSidebar } from "@cykani/ui/sidebar";
+import { setClientCookie } from "@/lib/cookie.client";
+import { Drawer, DrawerContent, DrawerDescription, DrawerTitle } from "@/ui/drawer";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/ui/resizable";
+import { useSidebar } from "@/ui/sidebar";
 
 import type { Mail } from "./data";
 import { MailInbox } from "./mail-inbox";

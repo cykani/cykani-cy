@@ -1,10 +1,10 @@
 "use client";
 
-import { cn } from "@cykani/lib/utils";
-import { Avatar, AvatarFallback } from "@cykani/ui/avatar";
-import { Button } from "@cykani/ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@cykani/ui/collapsible";
-import { SimpleIcon } from "@cykani/ui/components/simple-icon";
+import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/ui/avatar";
+import { Button } from "@/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/ui/collapsible";
+import { SimpleIcon } from "@/ui/components/simple-icon";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +12,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@cykani/ui/dropdown-menu";
-import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@cykani/ui/input-group";
-import { Separator } from "@cykani/ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@cykani/ui/tooltip";
+} from "@/ui/dropdown-menu";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/ui/input-group";
+import { Separator } from "@/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/ui/tooltip";
 import { format } from "date-fns/format";
 import {
   Archive,

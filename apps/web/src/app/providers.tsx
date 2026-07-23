@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 
 import { SessionProvider } from "next-auth/react";
 
-import type { FontKey } from "@cykani/lib/fonts/registry";
-import type { ContentLayout, NavbarStyle } from "@cykani/lib/preferences/layout";
-import type { ThemeMode, ThemePreset } from "@cykani/lib/preferences/theme";
-import { Toaster } from "@cykani/ui/sonner";
-import { TooltipProvider } from "@cykani/ui/tooltip";
+import type { FontKey } from "@/lib/fonts/registry";
+import type { ContentLayout, NavbarStyle } from "@/lib/preferences/layout";
+import type { ThemeMode, ThemePreset } from "@/lib/preferences/theme";
+import { Toaster } from "@/ui/sonner";
+import { TooltipProvider } from "@/ui/tooltip";
 
 import { PreferencesStoreProvider } from "@/stores/preferences/preferences-provider";
 

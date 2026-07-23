@@ -1,7 +1,7 @@
 import { ArrowUpRight, TrendingDown, TrendingUp } from "lucide-react";
 
-import { Badge } from "@cykani/ui/badge";
-import { Card, CardAction, CardContent, CardDescription, CardHeader } from "@cykani/ui/card";
+import { Badge } from "@/ui/badge";
+import { Card, CardAction, CardContent, CardDescription, CardHeader } from "@/ui/card";
 
 export function KpiCards() {
   return (

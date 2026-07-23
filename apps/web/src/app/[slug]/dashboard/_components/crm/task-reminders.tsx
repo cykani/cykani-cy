@@ -1,8 +1,8 @@
 import { CalendarDays, CalendarRange } from "lucide-react";
 
-import { Button } from "@cykani/ui/button";
-import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@cykani/ui/card";
-import { cn } from "@cykani/lib/utils";
+import { Button } from "@/ui/button";
+import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/ui/card";
+import { cn } from "@/lib/utils";
 
 const profilesDeployed = 12;
 const profilesTarget = 18;

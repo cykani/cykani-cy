@@ -6,7 +6,7 @@ import {
   PREFERENCE_DEFAULTS,
   type PreferenceKey,
   type PreferenceValueMap,
-} from "@cykani/lib/preferences/preferences-config";
+} from "@/lib/preferences/preferences-config";
 
 /**
  * Read a preference value from cookies on the server.

@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@cykani/lib/utils";
+import { cn } from "@/lib/utils";
 import { useSortable } from "@dnd-kit/sortable";
 
 import { TaskCard } from "./task-card";

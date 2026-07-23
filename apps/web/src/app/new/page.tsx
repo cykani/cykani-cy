@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
 
-import { db } from "@cykani/db/client";
-import { organizations, memberships } from "@cykani/db/schema";
+import { db } from "@/db/client";
+import { organizations, memberships } from "@/db/schema";
 
 import { auth } from "@/lib/auth";
 

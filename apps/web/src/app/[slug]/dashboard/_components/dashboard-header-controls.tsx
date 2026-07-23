@@ -2,8 +2,8 @@
 
 import { useSession, signOut } from "next-auth/react";
 
-import { AccountSwitcher } from "@cykani/ui/layout/sidebar/account-switcher";
-import { ThemeSwitcher } from "@cykani/ui/layout/sidebar/theme-switcher";
+import { AccountSwitcher } from "@/ui/layout/sidebar/account-switcher";
+import { ThemeSwitcher } from "@/ui/layout/sidebar/theme-switcher";
 
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 

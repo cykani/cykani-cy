@@ -2,10 +2,10 @@
 
 import { type CSSProperties, useState } from "react";
 
-import { useIsLg } from "@cykani/hooks/use-lg";
-import { useIsMobile } from "@cykani/hooks/use-mobile";
-import { cn } from "@cykani/lib/utils";
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@cykani/ui/sheet";
+import { useIsLg } from "@/hooks/use-lg";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
+import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/ui/sheet";
 
 import { ChatConversationList } from "./chat-conversation-list";
 import { ChatProfileDetails } from "./chat-profile-details";

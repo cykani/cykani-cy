@@ -11,10 +11,10 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@cykani/ui/pagination";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@cykani/ui/select";
-import { Separator } from "@cykani/ui/separator";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@cykani/ui/table";
+} from "@/ui/pagination";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Separator } from "@/ui/separator";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/ui/table";
 import { flexRender, type Table as TableType } from "@tanstack/react-table";
 
 import type { UserRow } from "./data";
