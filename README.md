@@ -13,7 +13,7 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://typescriptlang.org)
 [![Discord](https://img.shields.io/discord/cykani?label=discord)](https://discord.gg/cykani)
@@ -305,7 +305,7 @@ Join our [Discord](https://discord.gg/cykani) for discussion.
 
 ## License
 
-[MIT License](LICENSE) — Free for commercial use.
+[Apache 2.0 License](LICENSE) — Free for commercial use.
 
 ---
 
