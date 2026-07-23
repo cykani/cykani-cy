@@ -9,7 +9,6 @@ import { proxyRouter } from "../lib/proxy";
 import { analyticsRouter } from "../lib/analytics";
 import { realtimeRouter } from "../lib/realtime";
 import { apiKeyRouter } from "../lib/api-keys";
-import { stripeWebhookRouter } from "../lib/stripe/webhook";
 import { lemonSqueezyWebhookRouter } from "../lib/lemonsqueezy/webhook";
 import { authRouter } from "../lib/auth/routes";
 import { authMiddleware } from "../lib/auth/middleware";
@@ -20,7 +19,6 @@ export function createRouter(c: Container): Hono<ApiEnv> {
   const r = new Hono<ApiEnv>();
 
   r.route("/v1/auth", authRouter(c));
-  r.route("/v1/stripe", stripeWebhookRouter(c));
   r.route("/v1/lemonsqueezy", lemonSqueezyWebhookRouter(c));
 
   r.use("/v1/*", authMiddleware(c.env.JWT_SECRET, c.env.API_KEY_SECRET));

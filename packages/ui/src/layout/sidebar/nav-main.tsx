@@ -162,9 +162,12 @@ export function NavMain({ items, slug }: NavMainProps) {
                 size="icon"
                 className="h-9 w-9 shrink-0 group-data-[collapsible=icon]:opacity-0"
                 variant="outline"
+                asChild
               >
-                <MailIcon />
-                <span className="sr-only">Inbox</span>
+                <Link href="./mail" prefetch={false}>
+                  <MailIcon />
+                  <span className="sr-only">Inbox</span>
+                </Link>
               </Button>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -224,26 +227,28 @@ function NavLinkItem({ item, isActive, showIconFallback, prefixedUrl }: NavLinkI
   const disabled = item.disabled;
 
   if (disabled) {
-    return (
-      <SidebarMenuItem>
-        <SidebarMenuButton tooltip={item.title} isActive={isActive} disabled>
-          <NavLinkIcon item={item} showFallback={showIconFallback} />
-          <span>{item.title}</span>
-        </SidebarMenuButton>
-        <NavItemBadge badge={item.badge} />
-      </SidebarMenuItem>
-    );
-  }
-
   return (
     <SidebarMenuItem>
-      <SidebarMenuButton tooltip={item.title} isActive={isActive}>
+      <SidebarMenuButton tooltip={item.title} isActive={isActive} disabled>
         <NavLinkIcon item={item} showFallback={showIconFallback} />
         <span>{item.title}</span>
       </SidebarMenuButton>
       <NavItemBadge badge={item.badge} />
     </SidebarMenuItem>
   );
+}
+
+return (
+  <SidebarMenuItem>
+    <SidebarMenuButton tooltip={item.title} isActive={isActive} asChild>
+      <Link prefetch={false} href={prefixedUrl}>
+        <NavLinkIcon item={item} showFallback={showIconFallback} />
+        <span>{item.title}</span>
+      </Link>
+    </SidebarMenuButton>
+    <NavItemBadge badge={item.badge} />
+  </SidebarMenuItem>
+);
 }
 
 function NavLinkIcon({ item, showFallback }: NavLinkIconProps) {

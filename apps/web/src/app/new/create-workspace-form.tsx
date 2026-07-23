@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@cykani/ui/button";
@@ -12,11 +12,16 @@ import { validateSlug, slugify } from "@cykani/lib/validators/slug";
 
 export function CreateWorkspaceForm() {
   const router = useRouter();
+  const [host, setHost] = useState("");
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [slugError, setSlugError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setHost(window.location.host);
+  }, []);
 
   const handleNameChange = (value: string) => {
     setName(value);
@@ -84,7 +89,7 @@ export function CreateWorkspaceForm() {
         <Field className="gap-1.5">
           <FieldLabel htmlFor="workspace-slug">Workspace URL</FieldLabel>
           <div className="flex items-center gap-1 rounded-md border bg-muted/30 px-3 text-muted-foreground text-sm">
-            <span>{window.location.host}/</span>
+            <span>{host}/</span>
             <Input
               id="workspace-slug"
               value={slug}

@@ -3,7 +3,26 @@ import type { ApiEnv } from "../../shared/hono";
 import type { Container } from "../../container";
 import { eq } from "drizzle-orm";
 import { subscriptions, organizations } from "../db/schema";
-import { Subscription } from "../billing/entity";
+import { createHmac, timingSafeEqual } from "crypto";
+import { randomBytes } from "crypto";
+
+function verifyLemonSqueezySignature(payload: string, signature: string, secret: string): any {
+  try {
+    const expected = createHmac("sha256", secret).update(payload).digest("hex");
+    const sigBuf = Buffer.from(signature, "hex");
+    const expectedBuf = Buffer.from(expected, "hex");
+    if (sigBuf.length !== expectedBuf.length) return null;
+    if (!timingSafeEqual(sigBuf, expectedBuf)) return null;
+    return JSON.parse(payload);
+  } catch {
+    return null;
+  }
+}
+
+function generateLicenseKey(orgId: string): string {
+  const random = randomBytes(24).toString("hex");
+  return `cykani-${orgId.slice(0, 8)}-${random}`;
+}
 
 export function lemonSqueezyWebhookRouter(container: Container): Hono<ApiEnv> {
   const r = new Hono<ApiEnv>();
@@ -44,11 +63,12 @@ export function lemonSqueezyWebhookRouter(container: Container): Hono<ApiEnv> {
           }
 
           if (customerEmail && container.email) {
+            const licenseKey = generateLicenseKey(orgId);
             await container.email.send({
               to: [customerEmail],
               subject: `Your Cykani ${plan} license key`,
-              body: `Your license key: ${generateLicenseKey(orgId)}\nPlan: ${plan}\nThis key activates the cykani-browser binary.`,
-              html: `<p>Your license key:</p><pre>${generateLicenseKey(orgId)}</pre><p>Plan: ${plan}</p>`,
+              body: `Your license key: ${licenseKey}\nPlan: ${plan}\nThis key activates the cykani-browser binary.\n\nActivate with: cykani-stealth --license-key=${licenseKey}`,
+              html: `<p>Your license key:</p><pre style="background:#f4f4f4;padding:8px;border-radius:4px;font-size:14px">${licenseKey}</pre><p>Plan: <strong>${plan}</strong></p><p>Activate with: <code>cykani-stealth --license-key=${licenseKey}</code></p>`,
             });
           }
           break;
@@ -82,17 +102,4 @@ export function lemonSqueezyWebhookRouter(container: Container): Hono<ApiEnv> {
   });
 
   return r;
-}
-
-function verifyLemonSqueezySignature(payload: string, signature: string, secret: string): any {
-  try {
-    return JSON.parse(payload);
-  } catch {
-    return null;
-  }
-}
-
-function generateLicenseKey(orgId: string): string {
-  const random = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-  return `ck_${orgId}_${random}`;
 }

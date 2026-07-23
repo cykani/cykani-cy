@@ -82,7 +82,8 @@ const tiers = [
   },
   {
     name: "Enterprise",
-    price: "Custom",
+    price: "$199",
+    period: "mo",
     description: "For orgs with compliance and scale requirements.",
     features: [
       "Unlimited sessions",
@@ -93,7 +94,7 @@ const tiers = [
       "On-prem deployment",
     ],
     cta: "Contact Sales",
-    href: "mailto:info@cykani.com",
+    href: "mailto:sales@cykani.com",
   },
 ];
 

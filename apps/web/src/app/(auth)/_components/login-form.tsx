@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@cykani/ui/button";
 import { Checkbox } from "@cykani/ui/checkbox";
@@ -21,6 +22,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess }: LoginFormProps) {
+  const [submitting, setSubmitting] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,6 +33,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setSubmitting(true);
     try {
       const result = await signIn("credentials", {
         email: data.email,
@@ -47,6 +50,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
       toast("Login failed", {
         description: e instanceof Error ? e.message : "Please check your credentials",
       });
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -143,8 +148,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             )}
           />
         </FieldGroup>
-        <Button className="w-full" type="submit">
-          Login
+        <Button className="w-full" type="submit" disabled={submitting}>
+          {submitting ? "Signing in..." : "Login"}
         </Button>
       </form>
     </div>

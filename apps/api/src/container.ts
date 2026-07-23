@@ -71,7 +71,7 @@ export function createContainer(): Container {
   const profileService = new ProfileService(db);
   const agentService = new AgentService(db);
   const orgService = new OrgService(db);
-  const billingService = new BillingService(db, env.STRIPE_SECRET_KEY, env.LEMON_SQUEEZY_API_KEY);
+  const billingService = new BillingService(db, env.LEMON_SQUEEZY_API_KEY);
   const proxyService = new ProxyService(db);
   const apiKeyService = new ApiKeyService(db, env.API_KEY_SECRET);
   const licenseKeyService = new LicenseKeyService(db, env.API_KEY_SECRET);

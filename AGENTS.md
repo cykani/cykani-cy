@@ -29,47 +29,110 @@ pnpm --filter @cykani/api test
 CYKANI_BINARY_PATH=/path/to/chrome pnpm --filter cykani-stealth test:integration
 ```
 
-## Development Workflow
+## Development Workflow — Canonical Setup (Windows)
+
+This is the **only** supported local dev setup. Do not use Docker Desktop, Podman, or any other container runtime.
+
+### Prerequisites
+
+- WSL2 with Ubuntu (or any Linux distro)
+- Docker Engine installed *inside* WSL2 (see [Setup Notes](#setup-notes-docker-engine-in-wsl2))
+- `pnpm` available inside WSL2 (install via `corepack enable && corepack prepare pnpm@9.15.0 --activate` or `npm i -g pnpm@9.15.0`)
+
+### Repository Locations
+
+The project exists in two places — **do not confuse them**:
+
+| Location | Path | Platform | Filesystem | Purpose |
+|---|---|---|---|---|
+| **WSL (primary)** | `~/cykani-app` | Linux (WSL2) | ext4 (native, fast) | **Run dev server, build, git commits, all work** |
+| Windows (backup only) | `C:\Users\sekani\Desktop\cykani\cykani-app` | Windows | NTFS (slow via 9P) | Read-only backup. Do not run any commands here. |
+
+**Why two copies?** Running Next.js/tsx from `/mnt/c/` (Windows NTFS mounted in WSL) is ~10× slower due to the 9P protocol boundary. Filesystem watchers, builds, and git all suffer. WSL's native ext4 has none of these issues.
+
+**To restore from backup** (if WSL primary is lost):
+```bash
+cp -r /mnt/c/Users/sekani/Desktop/cykani/cykani-app ~/cykani-app
+cd ~/cykani-app && rm -rf node_modules .next && pnpm install
+```
+
+### Accessing WSL Files from Windows
+
+- **File Explorer**: `\\wsl.localhost\Ubuntu\home\sekani\cykani-app`
+- **VS Code**: From within WSL, run `code .` — opens on Windows with full WSL integration
+- **Terminal**: `wsl -d Ubuntu` then `cd ~/cykani-app`
+
+### Dev Loop
+
+All commands run **inside WSL2** from `~/cykani-app`.
 
 ```bash
-# 1. Start infrastructure (postgres + redis)
+# 1. Enter WSL2 (from PowerShell)
+wsl -d Ubuntu
+
+# 2. Navigate to project (WSL native ext4 — fast)
+cd ~/cykani-app
+
+# 3. Start infrastructure (postgres + redis in WSL2 Docker)
 docker compose up -d postgres redis
 
-# 2. Install dependencies
+# 4. Install dependencies (first time, or after pulling)
 pnpm install
 
-# 3. Apply DB schema
+# 5. Apply DB schema
 cd apps/api && pnpm db:push && cd ../..
 
-# 4. Run API in dev mode
-pnpm --filter @cykani/api dev
-
-# 5. Run Web in dev mode (separate terminal)
-pnpm --filter ./apps/web dev
-
-# Or start everything in Docker:
-# docker compose up -d
-
-# Typecheck all packages
-pnpm typecheck
-
-# Lint all packages
-pnpm lint
+# 6. Start both API + web dev server in one command
+pnpm dev
 ```
+
+`pnpm dev` runs `turbo run dev --filter=@cykani/api --filter=cykani`, which spawns both servers in parallel with clean interleaved output:
+- Web → http://localhost:3000
+- API → http://localhost:3000 (same port, different paths — thenproxy handles routing)
+
+### Individual commands (if you need separate terminals)
+
+```bash
+# Terminal 1
+pnpm dev:api
+
+# Terminal 2
+pnpm dev:web
+```
+
+### Other tasks
+
+```bash
+pnpm typecheck
+pnpm lint
+pnpm build
+cd apps/api && pnpm db:push   # apply schema changes
+cd apps/api && pnpm db:studio # open Drizzle Studio
+```
+
+### Git workflow
+
+Git operations run inside WSL just like any Linux dev machine. The remote is GitHub — nothing changes.
+
+```bash
+# Inside WSL, ~/cykani-app
+git add .
+git commit -m "message"
+git push
+```
+
+VS Code from WSL (`code .`) handles git, extensions, and terminal seamlessly.
 
 ## Docker
 
-Quick start (full stack):
+Local infrastructure runs **Docker Engine inside WSL2** (not Docker Desktop). Containers stay inside WSL2's network — the dev servers must also run inside WSL2 to reach them.
 
 ```bash
+# Start required services only
+docker compose up -d postgres redis
+
+# Full stack (production build)
 docker compose up -d
-# Starts postgres:5432, redis:6379, api:3000, web:3001
-```
-
-To apply DB schema changes:
-
-```bash
-cd apps/api && pnpm db:push
 ```
 
 ### Browser Containers (Optional)
@@ -86,6 +149,28 @@ docker compose -f docker-compose.email.yml up -d
 open http://localhost:9000
 # Default login: admin / ${LISTMONK_ADMIN_PASSWORD:-changeme}
 ```
+
+### Setup Notes — Docker Engine in WSL2
+
+Do this **once** per machine:
+
+```bash
+# 1. Enable systemd in WSL (required for Docker daemon auto-start)
+wsl -d Ubuntu -u root bash -c "printf '\n[boot]\nsystemd=true\n' >> /etc/wsl.conf"
+
+# 2. Restart WSL
+wsl --shutdown
+wsl -d Ubuntu
+
+# 3. Start Docker daemon
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# 4. Verify
+docker info
+```
+
+> No Docker Desktop, no Podman, no Rancher, no alternatives. This is the one true path.
 
 ## Environment Variables
 

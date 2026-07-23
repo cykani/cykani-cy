@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import { api } from "@cykani/lib/api/client";
 import { Button } from "@cykani/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cykani/ui/card";
-import { Label } from "@cykani/ui/label";
-import { RadioGroup, RadioGroupItem } from "@cykani/ui/radio-group";
 
 interface PlanData {
   id: string;
   name: string;
   limits: { maxSessions: number; maxProfiles: number };
+  price: number;
 }
 
 export function SettingsPlan() {
@@ -20,7 +19,6 @@ export function SettingsPlan() {
   const [loading, setLoading] = useState(true);
   const [upgrading, setUpgrading] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [provider, setProvider] = useState<"lemonsqueezy" | "stripe">("lemonsqueezy");
 
   useEffect(() => {
     async function load() {
@@ -43,7 +41,7 @@ export function SettingsPlan() {
     if (planId === org?.plan) return;
     setUpgrading(planId);
     try {
-      const res = await api.billing.checkout({ plan: planId, provider });
+      const res = await api.billing.checkout({ plan: planId });
       if (res.checkoutUrl) {
         window.location.href = res.checkoutUrl;
       } else {
@@ -100,24 +98,9 @@ export function SettingsPlan() {
               {currentPlan?.limits.maxSessions} sessions / {currentPlan?.limits.maxProfiles} profiles
             </p>
           </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label className="font-medium text-xs">Payment Provider</Label>
-          <RadioGroup value={provider} onValueChange={(v: "lemonsqueezy" | "stripe") => setProvider(v)}>
-            <div className="flex items-center gap-2">
-              <RadioGroupItem value="lemonsqueezy" id="lemonsqueezy" />
-              <Label htmlFor="lemonsqueezy" className="text-xs">
-                LemonSqueezy (subscription)
-              </Label>
-            </div>
-            <div className="flex items-center gap-2">
-              <RadioGroupItem value="stripe" id="stripe" />
-              <Label htmlFor="stripe" className="text-xs">
-                Stripe (subscription)
-              </Label>
-            </div>
-          </RadioGroup>
+          {currentPlan && currentPlan.price > 0 && (
+            <p className="font-medium text-lg">${currentPlan.price}/mo</p>
+          )}
         </div>
 
         {plans.length > 1 && (
@@ -135,15 +118,6 @@ export function SettingsPlan() {
             ))}
           </div>
         )}
-
-        <div className="border-t pt-4">
-          <p className="mb-2 text-muted-foreground text-xs">Prefer to support the project? Donate via Ko-fi:</p>
-          <Button variant="outline" size="sm" asChild>
-            <a href="https://ko-fi.com/your-username" target="_blank" rel="noopener noreferrer">
-              Donate on Ko-fi
-            </a>
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );

@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/sign-in", "/sign-up"];
+const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/sign-in", "/sign-up", "/v1/auth"];
 
 const SITE_PREFIXES = ["/pricing", "/docs", "/blog"];
 

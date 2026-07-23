@@ -1,6 +1,8 @@
 import {
   Bot,
   Globe,
+  FileText,
+  Mail,
   Monitor,
   Shield,
   Workflow,
@@ -48,6 +50,24 @@ export interface NavGroup {
 export const sidebarItems: NavGroup[] = [
   {
     id: 0,
+    label: "Mail",
+    items: [
+      {
+        id: "mail",
+        title: "Inbox",
+        url: "/dashboard/mail",
+        icon: Mail,
+      },
+      {
+        id: "invoice",
+        title: "Invoices",
+        url: "/dashboard/invoice",
+        icon: FileText,
+      },
+    ],
+  },
+  {
+    id: 1,
     label: "Platform",
     items: [
       {

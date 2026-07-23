@@ -18,8 +18,6 @@ const envSchema = z.object({
   VNC_PROXY_URL: z.string().url().optional(),
   EMAIL_API_URL: z.string().url().optional(),
   EMAIL_API_KEY: z.string().optional(),
-  STRIPE_SECRET_KEY: z.string().optional(),
-  STRIPE_WEBHOOK_SECRET: z.string().optional(),
   LEMON_SQUEEZY_API_KEY: z.string().optional(),
   LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),

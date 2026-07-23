@@ -7,6 +7,14 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
+  async rewrites() {
+    return [
+      {
+        source: "/v1/:path*",
+        destination: "http://localhost:3000/v1/:path*",
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX()(nextConfig);
