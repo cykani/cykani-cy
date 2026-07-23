@@ -1,6 +1,6 @@
-@import "@cykani/styles/presets/brutalist";
-@import "@cykani/styles/presets/soft-pop";
-@import "@cykani/styles/presets/tangerine";
+@import "../styles/presets/brutalist";
+@import "../styles/presets/soft-pop";
+@import "../styles/presets/tangerine";
 
 @import "tailwindcss";
 @import "tw-animate-css";
