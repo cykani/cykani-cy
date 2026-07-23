@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd ../.. && node -e \"const fs=require('fs');const p=JSON.parse(fs.readFileSync('apps/web/package.json','utf8'));const m={'@cykani/db':'../../packages/db','@cykani/hooks':'../../packages/hooks','@cykani/lib':'../../packages/lib','@cykani/styles':'../../packages/styles','@cykani/ui':'../../packages/ui'};for(const[k,v]of Object.entries(m)){if(p.dependencies?.[k])p.dependencies[k]='file:'+v;if(p.devDependencies?.[k])p.devDependencies[k]='file:'+v}fs.writeFileSync('apps/web/package.json',JSON.stringify(p,null,2)+'\\n')\" && cd apps/web && npm install --legacy-peer-deps && npx next build",
+  "buildCommand": "bash ../../scripts/vercel-build.sh",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "installCommand": "echo handled-in-build"
+  "installCommand": "echo skip"
 }
