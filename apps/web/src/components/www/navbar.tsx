@@ -16,6 +16,7 @@ type NavChild = {
   link: string;
   icon: string;
   desc: string;
+  external?: boolean;
 };
 
 type NavItem = {
@@ -37,8 +38,8 @@ const navLinks: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { name: "Documentation", link: "/docs", icon: "▸", desc: "Guides & references" },
-      { name: "API Reference", link: "/docs", icon: "▹", desc: "Full API docs" },
+      { name: "Documentation", link: "/docs", icon: "▸", desc: "Guides & references", external: true },
+      { name: "API Reference", link: "/docs", icon: "▹", desc: "Full API docs", external: true },
       { name: "Blog", link: "/blog", icon: "▻", desc: "Engineering insights" },
       { name: "FAQ", link: "/#faq", icon: "?", desc: "Common questions" },
     ],
@@ -112,22 +113,43 @@ function NavDropdown({ label, children }: { label: string; children: NavChild[] 
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.03, duration: 0.15 }}
                   >
-                    <Link
-                      href={child.link}
-                      className="group flex items-start gap-3 rounded-none px-3 py-2.5 transition-colors hover:bg-accent"
-                    >
-                      <span className="mt-0.5 font-mono text-xs text-muted-foreground/40 transition-colors group-hover:text-muted-foreground/70">
-                        {child.icon}
-                      </span>
-                      <div className="flex flex-col">
-                        <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
-                          {child.name}
+                    {child.external ? (
+                      <a
+                        href={child.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-start gap-3 rounded-none px-3 py-2.5 transition-colors hover:bg-accent"
+                      >
+                        <span className="mt-0.5 font-mono text-xs text-muted-foreground/40 transition-colors group-hover:text-muted-foreground/70">
+                          {child.icon}
                         </span>
-                        <span className="text-xs text-muted-foreground/50 transition-colors group-hover:text-muted-foreground/70">
-                          {child.desc}
+                        <div className="flex flex-col">
+                          <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+                            {child.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground/50 transition-colors group-hover:text-muted-foreground/70">
+                            {child.desc}
+                          </span>
+                        </div>
+                      </a>
+                    ) : (
+                      <Link
+                        href={child.link}
+                        className="group flex items-start gap-3 rounded-none px-3 py-2.5 transition-colors hover:bg-accent"
+                      >
+                        <span className="mt-0.5 font-mono text-xs text-muted-foreground/40 transition-colors group-hover:text-muted-foreground/70">
+                          {child.icon}
                         </span>
-                      </div>
-                    </Link>
+                        <div className="flex flex-col">
+                          <span className="text-sm text-muted-foreground transition-colors group-hover:text-foreground">
+                            {child.name}
+                          </span>
+                          <span className="text-xs text-muted-foreground/50 transition-colors group-hover:text-muted-foreground/70">
+                            {child.desc}
+                          </span>
+                        </div>
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
               </div>
@@ -211,15 +233,29 @@ export function SiteNavbar() {
                       {item.label}
                     </span>
                     {item.children.map((child) => (
-                      <Link
-                        key={child.name}
-                        href={child.link}
-                        onClick={() => setMobileOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2 pl-6 text-sm text-foreground transition-colors hover:text-muted-foreground"
-                      >
-                        <span className="font-mono text-xs text-muted-foreground/40">{child.icon}</span>
-                        <span>{child.name}</span>
-                      </Link>
+                      child.external ? (
+                        <a
+                          key={child.name}
+                          href={child.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-3 py-2 pl-6 text-sm text-foreground transition-colors hover:text-muted-foreground"
+                        >
+                          <span className="font-mono text-xs text-muted-foreground/40">{child.icon}</span>
+                          <span>{child.name}</span>
+                        </a>
+                      ) : (
+                        <Link
+                          key={child.name}
+                          href={child.link}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-3 py-2 pl-6 text-sm text-foreground transition-colors hover:text-muted-foreground"
+                        >
+                          <span className="font-mono text-xs text-muted-foreground/40">{child.icon}</span>
+                          <span>{child.name}</span>
+                        </Link>
+                      )
                     ))}
                   </div>
                 ) : (
