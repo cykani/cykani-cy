@@ -1,49 +1,48 @@
-import { auth } from "@/lib/auth";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_PATHS = ["/unauthorized", "/api/health", "/sign-in", "/sign-up", "/v1/auth"];
+// Marketing site is fully public
+const PUBLIC_PREFIXES = [
+  "/",
+  "/pricing",
+  "/docs",
+  "/blog",
+  "/changelog",
+  "/about",
+  "/contact",
+  "/faq",
+  "/products",
+  "/clients",
+  "/integrations",
+  "/terms",
+  "/privacy",
+];
 
-const SITE_PREFIXES = ["/pricing", "/docs", "/blog"];
-
-function isPublicPath(pathname: string): boolean {
-  return PUBLIC_PATHS.some((p) => pathname.includes(p));
+function isPublic(pathname: string): boolean {
+  if (pathname === "/") return true;
+  return PUBLIC_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
 }
 
-function isSitePath(pathname: string): boolean {
-  return SITE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
-}
-
-export default auth((req) => {
+export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // Allow static assets and internals
   if (
-    isPublicPath(pathname) ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
-    pathname.startsWith("/api/auth") ||
-    pathname.includes(".")
+    pathname.includes(".") ||
+    pathname === "/api/health"
   ) {
     return NextResponse.next();
   }
 
-  if (isSitePath(pathname)) {
+  // Allow marketing pages
+  if (isPublic(pathname)) {
     return NextResponse.next();
   }
 
-  if (!pathname || pathname === "/") {
-    return NextResponse.next();
-  }
-
-  const isLoggedIn = !!req.auth;
-
-  if (!isLoggedIn) {
-    const loginUrl = new URL("/sign-in", req.url);
-    loginUrl.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
-  return NextResponse.next();
-});
+  // Block everything else — redirect to coming-soon
+  return NextResponse.redirect(new URL("/coming-soon", req.url));
+}
 
 export const config = {
   matcher: [

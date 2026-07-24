@@ -178,18 +178,12 @@ export function SiteNavbar() {
             </svg>
             Star on GitHub
           </a>
-          <Link
-            href="/sign-in"
-            className="rounded-lg border border-border/60 bg-background px-4 py-2 font-medium text-foreground text-sm transition-colors hover:bg-accent"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/sign-up"
+          <a
+            href="/#contact"
             className="rounded-lg bg-foreground px-4 py-2 font-medium text-background text-sm transition-opacity hover:opacity-90"
           >
             Get Started
-          </Link>
+          </a>
         </div>
 
         <button
@@ -252,20 +246,13 @@ export function SiteNavbar() {
                   </svg>
                   Star on GitHub
                 </a>
-                <Link
-                  href="/sign-in"
-                  onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg border border-border/60 px-4 py-2 text-center font-medium text-foreground text-sm transition-colors hover:bg-accent"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  href="/sign-up"
+                <a
+                  href="/#contact"
                   onClick={() => setMobileOpen(false)}
                   className="block rounded-lg bg-foreground px-4 py-2 text-center font-medium text-background text-sm"
                 >
                   Get Started
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>

@@ -90,7 +90,7 @@ export function HeroSection() {
           </p>
 
           <div className={styles.ctaRow}>
-            <Link href="/sign-up" className={styles.ctaPrimary}>
+            <Link href="/#contact" className={styles.ctaPrimary}>
               Start For Free
             </Link>
             <Link href="/docs" className={styles.ctaSecondary}>

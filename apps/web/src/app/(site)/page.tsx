@@ -60,12 +60,12 @@ const tiers = [
     price: "$0",
     description: "For prototyping and personal projects.",
     features: ["3 concurrent sessions", "100 fingerprint signals", "Community support", "Shared infrastructure"],
-    cta: "Start Free",
-    href: "/cykani/dashboard/settings",
+    cta: "View on GitHub",
+    href: "https://github.com/cykani/cykani-cy",
   },
   {
     name: "Pro",
-    price: "$49",
+    price: "$19",
     period: "mo",
     description: "For teams shipping production automation.",
     features: [
@@ -76,13 +76,13 @@ const tiers = [
       "Priority support",
       "Dedicated infrastructure",
     ],
-    cta: "Get Started",
-    href: "/cykani/dashboard/settings",
+    cta: "Buy Now",
+    href: "https://cykani.lemonsqueezy.com/checkout/buy/pro-monthly",
     highlighted: true,
   },
   {
     name: "Enterprise",
-    price: "$199",
+    price: "$79",
     period: "mo",
     description: "For orgs with compliance and scale requirements.",
     features: [
