@@ -38,8 +38,8 @@ const navLinks: NavItem[] = [
   {
     label: "Resources",
     children: [
-      { name: "Documentation", link: "/docs", icon: "▸", desc: "Guides & references", external: true },
-      { name: "API Reference", link: "/docs", icon: "▹", desc: "Full API docs", external: true },
+      { name: "Documentation", link: "https://docs.cykani.com", icon: "▸", desc: "Guides & references", external: true },
+      { name: "API Reference", link: "https://docs.cykani.com/api", icon: "▹", desc: "Full API docs", external: true },
       { name: "Blog", link: "/blog", icon: "▻", desc: "Engineering insights" },
       { name: "FAQ", link: "/#faq", icon: "?", desc: "Common questions" },
     ],
