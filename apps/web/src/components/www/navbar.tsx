@@ -168,7 +168,7 @@ export function SiteNavbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            href="https://github.com/cykani/cykani-stealth"
+            href="https://github.com/cykani/cykani-cy"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg border border-border/60 bg-background px-4 py-2 font-medium text-foreground text-sm transition-colors hover:bg-accent"
@@ -241,7 +241,7 @@ export function SiteNavbar() {
               )}
               <div className="flex flex-col gap-2 pt-4">
                 <a
-                  href="https://github.com/cykani/cykani-stealth"
+                  href="https://github.com/cykani/cykani-cy"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
