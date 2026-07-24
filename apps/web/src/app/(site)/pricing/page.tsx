@@ -30,7 +30,7 @@ const tiers = [
       "Dedicated infrastructure",
     ],
     cta: "Buy Now",
-    href: "https://cykani.lemonsqueezy.com/checkout/buy/pro-monthly",
+    href: "/contact",
     highlighted: true,
   },
   {
