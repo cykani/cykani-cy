@@ -1,0 +1,47 @@
+---
+title: Humor Mode
+description: Human-like behavior with Bezier curves and cognitive hesitation
+---
+
+## Overview
+
+When `humor: true`, native Playwright methods are replaced with humanized versions that mimic real user behavior.
+
+## Enable Humor Mode
+
+```javascript
+const session = await strike({ humor: true });
+```
+
+## Humanized Behaviors
+
+| Behavior | Description |
+|----------|-------------|
+| `strikeMove` | Bezier curves with 15% distraction drift |
+| `cognitiveHesitation` | Pause proportional to page complexity |
+| `idleMicroMovement` | Tiny cursor jitter between actions |
+| `coffeeBreak` | 8% chance of 2-7s idle with micro-movements |
+
+## Custom Humor Settings
+
+```javascript
+await session.click('#btn', {
+  humor: {
+    hesitation: 0.9,  // Higher = longer pauses
+    precision: 0.99,  // Higher = more accurate
+  }
+});
+
+await session.type('#input', 'text', {
+  humor: {
+    latency: 'sluggish',  // 'instant' | 'human' | 'sluggish'
+  }
+});
+```
+
+## How It Works
+
+1. **Bezier Curves** — Mouse movements follow natural curves, not straight lines
+2. **Cognitive Hesitation** — Pauses before complex actions (forms, buttons)
+3. **Idle Micro-Movement** — Tiny cursor jitters during idle periods
+4. **Coffee Breaks** — Random 2-7 second pauses with micro-movements

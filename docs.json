@@ -1,0 +1,90 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Cykani",
+  "logo": {
+    "light": "/logo_black.png",
+    "dark": "/logo_black.png"
+  },
+  "favicon": "/favicon.ico",
+  "colors": {
+    "primary": "#22C55E",
+    "light": "#FAFAFA",
+    "dark": "#0A0A0A"
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/cykani/cykani-cy"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://cykani.com"
+  },
+  "links": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/cykani/cykani-cy"
+    },
+    {
+      "name": "Discord",
+      "url": "https://discord.gg/cykani"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "installation"
+      ]
+    },
+    {
+      "group": "SDK",
+      "pages": [
+        "sdk/overview",
+        "sdk/presets",
+        "sdk/autopilot",
+        "sdk/humor-mode",
+        "sdk/cdp-connection"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/stealth-mode",
+        "guides/proxy-setup",
+        "guides/session-management"
+      ]
+    }
+  ],
+  "sidebar": [
+    {
+      "group": "Getting Started",
+      "pages": [
+        "introduction",
+        "quickstart",
+        "installation"
+      ]
+    },
+    {
+      "group": "SDK",
+      "pages": [
+        "sdk/overview",
+        "sdk/presets",
+        "sdk/autopilot",
+        "sdk/humor-mode",
+        "sdk/cdp-connection"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/stealth-mode",
+        "guides/proxy-setup",
+        "guides/session-management"
+      ]
+    }
+  ]
+}

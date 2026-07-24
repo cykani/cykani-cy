@@ -1,0 +1,36 @@
+---
+title: Installation
+description: How to install Cykani
+---
+
+## Node.js
+
+```bash
+npm install cykani-stealth
+```
+
+## Python
+
+```bash
+pip install cykani-stealth
+```
+
+## Requirements
+
+- Node.js >= 18 (for Node.js SDK)
+- Python >= 3.8 (for Python SDK)
+
+## Binary Auto-Download
+
+The patched Chromium binary auto-downloads from GitHub Releases on first launch. No manual setup required.
+
+Override with environment variable:
+```bash
+export CYKANI_BINARY_PATH=/path/to/custom/chrome
+```
+
+## Verify Installation
+
+```bash
+node -e "const { strike } = require('cykani-stealth'); console.log('Cykani installed successfully');"
+```

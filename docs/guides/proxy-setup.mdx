@@ -1,0 +1,48 @@
+---
+title: Proxy Setup
+description: Configure proxies for IP rotation and geo-targeting
+---
+
+## Overview
+
+Cykani supports HTTP, HTTPS, and SOCKS5 proxies with automatic rotation and geo-targeting.
+
+## Basic Proxy
+
+```javascript
+const session = await strike({
+  proxy: 'http://user:pass@host:port',
+});
+```
+
+## Proxy with Geo-Targeting
+
+```javascript
+const session = await strike({
+  proxy: 'http://user:pass@host:port',
+  geoip: true,  // Auto-resolve timezone/locale from proxy IP
+});
+```
+
+## Per-Session Proxy
+
+```javascript
+// Different proxy for each session
+const session1 = await strike({ proxy: 'http://us-proxy:8080' });
+const session2 = await strike({ proxy: 'http://eu-proxy:8080' });
+```
+
+## Proxy Providers
+
+Works with any HTTP/HTTPS/SOCKS5 proxy:
+- Bright Data
+- Smartproxy
+- Oxylabs
+- IPRoyal
+- Your own proxy server
+
+## Environment Variable
+
+```bash
+export CYKANI_PROXY=http://user:pass@host:port
+```

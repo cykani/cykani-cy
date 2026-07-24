@@ -1,0 +1,35 @@
+---
+title: Quick Start
+description: Get up and running with Cykani in 5 minutes
+---
+
+## Installation
+
+```bash
+npm install cykani-stealth
+```
+
+## Basic Usage
+
+```javascript
+import { strike } from 'cykani-stealth';
+
+// Launch a stealth session
+const session = await strike({ humor: true, fingerprint: 42 });
+
+// Browse like a human
+await session.goto('https://example.com');
+await session.autoPilot().signIn({ 
+  email: 'user@site.com', 
+  password: 'secret' 
+});
+
+await session.close();
+```
+
+## What's Next?
+
+- [SDK Reference](/sdk/overview) — Full API documentation
+- [Presets](/sdk/presets) — Different stealth modes
+- [AutoPilot](/sdk/autopilot) — Heuristic automation
+- [Stealth Mode](/guides/stealth-mode) — How stealth works
