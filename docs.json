@@ -1,6 +1,7 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Cykani",
+  "theme": "mint",
   "logo": {
     "light": "/logo_black.png",
     "dark": "/logo_black.png"
