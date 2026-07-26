@@ -24,6 +24,12 @@ function isPublic(pathname: string): boolean {
 
 export default function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const host = req.headers.get("host") || "";
+
+  // docs.cykani.com → rewrite root to /docs
+  if (host === "docs.cykani.com" && pathname === "/") {
+    return NextResponse.rewrite(new URL("/docs", req.url));
+  }
 
   // Allow static assets and internals
   if (
