@@ -33,15 +33,21 @@
   position: sticky;
   top: 64px;
   height: calc(100vh - 64px) !important;
-  overflow-y: auto;
+  overflow: visible;
 }
 
-/* Sidebar toggle button - must be above navbar z-index */
+#nd-sidebar > div {
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Sidebar toggle button */
 #nd-sidebar-toggle,
 [aria-label="Toggle Sidebar"],
 button[data-sidebar="trigger"] {
-  z-index: 60 !important;
-  top: 72px !important;
+  position: sticky;
+  top: 64px;
+  z-index: 10;
 }
 
 /* Mobile sidebar overlay */
