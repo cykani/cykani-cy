@@ -1,3 +1,5 @@
 {
-  "outputDirectory": "apps/web/.next/standalone"
+  "buildCommand": "pnpm --filter cykani build",
+  "outputDirectory": "apps/web/.next/standalone",
+  "installCommand": "pnpm install"
 }
