@@ -50,8 +50,8 @@ export default function PrivacyPage() {
 
           <h2>5. Third-Party Services</h2>
           <p>
-            We use select sub-processors for cloud infrastructure (AWS, GCP), payment processing (Stripe), and email
-            delivery. Each sub-processor is contractually bound to data protection standards equivalent to our own.
+            We use select sub-processors for cloud infrastructure (AWS, GCP), payment processing (Lemon Squeezy), and
+            email delivery. Each sub-processor is contractually bound to data protection standards equivalent to our own.
           </p>
 
           <h2>6. Your Rights</h2>

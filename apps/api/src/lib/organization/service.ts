@@ -23,9 +23,9 @@ export class OrgService {
     return Ok(Organization.reconstitute({ id: row.id, name: row.name, plan: row.plan as OrgPlan, ownerId: row.ownerId, members: members.map((m) => ({ userId: m.userId, role: m.role, joinedAt: m.joinedAt })), createdAt: row.createdAt, updatedAt: row.updatedAt }));
   }
 
-  async getByStripeCustomerId(stripeCustomerId: string): Promise<Result<Organization>> {
-    const [row] = await this.db.select().from(organizations).where(eq(organizations.stripeCustomerId, stripeCustomerId));
-    if (!row) return Err(AppError.notFound("Organization", stripeCustomerId));
+  async getByLemonSqueezyCustomerId(customerId: string): Promise<Result<Organization>> {
+    const [row] = await this.db.select().from(organizations).where(eq(organizations.lemonSqueezyCustomerId, customerId));
+    if (!row) return Err(AppError.notFound("Organization", customerId));
     const members = await this.db.select().from(memberships).where(eq(memberships.orgId, row.id));
     return Ok(Organization.reconstitute({ id: row.id, name: row.name, plan: row.plan as OrgPlan, ownerId: row.ownerId, members: members.map((m) => ({ userId: m.userId, role: m.role, joinedAt: m.joinedAt })), createdAt: row.createdAt, updatedAt: row.updatedAt }));
   }

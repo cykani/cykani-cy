@@ -106,7 +106,7 @@ export const api = {
 
   billing: {
     plans: () => request<{ plans: any[] }>("/v1/billing/plans"),
-    checkout: (data: { plan: string; provider?: "stripe" | "kofi" | "lemonsqueezy" }) =>
+    checkout: (data: { plan: string; provider?: "lemonsqueezy" }) =>
       request<{ checkoutUrl: string | null; sessionId?: string; subscription?: any; provider?: string }>("/v1/billing/checkout", {
         method: "POST",
         body: data,

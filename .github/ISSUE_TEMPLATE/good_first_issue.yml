@@ -1,0 +1,27 @@
+name: Good First Issue
+description: A scoped, well-defined task suitable for a new contributor
+labels: ["good first issue", "help wanted"]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Task description
+      description: Describe exactly what needs to be done.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Relevant files / context
+      description: Which files are involved? Any design constraints?
+    validations:
+      required: true
+
+  - type: textarea
+    id: definition_of_done
+    attributes:
+      label: Definition of done
+      description: How will we know when this is complete?
+    validations:
+      required: true

@@ -2,7 +2,11 @@ import { nanoid } from "nanoid";
 
 export const OrgPlan = { FREE: "free", PRO: "pro", ENTERPRISE: "enterprise" } as const;
 export type OrgPlan = (typeof OrgPlan)[keyof typeof OrgPlan];
-export const PLAN_LIMITS: Record<OrgPlan, { maxSessions: number; maxProfiles: number }> = { free: { maxSessions: 2, maxProfiles: 5 }, pro: { maxSessions: 10, maxProfiles: 50 }, enterprise: { maxSessions: 100, maxProfiles: 500 } };
+export const PLAN_LIMITS: Record<OrgPlan, { maxSessions: number; maxProfiles: number }> = {
+  free:       { maxSessions: 3,         maxProfiles: 10  },
+  pro:        { maxSessions: 25,        maxProfiles: 100 },
+  enterprise: { maxSessions: Infinity,  maxProfiles: Infinity },
+};
 
 export interface OrgProps { id: string; name: string; plan: OrgPlan; ownerId: string; members: Array<{ userId: string; role: string; joinedAt: Date }>; createdAt: Date; updatedAt: Date; }
 

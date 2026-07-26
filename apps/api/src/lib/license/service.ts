@@ -12,8 +12,8 @@ export interface LicenseKeyProps {
   orgId: string;
   keyHash: string;
   plan: string;
-  stripeCustomerId: string | null;
-  stripeSubscriptionId: string | null;
+  lemonSqueezyCustomerId: string | null;
+  lemonSqueezySubscriptionId: string | null;
   expiresAt: Date | null;
   lastUsedAt: Date | null;
   createdAt: Date;
@@ -24,8 +24,8 @@ export class LicenseKey {
   readonly orgId: string;
   readonly keyHash: string;
   readonly plan: string;
-  readonly stripeCustomerId: string | null;
-  readonly stripeSubscriptionId: string | null;
+  readonly lemonSqueezyCustomerId: string | null;
+  readonly lemonSqueezySubscriptionId: string | null;
   readonly expiresAt: Date | null;
   readonly lastUsedAt: Date | null;
   readonly createdAt: Date;
@@ -35,8 +35,8 @@ export class LicenseKey {
     this.orgId = p.orgId;
     this.keyHash = p.keyHash;
     this.plan = p.plan;
-    this.stripeCustomerId = p.stripeCustomerId;
-    this.stripeSubscriptionId = p.stripeSubscriptionId;
+    this.lemonSqueezyCustomerId = p.lemonSqueezyCustomerId;
+    this.lemonSqueezySubscriptionId = p.lemonSqueezySubscriptionId;
     this.expiresAt = p.expiresAt;
     this.lastUsedAt = p.lastUsedAt;
     this.createdAt = p.createdAt;
@@ -52,8 +52,8 @@ export class LicenseKey {
       orgId: this.orgId,
       keyHash: this.keyHash,
       plan: this.plan,
-      stripeCustomerId: this.stripeCustomerId,
-      stripeSubscriptionId: this.stripeSubscriptionId,
+      lemonSqueezyCustomerId: this.lemonSqueezyCustomerId,
+      lemonSqueezySubscriptionId: this.lemonSqueezySubscriptionId,
       expiresAt: this.expiresAt,
       lastUsedAt: this.lastUsedAt,
       createdAt: this.createdAt,
@@ -71,15 +71,15 @@ export class LicenseKeyService {
       orgId: r.orgId,
       keyHash: r.keyHash,
       plan: r.plan,
-      stripeCustomerId: r.stripeCustomerId ?? null,
-      stripeSubscriptionId: r.stripeSubscriptionId ?? null,
+      lemonSqueezyCustomerId: r.lemonSqueezyCustomerId ?? null,
+      lemonSqueezySubscriptionId: r.lemonSqueezySubscriptionId ?? null,
       expiresAt: r.expiresAt ?? null,
       lastUsedAt: r.lastUsedAt ?? null,
       createdAt: r.createdAt,
     }));
   }
 
-  async createForOrg(orgId: string, plan: string, stripeCustomerId?: string, stripeSubscriptionId?: string): Promise<{ key: LicenseKey; raw: string }> {
+  async createForOrg(orgId: string, plan: string, lemonSqueezyCustomerId?: string, lemonSqueezySubscriptionId?: string): Promise<{ key: LicenseKey; raw: string }> {
     const raw = `ck_${orgId}_${randomBytes(32).toString("hex")}`;
     const keyHash = createHmac("sha256", this.apiSecret).update(orgId).digest("hex");
 
@@ -92,8 +92,8 @@ export class LicenseKeyService {
       orgId,
       keyHash,
       plan,
-      stripeCustomerId: stripeCustomerId ?? null,
-      stripeSubscriptionId: stripeSubscriptionId ?? null,
+      lemonSqueezyCustomerId: lemonSqueezyCustomerId ?? null,
+      lemonSqueezySubscriptionId: lemonSqueezySubscriptionId ?? null,
       expiresAt,
       createdAt: now,
     });
@@ -103,8 +103,8 @@ export class LicenseKeyService {
       orgId,
       keyHash,
       plan,
-      stripeCustomerId: stripeCustomerId ?? null,
-      stripeSubscriptionId: stripeSubscriptionId ?? null,
+      lemonSqueezyCustomerId: lemonSqueezyCustomerId ?? null,
+      lemonSqueezySubscriptionId: lemonSqueezySubscriptionId ?? null,
       expiresAt,
       lastUsedAt: null,
       createdAt: now,
@@ -121,8 +121,8 @@ export class LicenseKeyService {
       orgId: row.orgId,
       keyHash: row.keyHash,
       plan: row.plan,
-      stripeCustomerId: row.stripeCustomerId ?? null,
-      stripeSubscriptionId: row.stripeSubscriptionId ?? null,
+      lemonSqueezyCustomerId: row.lemonSqueezyCustomerId ?? null,
+      lemonSqueezySubscriptionId: row.lemonSqueezySubscriptionId ?? null,
       expiresAt: row.expiresAt ?? null,
       lastUsedAt: row.lastUsedAt ?? null,
       createdAt: row.createdAt,

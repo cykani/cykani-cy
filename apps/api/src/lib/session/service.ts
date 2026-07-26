@@ -17,7 +17,10 @@ export class SessionService {
 
   async create(orgId: string, profileId: string, ttlMinutes?: number): Promise<Result<Session>> {
     const count = await this.countActive(orgId);
-    if (count >= this.maxPerOrg) return Err(AppError.sessionLimit(this.maxPerOrg));
+    // maxPerOrg of Infinity (enterprise) means no limit
+    if (isFinite(this.maxPerOrg) && count >= this.maxPerOrg) {
+      return Err(AppError.sessionLimit(this.maxPerOrg));
+    }
 
     const [profile] = await this.db.select({ id: profiles.id }).from(profiles).where(eq(profiles.id, profileId));
     if (!profile) return Err(AppError.notFound("Profile", profileId));

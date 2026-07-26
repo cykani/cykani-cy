@@ -11,7 +11,7 @@ export const organizations = pgTable("organizations", {
   slug: text("slug").notNull().unique(),
   plan: text("plan").notNull().default("free"),
   ownerId: text("owner_id").notNull(),
-  stripeCustomerId: text("stripe_customer_id"),
+  lemonSqueezyCustomerId: text("lemonsqueezy_customer_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (table) => [
@@ -123,14 +123,14 @@ export const subscriptions = pgTable("subscriptions", {
   id: text("id").primaryKey().$defaultFn(generateId),
   orgId: text("org_id").notNull().references(() => organizations.id),
   plan: text("plan").notNull().default("free"),
-  stripeSubscriptionId: text("stripe_subscription_id"),
+  lemonSqueezySubscriptionId: text("lemonsqueezy_subscription_id"),
   currentPeriodStart: timestamp("current_period_start", { withTimezone: true }).notNull(),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (table) => [
   index("idx_subscriptions_org_id").on(table.orgId),
-  uniqueIndex("idx_subscriptions_stripe_id").on(table.stripeSubscriptionId),
+  uniqueIndex("idx_subscriptions_ls_id").on(table.lemonSqueezySubscriptionId),
 ]);
 
 export const authUsers = pgTable("auth_users", {

@@ -45,6 +45,80 @@ const products = [
   },
 ];
 
+const useCases = [
+  {
+    tag: "QA TESTING",
+    name: "Test what users actually see.",
+    desc: "Run your test suite against a real, unpatched browser fingerprint. No webdriver flags, no canvas artifacts — catch rendering bugs that Playwright misses because your users aren't running Playwright.",
+    ascii: [
+      "┌─ qa-suite.ts ───────────────┐",
+      "│                             │",
+      "│  $ cykani run --profile=qa  │",
+      "│  ✓ canvas:    PASS          │",
+      "│  ✓ webgl:     PASS          │",
+      "│  ✓ webdriver: HIDDEN        │",
+      "│  ✓ timezone:  SPOOFED       │",
+      "│                             │",
+      "│  4/4 checks passed          │",
+      "└─────────────────────────────┘",
+    ],
+  },
+  {
+    tag: "PRICE TRACKING",
+    name: "Monitor competitors without getting blocked.",
+    desc: "Retailers and e-commerce teams run thousands of price checks daily. Most tools get rate-limited or served stale data within hours. Cykani rotates fingerprints and proxies per request so you always see the real price.",
+    ascii: [
+      "┌─ tracker.ts ────────────────┐",
+      "│                             │",
+      "│  product   before   after   │",
+      "│  ───────   ──────   ─────   │",
+      "│  SKU-001   $49.99   $44.99  │",
+      "│  SKU-002   $12.00   $10.50  │",
+      "│  SKU-003   $89.99   $89.99  │",
+      "│                             │",
+      "│  Δ 2 changes detected       │",
+      "└─────────────────────────────┘",
+    ],
+  },
+  {
+    tag: "LEAD GENERATION",
+    name: "Enrich leads at scale, undetected.",
+    desc: "Sales teams need verified contact data from LinkedIn, company directories, and public registries. Cykani handles session persistence and fingerprint rotation so your enrichment pipeline doesn't get shut down on page 3.",
+    ascii: [
+      "┌─ enrich.ts ─────────────────┐",
+      "│                             │",
+      "│  $ cykani enrich leads.csv  │",
+      "│                             │",
+      "│  [████████████░░] 80%       │",
+      "│  processed: 4,000           │",
+      "│  enriched:  3,847           │",
+      "│  blocked:   0               │",
+      "│                             │",
+      "│  ETA: 4m 12s                │",
+      "└─────────────────────────────┘",
+    ],
+  },
+  {
+    tag: "AI AGENTS",
+    name: "The browser layer your agent actually needs.",
+    desc: "Steel, BrowserBase, and BrowserUse give agents a browser. Cykani gives agents a browser that doesn't get blocked. C++-level stealth patches, persistent sessions, proxy rotation, and a CDP endpoint your agent connects to in one line — no infrastructure to manage.",
+    ascii: [
+      "┌─ agent.ts ──────────────────┐",
+      "│                             │",
+      "│  vs. browserbase  $$$  slow │",
+      "│  vs. browseruse   blocked   │",
+      "│  vs. steel.dev    detected  │",
+      "│  ─────────────────────────  │",
+      "│  cykani:                    │",
+      "│    bot score:  0.02   ✓     │",
+      "│    cf_clearance: set  ✓     │",
+      "│    session: persistent ✓    │",
+      "│    cost: 90% less     ✓     │",
+      "└─────────────────────────────┘",
+    ],
+  },
+];
+
 const clients = [
   { name: "Acme Corp", type: "Enterprise" },
   { name: "Globex", type: "Enterprise" },
@@ -217,6 +291,41 @@ export default function SitePage() {
               <span className={styles.cardTag}>{product.tag}</span>
               <h3 className={styles.cardName}>{product.name}</h3>
               <p className={styles.cardDesc}>{product.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Divider />
+
+      <section id="use-cases" className={styles.section}>
+        <div className={styles.sectionInner}>
+          <span className={styles.tag}>Use Cases</span>
+          <h2 className={styles.sectionHeading}>
+            One browser layer.
+            <br />
+            Every use case
+            <br />
+            that needs stealth.
+          </h2>
+          <p className={styles.sectionSubhead}>
+            QA teams, data engineers, sales teams, and AI builders all hit the same wall — bot detection. Cykani
+            removes it.
+          </p>
+        </div>
+        <div className={styles.useCaseGrid}>
+          {useCases.map((uc) => (
+            <div className={styles.useCaseCard} key={uc.tag}>
+              <div className={styles.useCaseLeft}>
+                <span className={styles.cardTag}>{uc.tag}</span>
+                <h3 className={styles.useCaseName}>{uc.name}</h3>
+                <p className={styles.cardDesc}>{uc.desc}</p>
+              </div>
+              <div className={styles.useCaseAscii}>
+                {uc.ascii.map((line, i) => (
+                  <div className={styles.asciiLine} key={i}>{line}</div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

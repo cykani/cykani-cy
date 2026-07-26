@@ -9,9 +9,9 @@ export class BillingService {
 
   async getOrCreateSubscription(orgId: string, plan: OrgPlan): Promise<Subscription> {
     const [ex] = await this.db.select().from(subscriptions).where(eq(subscriptions.orgId, orgId));
-    if (ex) return Subscription.reconstitute({ id: ex.id, orgId: ex.orgId, plan: ex.plan as OrgPlan, stripeSubscriptionId: ex.stripeSubscriptionId, currentPeriodStart: ex.currentPeriodStart, currentPeriodEnd: ex.currentPeriodEnd, createdAt: ex.createdAt, updatedAt: ex.updatedAt });
+    if (ex) return Subscription.reconstitute({ id: ex.id, orgId: ex.orgId, plan: ex.plan as OrgPlan, lemonSqueezySubscriptionId: ex.lemonSqueezySubscriptionId, currentPeriodStart: ex.currentPeriodStart, currentPeriodEnd: ex.currentPeriodEnd, createdAt: ex.createdAt, updatedAt: ex.updatedAt });
     const sub = Subscription.create(orgId, plan);
-    await this.db.insert(subscriptions).values({ id: sub.id, orgId: sub.orgId, plan: sub.plan, stripeSubscriptionId: sub.stripeSubscriptionId, currentPeriodStart: sub.currentPeriodStart, currentPeriodEnd: sub.currentPeriodEnd, createdAt: sub.createdAt, updatedAt: sub.updatedAt });
+    await this.db.insert(subscriptions).values({ id: sub.id, orgId: sub.orgId, plan: sub.plan, lemonSqueezySubscriptionId: sub.lemonSqueezySubscriptionId, currentPeriodStart: sub.currentPeriodStart, currentPeriodEnd: sub.currentPeriodEnd, createdAt: sub.createdAt, updatedAt: sub.updatedAt });
     return sub;
   }
 
@@ -25,7 +25,7 @@ export class BillingService {
         orgId,
       });
 
-      await this.db.update(subscriptions).set({ stripeSubscriptionId: checkout.data.id }).where(eq(subscriptions.id, existing.id));
+      await this.db.update(subscriptions).set({ lemonSqueezySubscriptionId: checkout.data.id }).where(eq(subscriptions.id, existing.id));
 
       return { sessionId: checkout.data.id, url: checkout.data.attributes.checkout_url ?? "" };
     }

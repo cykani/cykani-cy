@@ -54,7 +54,7 @@ export function lemonSqueezyWebhookRouter(container: Container): Hono<ApiEnv> {
 
           const [sub] = await container.db.select().from(subscriptions).where(eq(subscriptions.orgId, orgId));
           if (sub) {
-            await container.db.update(subscriptions).set({ plan, stripeSubscriptionId: data.id }).where(eq(subscriptions.id, sub.id));
+            await container.db.update(subscriptions).set({ plan, lemonSqueezySubscriptionId: data.id }).where(eq(subscriptions.id, sub.id));
           }
 
           const [org] = await container.db.select().from(organizations).where(eq(organizations.id, orgId));

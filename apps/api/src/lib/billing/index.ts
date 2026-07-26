@@ -5,7 +5,14 @@ import type { Container } from "../../container";
 
 export function billingRouter(container: Container): Hono<ApiEnv> {
   const r = new Hono<ApiEnv>();
-  r.get("/plans", (c) => c.json({ plans: Object.entries(PLAN_LIMITS).map(([id, limits]) => ({ id, name: id.charAt(0).toUpperCase() + id.slice(1), limits, price: id === "free" ? 0 : id === "pro" ? 49 : 199 })) }));
+  r.get("/plans", (c) => c.json({
+    plans: Object.entries(PLAN_LIMITS).map(([id, limits]) => ({
+      id,
+      name: id.charAt(0).toUpperCase() + id.slice(1),
+      limits,
+      price: id === "free" ? 0 : id === "pro" ? 19 : 79,
+    }))
+  }));
 
   r.post("/checkout", async (c) => {
     const orgId = c.get("orgId");

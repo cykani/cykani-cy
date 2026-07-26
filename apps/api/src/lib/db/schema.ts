@@ -6,7 +6,7 @@ function gid() { return nanoid(); }
 export const organizations = pgTable("organizations", {
   id: text("id").primaryKey().$defaultFn(gid), name: text("name").notNull(), slug: text("slug").notNull().unique(),
   plan: text("plan").notNull().default("free"),
-  ownerId: text("owner_id").notNull(), stripeCustomerId: text("stripe_customer_id"),
+  ownerId: text("owner_id").notNull(), lemonSqueezyCustomerId: text("lemonsqueezy_customer_id"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [index("idx_org_owner").on(t.ownerId), uniqueIndex("idx_org_slug").on(t.slug)]);
@@ -62,7 +62,7 @@ export const apiKeys = pgTable("api_keys", {
 
 export const subscriptions = pgTable("subscriptions", {
   id: text("id").primaryKey().$defaultFn(gid), orgId: text("org_id").notNull().references(() => organizations.id),
-  plan: text("plan").notNull().default("free"), stripeSubscriptionId: text("stripe_subscription_id"),
+  plan: text("plan").notNull().default("free"), lemonSqueezySubscriptionId: text("lemonsqueezy_subscription_id"),
   currentPeriodStart: timestamp("current_period_start", { withTimezone: true }).notNull(),
   currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -78,7 +78,7 @@ export const usageRecords = pgTable("usage_records", {
 export const licenseKeys = pgTable("license_keys", {
   id: text("id").primaryKey().$defaultFn(gid), orgId: text("org_id").notNull().references(() => organizations.id),
   keyHash: text("key_hash").notNull(), plan: text("plan").notNull().default("pro"),
-  stripeCustomerId: text("stripe_customer_id"), stripeSubscriptionId: text("stripe_subscription_id"),
+  lemonSqueezyCustomerId: text("lemonsqueezy_customer_id"), lemonSqueezySubscriptionId: text("lemonsqueezy_subscription_id"),
   expiresAt: timestamp("expires_at", { withTimezone: true }),
   lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
