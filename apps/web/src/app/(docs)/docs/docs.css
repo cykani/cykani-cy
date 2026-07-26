@@ -21,7 +21,6 @@
 #nd-docs-layout {
   min-height: 0 !important;
   --fd-docs-height: auto !important;
-  padding-top: 64px;
 }
 
 #nd-sidebar {
