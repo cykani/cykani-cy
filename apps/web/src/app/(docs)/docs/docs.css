@@ -21,6 +21,7 @@
 #nd-docs-layout {
   min-height: 0 !important;
   --fd-docs-height: auto !important;
+  padding-top: 64px;
 }
 
 #nd-sidebar {
@@ -29,6 +30,24 @@
   --color-fd-muted-foreground: #a1a1aa;
   background: #08090b;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px) !important;
+  overflow-y: auto;
+}
+
+/* Sidebar toggle button - must be above navbar z-index */
+#nd-sidebar-toggle,
+[aria-label="Toggle Sidebar"],
+button[data-sidebar="trigger"] {
+  z-index: 60 !important;
+  top: 72px !important;
+}
+
+/* Mobile sidebar overlay */
+#nd-mobile-sidebar {
+  z-index: 55 !important;
+  padding-top: 64px;
 }
 
 #nd-sidebar a {
