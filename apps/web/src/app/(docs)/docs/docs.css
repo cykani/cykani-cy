@@ -30,30 +30,6 @@
   --color-fd-muted-foreground: #a1a1aa;
   background: #08090b;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
-  position: sticky;
-  top: 64px;
-  height: calc(100vh - 64px) !important;
-  overflow: visible;
-}
-
-#nd-sidebar > div {
-  overflow-y: auto;
-  height: 100%;
-}
-
-/* Sidebar toggle button */
-#nd-sidebar-toggle,
-[aria-label="Toggle Sidebar"],
-button[data-sidebar="trigger"] {
-  position: sticky;
-  top: 64px;
-  z-index: 10;
-}
-
-/* Mobile sidebar overlay */
-#nd-mobile-sidebar {
-  z-index: 55 !important;
-  padding-top: 64px;
 }
 
 #nd-sidebar a {
