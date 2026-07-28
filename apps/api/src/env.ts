@@ -22,6 +22,14 @@ const envSchema = z.object({
   LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
   // ---------------------------------------------------------------------------
+  // AnyIP proxy provider (free 5GB trial)
+  // Set ANYIP_USERNAME and ANYIP_PASSWORD — never commit real values.
+  // ---------------------------------------------------------------------------
+  ANYIP_USERNAME: z.string().optional(),
+  ANYIP_PASSWORD: z.string().optional(),
+  ANYIP_HOST: z.string().default("portal.anyip.io"),
+  ANYIP_PORT: z.coerce.number().default(1080),
+  // ---------------------------------------------------------------------------
   // LLM Provider config
   // Default: Hermes 3 via OpenRouter (MIT model, free tier available).
   // Switch to groq/openai/anthropic/custom via LLM_PROVIDER env var.
