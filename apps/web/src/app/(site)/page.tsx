@@ -8,7 +8,6 @@ import { HeroSection } from "@/components/www/hero-section";
 import { MetricsSection } from "@/components/www/metrics-section";
 import { PricingCard } from "@/components/www/pricing-card";
 import { SecurityBadges } from "@/components/www/security-badges";
-import { TestimonialsSection } from "@/components/www/testimonials-section";
 
 import styles from "./landing.module.css";
 
@@ -118,15 +117,6 @@ const useCases = [
       "└─────────────────────────────┘",
     ],
   },
-];
-
-const clients = [
-  { name: "Acme Corp", type: "Enterprise" },
-  { name: "Globex", type: "Enterprise" },
-  { name: "Soylent", type: "Enterprise" },
-  { name: "Initech", type: "Enterprise" },
-  { name: "Umbrella", type: "Enterprise" },
-  { name: "Stark Industries", type: "Enterprise" },
 ];
 
 const tiers = [
@@ -369,49 +359,6 @@ export default function SitePage() {
             ))}
           </div>
         </div>
-      </section>
-
-      <Divider />
-
-      <section id="clients" className={styles.section}>
-        <div className={styles.sectionInner}>
-          <span className={styles.tag}>Clients</span>
-          <h2 className={styles.sectionHeading}>
-            Trusted by teams
-            <br />
-            that ship automation.
-          </h2>
-          <p className={styles.sectionSubhead}>
-            From AI labs to security firms, organizations rely on Cykani to run undetectable browser infrastructure at
-            scale.
-          </p>
-        </div>
-        <div className={styles.grid}>
-          {clients.map((client) => (
-            <div className={styles.card} key={client.name}>
-              <div className={styles.cardInitial}>{client.name[0]}</div>
-              <span className={styles.cardName}>{client.name}</span>
-              <span className={styles.cardType}>{client.type}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <Divider />
-
-      <section id="testimonials" className={styles.section}>
-        <div className={styles.sectionInner}>
-          <span className={styles.tag}>Testimonials</span>
-          <h2 className={styles.sectionHeading}>
-            Trusted by engineers
-            <br />
-            shipping at scale.
-          </h2>
-          <p className={styles.sectionSubhead}>
-            Teams that rely on Cykani for production browser automation share their experience.
-          </p>
-        </div>
-        <TestimonialsSection />
       </section>
 
       <Divider />

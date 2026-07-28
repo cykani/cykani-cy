@@ -7,6 +7,7 @@ import { NoVncProxy } from "./lib/vnc/proxy";
 import { SessionService } from "./lib/session/service";
 import { ProfileService } from "./lib/profile/service";
 import { AgentService } from "./lib/agent/service";
+import { AgentRunner } from "./lib/agent/runner";
 import { OrgService } from "./lib/organization/service";
 import { BillingService } from "./lib/billing/service";
 import { ProxyService } from "./lib/proxy/service";
@@ -30,6 +31,7 @@ export interface Container {
   docker: DockerEngine;
   vnc: NoVncProxy;
   stealth: StealthService;
+  agentRunner: AgentRunner;
   sessionService: SessionService;
   profileService: ProfileService;
   agentService: AgentService;
@@ -76,6 +78,10 @@ export function createContainer(): Container {
   const apiKeyService = new ApiKeyService(db, env.API_KEY_SECRET);
   const licenseKeyService = new LicenseKeyService(db, env.API_KEY_SECRET);
 
+  // AgentRunner wires agentService + stealthService + sseBus.
+  // LLM provider defaults to Hermes 3 via OpenRouter — configurable via env vars.
+  const agentRunner = new AgentRunner(agentService, stealth, sseBus);
+
   eventBus.subscribe("*", async (event) => {
     sseBus.publish(event.payload.orgId as string ?? "", event.eventType, event.payload);
     await webhooks.dispatch(event.eventType, event.payload);
@@ -95,7 +101,7 @@ export function createContainer(): Container {
 
   _c = {
     env, db, redis, eventBus, docker, vnc,
-    sessionService, profileService, agentService,
+    sessionService, profileService, agentService, agentRunner,
     orgService, billingService, proxyService, stealth,
     rateLimiter: new RateLimiter(60000, 100),
     webhooks, usage, recording, screenshots, sseBus, email,
