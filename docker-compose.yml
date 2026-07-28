@@ -37,20 +37,42 @@ services:
     restart: unless-stopped
     ports:
       - "${API_PORT:-3000}:3000"
+    volumes:
+      # Mount Docker socket so the API can launch browser containers
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      NODE_ENV: "${NODE_ENV:-production}"
+      NODE_ENV: "${NODE_ENV:-development}"
       PORT: "3000"
-      DATABASE_URL: "${DATABASE_URL}"
-      REDIS_URL: "${REDIS_URL:-redis://redis:6379}"
+      DATABASE_URL: "postgresql://postgres:${PG_PASSWORD:-1234}@postgres:5432/cykani"
+      REDIS_URL: "redis://redis:6379"
       JWT_SECRET: "${JWT_SECRET}"
       API_KEY_SECRET: "${API_KEY_SECRET}"
       CORS_ORIGINS: "${CORS_ORIGINS:-http://localhost:3001}"
-      DOCKER_SOCKET: "${DOCKER_SOCKET:-/var/run/docker.sock}"
+      DOCKER_SOCKET: "/var/run/docker.sock"
+      # cykani-browser image — built from the private cykani-browser repo
+      # Local dev: build it first with: docker build -t cykani-browser:latest ./path/to/cykani-browser
       BROWSER_IMAGE: "${BROWSER_IMAGE:-cykani-browser:latest}"
-      MAX_SESSIONS_PER_ORG: "${MAX_SESSIONS_PER_ORG:-10}"
+      MAX_SESSIONS_PER_ORG: "${MAX_SESSIONS_PER_ORG:-5}"
       LOG_LEVEL: "${LOG_LEVEL:-info}"
       LEMON_SQUEEZY_API_KEY: "${LEMON_SQUEEZY_API_KEY:-}"
       LEMON_SQUEEZY_WEBHOOK_SECRET: "${LEMON_SQUEEZY_WEBHOOK_SECRET:-}"
+      # ---------------------------------------------------------------------------
+      # LLM Provider — Hermes 3 via OpenRouter is the default.
+      # Get a free OpenRouter API key at https://openrouter.ai
+      # The Hermes 3 model (nousresearch/hermes-3-llama-3.1-405b) is free-tier.
+      # Alternative: set LLM_PROVIDER=groq and GROQ_API_KEY for faster inference.
+      # ---------------------------------------------------------------------------
+      LLM_PROVIDER: "${LLM_PROVIDER:-hermes}"
+      LLM_MODEL: "${LLM_MODEL:-}"
+      OPENROUTER_API_KEY: "${OPENROUTER_API_KEY:-}"
+      GROQ_API_KEY: "${GROQ_API_KEY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   web:
     build:
@@ -61,14 +83,17 @@ services:
     ports:
       - "${WEB_PORT:-3001}:3000"
     environment:
-      NODE_ENV: "${NODE_ENV:-production}"
-      DATABASE_URL: "${DATABASE_URL}"
+      NODE_ENV: "${NODE_ENV:-development}"
+      DATABASE_URL: "postgresql://postgres:${PG_PASSWORD:-1234}@postgres:5432/cykani"
+      NEXT_PUBLIC_API_URL: "http://localhost:${API_PORT:-3000}"
       AUTH_URL: "${AUTH_URL:-http://localhost:3001}"
       AUTH_SECRET: "${AUTH_SECRET}"
-      AUTH_GOOGLE_ID: "${AUTH_GOOGLE_ID}"
-      AUTH_GOOGLE_SECRET: "${AUTH_GOOGLE_SECRET}"
-      AUTH_GITHUB_ID: "${AUTH_GITHUB_ID}"
-      AUTH_GITHUB_SECRET: "${AUTH_GITHUB_SECRET}"
+      AUTH_GOOGLE_ID: "${AUTH_GOOGLE_ID:-}"
+      AUTH_GOOGLE_SECRET: "${AUTH_GOOGLE_SECRET:-}"
+      AUTH_GITHUB_ID: "${AUTH_GITHUB_ID:-}"
+      AUTH_GITHUB_SECRET: "${AUTH_GITHUB_SECRET:-}"
+    depends_on:
+      - api
 
 volumes:
   cykani-pg-data:

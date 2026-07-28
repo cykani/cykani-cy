@@ -1,26 +1,44 @@
-import { SessionActions } from "./_components/session-actions";
-import { SessionInfo } from "./_components/session-info";
+import { AgentPromptPanel } from "./_components/agent-prompt-panel";
+import { SessionMeta } from "./_components/session-meta";
+import { StepLog } from "./_components/step-log";
 import { VNCViewer } from "./_components/vnc-viewer";
 
-export default async function SessionDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function SessionDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string; id: string }>;
+}) {
+  const { id, slug } = await params;
 
   return (
-    <div className="@container/main flex flex-col gap-4 md:gap-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-bold text-3xl">Session {id}</h1>
-          <p className="text-muted-foreground">Browser session details and VNC viewer</p>
+    <div className="@container/main flex h-[calc(100vh-theme(spacing.24))] flex-col gap-0 overflow-hidden rounded-xl border border-border/60">
+      {/* Top bar */}
+      <div className="flex h-12 shrink-0 items-center justify-between border-b border-border/60 bg-card/80 px-4 backdrop-blur-sm">
+        <div className="flex items-center gap-3">
+          <span className="size-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_6px_2px_#34d39980]" />
+          <span className="font-mono text-muted-foreground text-xs">
+            session / <span className="text-foreground">{id.slice(0, 12)}</span>
+          </span>
         </div>
+        <SessionMeta sessionId={id} />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      {/* Main 3-column layout */}
+      <div className="flex min-h-0 flex-1 overflow-hidden">
+        {/* VNC viewport — main canvas */}
+        <div className="flex min-w-0 flex-1 flex-col">
           <VNCViewer sessionId={id} />
         </div>
-        <div className="space-y-4">
-          <SessionInfo sessionId={id} />
-          <SessionActions sessionId={id} />
+
+        {/* Right panel */}
+        <div className="flex w-80 shrink-0 flex-col border-l border-border/60 bg-card/60">
+          {/* Agent prompt input */}
+          <AgentPromptPanel sessionId={id} />
+
+          {/* Step log feed */}
+          <div className="min-h-0 flex-1 overflow-hidden">
+            <StepLog sessionId={id} />
+          </div>
         </div>
       </div>
     </div>

@@ -52,7 +52,6 @@ const navLinks: NavItem[] = [
     label: "Company",
     children: [
       { name: "About", link: "/#about", icon: "◈", desc: "Our mission" },
-      { name: "Clients", link: "/#clients", icon: "◐", desc: "Trusted by teams" },
       { name: "Contact", link: "/#contact", icon: "◇", desc: "Get in touch" },
     ],
   },

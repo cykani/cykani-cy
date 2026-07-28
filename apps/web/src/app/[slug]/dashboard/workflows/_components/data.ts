@@ -447,6 +447,511 @@ export const sampleWorkflows: Workflow[] = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Hot-market pre-built workflow templates
+// ---------------------------------------------------------------------------
+
+export interface WorkflowTemplate {
+  id: string;
+  name: string;
+  description: string;
+  category: "jobs" | "research" | "forms" | "booking" | "scraping";
+  categoryLabel: string;
+  categoryColor: string;
+  icon: string;
+  estimatedTime: string;
+  useCases: string[];
+  nodes: WorkflowNode[];
+  edges: WorkflowEdge[];
+}
+
+export const workflowTemplates: WorkflowTemplate[] = [
+  // -------------------------------------------------------------------------
+  // 1. Job Application Automation
+  // -------------------------------------------------------------------------
+  {
+    id: "tpl-job-apply",
+    name: "Job Application Bot",
+    description:
+      "Automatically submit your CV to hundreds of job postings. Reads job boards, filters by criteria, fills application forms, and tracks submissions.",
+    category: "jobs",
+    categoryLabel: "Career",
+    categoryColor: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+    icon: "Briefcase",
+    estimatedTime: "~45s per application",
+    useCases: [
+      "Apply to LinkedIn Easy Apply jobs",
+      "Submit CVs to recruitment portals",
+      "Fill out multi-step application forms",
+      "Track application status per company",
+    ],
+    nodes: [
+      {
+        id: "j1",
+        type: "trigger",
+        label: "Schedule: Daily 8AM",
+        description: "Runs every morning to check for new matching jobs",
+        config: { cron: "0 8 * * *", timezone: "Africa/Johannesburg" },
+        status: "idle",
+        duration: "0ms",
+      },
+      {
+        id: "j2",
+        type: "browser",
+        label: "Open LinkedIn Jobs",
+        description: "Navigates to LinkedIn job search with filters",
+        config: {
+          url: "https://www.linkedin.com/jobs/search/?keywords=software+engineer&location=South+Africa",
+          waitUntil: "networkidle",
+          timeout: 15000,
+        },
+        status: "idle",
+        duration: "2.1s",
+      },
+      {
+        id: "j3",
+        type: "agent",
+        label: "AI Extract Job Listings",
+        description: "Extracts title, company, location, salary, and apply URL for each job",
+        config: {
+          goal: "Extract all job listings visible on the page including title, company, location, salary if shown, and the apply button URL",
+          model: "gpt-4o-mini",
+          schema: '[{"title":"string","company":"string","location":"string","applyUrl":"string","salary":"string"}]',
+        },
+        status: "idle",
+        duration: "3.8s",
+      },
+      {
+        id: "j4",
+        type: "condition",
+        label: "Filter: Easy Apply Only?",
+        description: "Only proceed with Easy Apply jobs to maximise volume",
+        config: {
+          variable: "{{j3.easyApply}}",
+          operator: "equals",
+          value: "true",
+        },
+        status: "idle",
+      },
+      {
+        id: "j5",
+        type: "agent",
+        label: "AI Fill Application",
+        description: "Reads the form fields and fills them using your CV data",
+        config: {
+          goal: "Fill all visible form fields using the candidate profile. Match field labels to profile data (name, email, phone, experience, skills). Submit when all required fields are complete.",
+          model: "gpt-4o",
+          schema: '{"fieldsCompleted":"number","submitted":"boolean","jobTitle":"string"}',
+        },
+        status: "idle",
+        duration: "8.4s",
+      },
+      {
+        id: "j6",
+        type: "action",
+        label: "Log Submission",
+        description: "Records the application in your tracking database",
+        config: {
+          table: "job_applications",
+          data: "{{j5.output}}",
+        },
+        status: "idle",
+        duration: "0.4s",
+      },
+      {
+        id: "j7",
+        type: "output",
+        label: "Daily Summary Email",
+        description: "Sends you a summary of all applications submitted today",
+        config: {
+          to: "you@example.com",
+          subject: "Job Applications Summary — {{date}}",
+          body: "Applied to {{j6.count}} jobs today. See attached report.",
+        },
+        status: "idle",
+        duration: "0.2s",
+      },
+    ],
+    edges: [
+      { id: "ej1-2", source: "j1", target: "j2", type: "default" },
+      { id: "ej2-3", source: "j2", target: "j3", type: "default" },
+      { id: "ej3-4", source: "j3", target: "j4", type: "default" },
+      { id: "ej4-5", source: "j4", target: "j5", type: "yes", label: "yes" },
+      { id: "ej5-6", source: "j5", target: "j6", type: "default" },
+      { id: "ej6-7", source: "j6", target: "j7", type: "default" },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // 2. Research Automation (Law / Consulting)
+  // -------------------------------------------------------------------------
+  {
+    id: "tpl-research",
+    name: "Deep Web Research Agent",
+    description:
+      "Autonomously researches any topic across multiple sources. Synthesises findings into a structured report. Used by law firms, consultancies, and analysts.",
+    category: "research",
+    categoryLabel: "Research",
+    categoryColor: "text-violet-400 bg-violet-400/10 border-violet-400/20",
+    icon: "Search",
+    estimatedTime: "~3-8 min per topic",
+    useCases: [
+      "Company due diligence reports",
+      "Legal case background research",
+      "Competitor intelligence gathering",
+      "Academic literature summaries",
+    ],
+    nodes: [
+      {
+        id: "r1",
+        type: "trigger",
+        label: "Webhook: Research Request",
+        description: "Receives research topic via API call",
+        config: { method: "POST", path: "/api/research", auth: "API Key" },
+        status: "idle",
+        duration: "0ms",
+      },
+      {
+        id: "r2",
+        type: "agent",
+        label: "AI Plan Research",
+        description: "Breaks the topic into specific search queries and source targets",
+        config: {
+          goal: "Given a research topic, generate 5-8 specific search queries and identify the best sources to visit (news sites, databases, company sites). Return a structured research plan.",
+          model: "gpt-4o",
+          schema: '{"queries":["string"],"sources":["string"],"keyQuestions":["string"]}',
+        },
+        status: "idle",
+        duration: "2.1s",
+      },
+      {
+        id: "r3",
+        type: "condition",
+        label: "Loop: Each Query",
+        description: "Iterates over each research query",
+        config: {
+          items: "{{r2.queries}}",
+          maxIterations: 8,
+        },
+        status: "idle",
+      },
+      {
+        id: "r4",
+        type: "browser",
+        label: "Search & Navigate",
+        description: "Executes search and opens top results",
+        config: {
+          url: "https://www.google.com/search?q={{r3.currentItem}}",
+          waitUntil: "domcontentloaded",
+          timeout: 10000,
+        },
+        status: "idle",
+        duration: "1.4s",
+      },
+      {
+        id: "r5",
+        type: "agent",
+        label: "AI Extract Key Findings",
+        description: "Extracts relevant facts, quotes, and data points from each page",
+        config: {
+          goal: "Extract all facts, statistics, quotes, and key findings relevant to the research topic. Ignore navigation and ads. Return structured findings with source URL and date.",
+          model: "gpt-4o",
+          schema: '{"findings":["string"],"source":"string","date":"string","credibility":"high|medium|low"}',
+        },
+        status: "idle",
+        duration: "4.7s",
+      },
+      {
+        id: "r6",
+        type: "agent",
+        label: "AI Synthesise Report",
+        description: "Compiles all findings into a professional research report",
+        config: {
+          goal: "Synthesise all collected findings into a structured report with Executive Summary, Key Findings, Supporting Evidence, and Recommendations sections. Use professional language.",
+          model: "gpt-4o",
+          schema: '{"title":"string","executiveSummary":"string","keyFindings":["string"],"recommendations":["string"]}',
+        },
+        status: "idle",
+        duration: "6.2s",
+      },
+      {
+        id: "r7",
+        type: "output",
+        label: "Deliver Report",
+        description: "Sends the completed research report",
+        config: {
+          to: "{{r1.requesterEmail}}",
+          subject: "Research Report: {{r1.topic}}",
+          body: "{{r6.report}}",
+        },
+        status: "idle",
+        duration: "0.3s",
+      },
+    ],
+    edges: [
+      { id: "er1-2", source: "r1", target: "r2", type: "default" },
+      { id: "er2-3", source: "r2", target: "r3", type: "default" },
+      { id: "er3-4", source: "r3", target: "r4", type: "yes", label: "each" },
+      { id: "er4-5", source: "r4", target: "r5", type: "default" },
+      { id: "er5-3", source: "r5", target: "r3", type: "default", label: "next" },
+      { id: "er3-6", source: "r3", target: "r6", type: "default", label: "done" },
+      { id: "er6-7", source: "r6", target: "r7", type: "default" },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // 3. Form Filling / Data Entry Automation
+  // -------------------------------------------------------------------------
+  {
+    id: "tpl-form-fill",
+    name: "Bulk Form Submission Bot",
+    description:
+      "Reads structured data from a spreadsheet or database and fills web forms at scale. Handles multi-step forms, CAPTCHAs, and confirmations.",
+    category: "forms",
+    categoryLabel: "Data Entry",
+    categoryColor: "text-amber-400 bg-amber-400/10 border-amber-400/20",
+    icon: "FileText",
+    estimatedTime: "~15s per form",
+    useCases: [
+      "Government portal submissions",
+      "Insurance claim forms",
+      "Supplier onboarding portals",
+      "Survey data entry at scale",
+    ],
+    nodes: [
+      {
+        id: "f1",
+        type: "trigger",
+        label: "Manual / Webhook",
+        description: "Triggered manually or via API with the data batch",
+        config: { method: "POST", path: "/api/form-fill", auth: "API Key" },
+        status: "idle",
+        duration: "0ms",
+      },
+      {
+        id: "f2",
+        type: "action",
+        label: "Load Data Batch",
+        description: "Fetches the records to be submitted from the data source",
+        config: {
+          method: "GET",
+          url: "https://api.example.com/records?status=pending",
+          headers: '{"Authorization": "Bearer {{env.API_TOKEN}}"}',
+        },
+        status: "idle",
+        duration: "0.6s",
+      },
+      {
+        id: "f3",
+        type: "condition",
+        label: "Loop: Each Record",
+        description: "Processes each record in the batch",
+        config: {
+          items: "{{f2.records}}",
+          maxIterations: 500,
+        },
+        status: "idle",
+      },
+      {
+        id: "f4",
+        type: "browser",
+        label: "Open Form Page",
+        description: "Navigates to the target form URL",
+        config: {
+          url: "{{f1.formUrl}}",
+          waitUntil: "networkidle",
+          timeout: 20000,
+        },
+        status: "idle",
+        duration: "1.8s",
+      },
+      {
+        id: "f5",
+        type: "agent",
+        label: "AI Map & Fill Fields",
+        description: "Intelligently maps record data to form fields and fills them",
+        config: {
+          goal: "Analyse all form fields on the page. Map each field label to the corresponding data from the current record. Fill every required field. Handle dropdowns, checkboxes, and radio buttons. Do not submit yet.",
+          model: "gpt-4o",
+          schema: '{"fieldsMapped":"number","fieldsRequired":"number","allRequiredFilled":"boolean"}',
+        },
+        status: "idle",
+        duration: "5.3s",
+      },
+      {
+        id: "f6",
+        type: "browser",
+        label: "Screenshot & Verify",
+        description: "Takes a screenshot for audit trail before submitting",
+        config: { fullPage: false, format: "png", quality: 90 },
+        status: "idle",
+        duration: "0.4s",
+      },
+      {
+        id: "f7",
+        type: "browser",
+        label: "Submit Form",
+        description: "Clicks the submit button and waits for confirmation",
+        config: {
+          selector: "button[type='submit'], input[type='submit']",
+          waitAfter: 2000,
+        },
+        status: "idle",
+        duration: "2.1s",
+      },
+      {
+        id: "f8",
+        type: "action",
+        label: "Mark Record Complete",
+        description: "Updates the record status to submitted with confirmation number",
+        config: {
+          method: "PATCH",
+          url: "https://api.example.com/records/{{f3.currentItem.id}}",
+          body: '{"status":"submitted","confirmedAt":"{{now}}","screenshot":"{{f6.base64}}"}',
+        },
+        status: "idle",
+        duration: "0.3s",
+      },
+    ],
+    edges: [
+      { id: "ef1-2", source: "f1", target: "f2", type: "default" },
+      { id: "ef2-3", source: "f2", target: "f3", type: "default" },
+      { id: "ef3-4", source: "f3", target: "f4", type: "yes", label: "each" },
+      { id: "ef4-5", source: "f4", target: "f5", type: "default" },
+      { id: "ef5-6", source: "f5", target: "f6", type: "default" },
+      { id: "ef6-7", source: "f6", target: "f7", type: "default" },
+      { id: "ef7-8", source: "f7", target: "f8", type: "default" },
+      { id: "ef8-3", source: "f8", target: "f3", type: "default", label: "next" },
+    ],
+  },
+
+  // -------------------------------------------------------------------------
+  // 4. Booking Automation
+  // -------------------------------------------------------------------------
+  {
+    id: "tpl-booking",
+    name: "Appointment & Booking Agent",
+    description:
+      "Monitors availability and books appointments, tickets, or travel automatically. Handles authentication, seat selection, and confirmation extraction.",
+    category: "booking",
+    categoryLabel: "Booking",
+    categoryColor: "text-blue-400 bg-blue-400/10 border-blue-400/20",
+    icon: "CalendarCheck",
+    estimatedTime: "~30s per booking",
+    useCases: [
+      "Doctor / clinic appointment booking",
+      "Flight and hotel reservations",
+      "Event ticket purchasing",
+      "Restaurant reservations at peak times",
+    ],
+    nodes: [
+      {
+        id: "b1",
+        type: "trigger",
+        label: "Schedule: Check Every 5min",
+        description: "Polls for availability on a tight interval",
+        config: { cron: "*/5 * * * *", timezone: "UTC" },
+        status: "idle",
+        duration: "0ms",
+      },
+      {
+        id: "b2",
+        type: "browser",
+        label: "Open Booking Portal",
+        description: "Navigates to the booking site and logs in if needed",
+        config: {
+          url: "{{env.BOOKING_URL}}",
+          waitUntil: "networkidle",
+          timeout: 20000,
+        },
+        status: "idle",
+        duration: "2.4s",
+      },
+      {
+        id: "b3",
+        type: "agent",
+        label: "AI Check Availability",
+        description: "Scans the calendar or availability grid for open slots",
+        config: {
+          goal: "Check the booking calendar for available slots matching the target date range and preferences. Return available time slots with their selector paths.",
+          model: "gpt-4o",
+          schema: '{"available":["boolean"],"slots":[{"date":"string","time":"string","selector":"string"}]}',
+        },
+        status: "idle",
+        duration: "2.9s",
+      },
+      {
+        id: "b4",
+        type: "condition",
+        label: "Slot Available?",
+        description: "Checks if any matching slot was found",
+        config: {
+          variable: "{{b3.available}}",
+          operator: "equals",
+          value: "true",
+        },
+        status: "idle",
+      },
+      {
+        id: "b5",
+        type: "agent",
+        label: "AI Select & Book",
+        description: "Selects the best available slot and completes the booking form",
+        config: {
+          goal: "Select the first available slot from the options. Fill in all required booking details (name, email, phone, preferences). Click confirm. Extract the confirmation number from the success page.",
+          model: "gpt-4o",
+          schema: '{"confirmationNumber":"string","date":"string","time":"string","venue":"string","totalCost":"string"}',
+        },
+        status: "idle",
+        duration: "7.1s",
+      },
+      {
+        id: "b6",
+        type: "browser",
+        label: "Screenshot Confirmation",
+        description: "Captures the booking confirmation page as evidence",
+        config: { fullPage: false, format: "png", quality: 95 },
+        status: "idle",
+        duration: "0.3s",
+      },
+      {
+        id: "b7",
+        type: "action",
+        label: "Save Booking Record",
+        description: "Stores booking details in the database",
+        config: {
+          table: "bookings",
+          data: "{{b5.output}}",
+        },
+        status: "idle",
+        duration: "0.2s",
+      },
+      {
+        id: "b8",
+        type: "output",
+        label: "Confirmation Notification",
+        description: "Sends confirmation details via email and Slack",
+        config: {
+          channel: "#bookings",
+          message: "✅ Booking confirmed! {{b5.date}} at {{b5.time}} — Ref: {{b5.confirmationNumber}}",
+        },
+        status: "idle",
+        duration: "0.2s",
+      },
+    ],
+    edges: [
+      { id: "eb1-2", source: "b1", target: "b2", type: "default" },
+      { id: "eb2-3", source: "b2", target: "b3", type: "default" },
+      { id: "eb3-4", source: "b3", target: "b4", type: "default" },
+      { id: "eb4-5", source: "b4", target: "b5", type: "yes", label: "available" },
+      { id: "eb4-1", source: "b4", target: "b1", type: "default", label: "retry" },
+      { id: "eb5-6", source: "b5", target: "b6", type: "default" },
+      { id: "eb6-7", source: "b6", target: "b7", type: "default" },
+      { id: "eb7-8", source: "b7", target: "b8", type: "default" },
+    ],
+  },
+];
+
 export const templateCategories = [
   { id: "triggers", label: "Triggers", description: "Start your workflow" },
   { id: "browser", label: "Browser", description: "Browser automation" },

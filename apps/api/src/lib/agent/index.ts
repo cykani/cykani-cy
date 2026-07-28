@@ -76,5 +76,55 @@ export function agentRouter(container: Container): Hono<ApiEnv> {
     return c.json({ agent: result.value.toJSON() });
   });
 
+  // ---------------------------------------------------------------------------
+  // POST /:id/run  — trigger the agent execution loop
+  // This is what the UI calls when the user hits "Run" on an agent.
+  // The runner uses Hermes (or configured LLM) + cykani-stealth.
+  // ---------------------------------------------------------------------------
+  r.post("/:id/run", async (c) => {
+    const agentId = String(c.req.param("id"));
+    const body = await c.req.json().catch(() => ({})) as {
+      cdpEndpoint?: string;
+      llmProvider?: string;
+      llmModel?: string;
+    };
+
+    const agentResult = await container.agentService.getById(agentId);
+    if (!agentResult.ok) return errorResponse(c, agentResult, 404);
+
+    const agent = agentResult.value;
+    if (agent.status === "running") {
+      return c.json({ error: { code: "ALREADY_RUNNING", message: "Agent is already running" } }, 400);
+    }
+
+    // Get CDP endpoint from the session
+    let cdpEndpoint = body.cdpEndpoint;
+    if (!cdpEndpoint) {
+      const sessionResult = await container.sessionService.getById(agent.sessionId);
+      if (sessionResult.ok && sessionResult.value.cdpPort) {
+        cdpEndpoint = `ws://localhost:${sessionResult.value.cdpPort}`;
+      }
+    }
+
+    if (!cdpEndpoint) {
+      return c.json({ error: { code: "NO_CDP_ENDPOINT", message: "No CDP endpoint available — session must be running" } }, 400);
+    }
+
+    // Fire-and-forget: run the agent in background so HTTP responds immediately
+    void container.agentRunner.run({
+      agentId,
+      orgId: c.get("orgId"),
+      goal: agent.task.goal,
+      cdpEndpoint,
+      maxSteps: agent.task.maxSteps ?? 25,
+      llmConfig: {
+        provider: (body.llmProvider as "hermes" | "groq" | "openai" | undefined) ?? undefined,
+        model: body.llmModel,
+      },
+    });
+
+    return c.json({ agentId, status: "running", message: "Agent execution started" });
+  });
+
   return r;
 }

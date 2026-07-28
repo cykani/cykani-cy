@@ -1,10 +1,11 @@
 import { api } from "@/lib/api/client";
 
-import { ComingSoonOverlay } from "../_components/coming-soon-overlay";
+import { LaunchBrowserModal } from "./_components/launch-browser-modal";
 import { SessionList } from "./_components/session-list";
 import { SessionStats } from "./_components/session-stats";
 
-export default async function SessionsPage() {
+export default async function SessionsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   let sessions: any[] = [];
   try {
     const data = await api.sessions.list({ limit: 20 });
@@ -14,11 +15,20 @@ export default async function SessionsPage() {
   }
 
   return (
-    <ComingSoonOverlay>
-      <div className="@container/main flex flex-col gap-4 md:gap-6">
-        <SessionStats sessions={sessions} />
-        <SessionList sessions={sessions} />
+    <div className="@container/main flex flex-col gap-6">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-bold text-2xl tracking-tight">Browser Sessions</h1>
+          <p className="mt-1 text-muted-foreground text-sm">
+            Launch stealth Chromium sessions and observe them live.
+          </p>
+        </div>
+        <LaunchBrowserModal />
       </div>
-    </ComingSoonOverlay>
+
+      <SessionStats sessions={sessions} />
+      <SessionList sessions={sessions} slug={slug} />
+    </div>
   );
 }

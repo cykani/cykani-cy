@@ -1,8 +1,6 @@
 "use client";
 
-import { Badge } from "@/ui/badge";
-import { Button } from "@/ui/button";
-import { Separator } from "@/ui/separator";
+import { cn } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
 import {
   Brain,
@@ -19,20 +17,14 @@ import {
   MessageSquare,
   MousePointer,
   Play,
-  Redo,
   Repeat,
-  Save,
   Send,
   Sparkles,
   Timer,
-  Trash2,
   Type,
-  Undo,
   Variable,
   Webhook,
   Zap,
-  ZoomIn,
-  ZoomOut,
 } from "lucide-react";
 
 const iconMap: Record<string, LucideIcon> = {
@@ -66,106 +58,49 @@ interface NodePaletteItem {
   label: string;
   icon: string;
   color: string;
+  category: string;
 }
 
 const nodePalette: NodePaletteItem[] = [
-  {
-    type: "trigger",
-    label: "Webhook",
-    icon: "Webhook",
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20",
-  },
-  {
-    type: "trigger",
-    label: "Schedule",
-    icon: "Clock",
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20",
-  },
-  {
-    type: "browser",
-    label: "Navigate",
-    icon: "Globe",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:bg-violet-500/20",
-  },
-  {
-    type: "browser",
-    label: "Click",
-    icon: "MousePointer",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:bg-violet-500/20",
-  },
-  {
-    type: "browser",
-    label: "Type",
-    icon: "Type",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:bg-violet-500/20",
-  },
-  {
-    type: "browser",
-    label: "Extract",
-    icon: "Download",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:bg-violet-500/20",
-  },
-  {
-    type: "browser",
-    label: "Screenshot",
-    icon: "Camera",
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400 hover:bg-violet-500/20",
-  },
-  {
-    type: "condition",
-    label: "If/Else",
-    icon: "GitBranch",
-    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20",
-  },
-  {
-    type: "condition",
-    label: "Loop",
-    icon: "Repeat",
-    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20",
-  },
-  {
-    type: "agent",
-    label: "AI Extract",
-    icon: "Brain",
-    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400 hover:bg-orange-500/20",
-  },
-  {
-    type: "agent",
-    label: "AI Decide",
-    icon: "Sparkles",
-    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400 hover:bg-orange-500/20",
-  },
-  {
-    type: "action",
-    label: "HTTP",
-    icon: "Send",
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20",
-  },
-  {
-    type: "action",
-    label: "Code",
-    icon: "Code",
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20",
-  },
-  {
-    type: "output",
-    label: "Email",
-    icon: "Mail",
-    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20",
-  },
-  {
-    type: "output",
-    label: "Slack",
-    icon: "MessageSquare",
-    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20",
-  },
-  {
-    type: "output",
-    label: "Database",
-    icon: "Database",
-    color: "bg-slate-500/10 text-slate-600 dark:text-slate-400 hover:bg-slate-500/20",
-  },
+  // Triggers
+  { type: "trigger", label: "Webhook", icon: "Webhook", color: "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20", category: "Triggers" },
+  { type: "trigger", label: "Schedule", icon: "Clock", color: "bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 border border-emerald-500/20", category: "Triggers" },
+  // Browser
+  { type: "browser", label: "Navigate", icon: "Globe", color: "bg-violet-500/15 text-violet-400 hover:bg-violet-500/25 border border-violet-500/20", category: "Browser" },
+  { type: "browser", label: "Click", icon: "MousePointer", color: "bg-violet-500/15 text-violet-400 hover:bg-violet-500/25 border border-violet-500/20", category: "Browser" },
+  { type: "browser", label: "Type", icon: "Type", color: "bg-violet-500/15 text-violet-400 hover:bg-violet-500/25 border border-violet-500/20", category: "Browser" },
+  { type: "browser", label: "Extract", icon: "Download", color: "bg-violet-500/15 text-violet-400 hover:bg-violet-500/25 border border-violet-500/20", category: "Browser" },
+  { type: "browser", label: "Screenshot", icon: "Camera", color: "bg-violet-500/15 text-violet-400 hover:bg-violet-500/25 border border-violet-500/20", category: "Browser" },
+  // Logic
+  { type: "condition", label: "If/Else", icon: "GitBranch", color: "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20", category: "Logic" },
+  { type: "condition", label: "Loop", icon: "Repeat", color: "bg-amber-500/15 text-amber-400 hover:bg-amber-500/25 border border-amber-500/20", category: "Logic" },
+  // AI
+  { type: "agent", label: "AI Extract", icon: "Brain", color: "bg-orange-500/15 text-orange-400 hover:bg-orange-500/25 border border-orange-500/20", category: "AI" },
+  { type: "agent", label: "AI Decide", icon: "Sparkles", color: "bg-orange-500/15 text-orange-400 hover:bg-orange-500/25 border border-orange-500/20", category: "AI" },
+  // Actions
+  { type: "action", label: "HTTP", icon: "Send", color: "bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20", category: "Actions" },
+  { type: "action", label: "Code", icon: "Code", color: "bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 border border-blue-500/20", category: "Actions" },
+  // Output
+  { type: "output", label: "Email", icon: "Mail", color: "bg-slate-500/15 text-slate-400 hover:bg-slate-500/25 border border-slate-500/20", category: "Output" },
+  { type: "output", label: "Slack", icon: "MessageSquare", color: "bg-slate-500/15 text-slate-400 hover:bg-slate-500/25 border border-slate-500/20", category: "Output" },
+  { type: "output", label: "Database", icon: "Database", color: "bg-slate-500/15 text-slate-400 hover:bg-slate-500/25 border border-slate-500/20", category: "Output" },
 ];
+
+const categoryColors: Record<string, string> = {
+  Triggers: "text-emerald-500",
+  Browser: "text-violet-500",
+  Logic: "text-amber-500",
+  AI: "text-orange-500",
+  Actions: "text-blue-500",
+  Output: "text-slate-400",
+};
+
+// Group palette by category
+const grouped: Record<string, NodePaletteItem[]> = {};
+for (const item of nodePalette) {
+  if (!grouped[item.category]) grouped[item.category] = [];
+  grouped[item.category].push(item);
+}
 
 export function WorkflowToolbar() {
   const onDragStart = (event: React.DragEvent, nodeType: string, label: string) => {
@@ -175,69 +110,33 @@ export function WorkflowToolbar() {
   };
 
   return (
-    <div className="flex items-center justify-between gap-4">
-      {/* Left: Title */}
-      <div className="flex items-center gap-3">
-        <h1 className="font-bold text-2xl tracking-tight">Workflow Builder</h1>
-        <Badge variant="outline" className="text-xs">
-          Draft
-        </Badge>
-      </div>
-
-      {/* Center: Node Palette (draggable) */}
-      <div className="flex items-center gap-1 rounded-xl border bg-muted/30 p-1.5">
-        {nodePalette.map((node) => {
-          const Icon = iconMap[node.icon] ?? Zap;
-          return (
-            <div
-              key={`${node.type}-${node.label}`}
-              className={cn(
-                "flex cursor-grab items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-colors active:cursor-grabbing",
-                node.color,
-              )}
-              draggable
-              onDragStart={(e) => onDragStart(e, node.type, node.label)}
-            >
-              <Icon className="size-3.5" />
-              <span className="whitespace-nowrap font-medium text-xs">{node.label}</span>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Right: Actions */}
-      <div className="flex items-center gap-2">
-        <div className="flex items-center gap-0.5 rounded-lg border p-0.5">
-          <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
-            <Undo className="size-3.5" />
-          </Button>
-          <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
-            <Redo className="size-3.5" />
-          </Button>
-          <Separator orientation="vertical" className="h-5" />
-          <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
-            <ZoomIn className="size-3.5" />
-          </Button>
-          <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
-            <ZoomOut className="size-3.5" />
-          </Button>
-          <Separator orientation="vertical" className="h-5" />
-          <Button variant="ghost" size="sm" className="h-7 w-7 p-0 text-destructive hover:text-destructive">
-            <Trash2 className="size-3.5" />
-          </Button>
+    <div className="flex items-center gap-1.5 overflow-x-auto border-b border-[#27272a] bg-[#0a0a0b]/95 px-3 py-2 backdrop-blur-sm scrollbar-none">
+      {Object.entries(grouped).map(([category, items], gi) => (
+        <div key={category} className="flex items-center gap-1">
+          {gi > 0 && <div className="mx-1 h-4 w-px shrink-0 bg-[#27272a]" />}
+          <span className={cn("mr-1 shrink-0 font-medium text-[10px] uppercase tracking-wider", categoryColors[category])}>
+            {category}
+          </span>
+          {items.map((node) => {
+            const Icon = iconMap[node.icon] ?? Zap;
+            return (
+              <div
+                key={`${node.type}-${node.label}`}
+                className={cn(
+                  "flex shrink-0 cursor-grab items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors active:cursor-grabbing",
+                  node.color,
+                )}
+                draggable
+                onDragStart={(e) => onDragStart(e, node.type, node.label)}
+                title={`Drag to add ${node.label} node`}
+              >
+                <Icon className="size-3" />
+                <span className="whitespace-nowrap">{node.label}</span>
+              </div>
+            );
+          })}
         </div>
-
-        <Button variant="outline" size="sm" className="h-8">
-          <Save className="mr-1.5 size-3.5" /> Save
-        </Button>
-        <Button size="sm" className="h-8 bg-emerald-600 hover:bg-emerald-700">
-          <Play className="mr-1.5 size-3.5" /> Run
-        </Button>
-      </div>
+      ))}
     </div>
   );
-}
-
-function cn(...classes: (string | boolean | undefined | null)[]) {
-  return classes.filter(Boolean).join(" ");
 }

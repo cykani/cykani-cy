@@ -21,6 +21,20 @@ const envSchema = z.object({
   LEMON_SQUEEZY_API_KEY: z.string().optional(),
   LEMON_SQUEEZY_WEBHOOK_SECRET: z.string().optional(),
   LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).default("info"),
+  // ---------------------------------------------------------------------------
+  // LLM Provider config
+  // Default: Hermes 3 via OpenRouter (MIT model, free tier available).
+  // Switch to groq/openai/anthropic/custom via LLM_PROVIDER env var.
+  // Users never configure this — it's backend infrastructure.
+  // ---------------------------------------------------------------------------
+  LLM_PROVIDER: z.enum(["hermes", "groq", "openai", "anthropic", "custom"]).default("hermes"),
+  LLM_MODEL: z.string().optional(),                         // overrides provider default model
+  LLM_BASE_URL: z.string().url().optional(),               // for custom/self-hosted endpoints
+  OPENROUTER_API_KEY: z.string().optional(),               // for hermes via OpenRouter
+  GROQ_API_KEY: z.string().optional(),                     // for groq provider
+  OPENAI_API_KEY: z.string().optional(),                   // for openai provider
+  ANTHROPIC_API_KEY: z.string().optional(),                // for anthropic provider
+  LLM_API_KEY: z.string().optional(),                      // generic fallback key
 });
 
 export type Env = z.infer<typeof envSchema>;
