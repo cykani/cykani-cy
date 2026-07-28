@@ -34,8 +34,10 @@ export class AnyIPProxy {
 
   /**
    * Returns the proxy URL for the given country exit node.
-   * If ANYIP_USERNAME / ANYIP_PASSWORD are not set, returns null
-   * (caller can decide whether to proceed without proxy).
+   * Supports AnyIP's session-sticky format:
+   *   user_440259,sesstime_10080,session_gk9s6pxjxo
+   *
+   * If ANYIP_USERNAME / ANYIP_PASSWORD are not set, returns null.
    */
   static getUrl(countryCode?: string): string | null {
     const username = process.env["ANYIP_USERNAME"];
@@ -45,12 +47,17 @@ export class AnyIPProxy {
 
     if (!username || !password) return null;
 
-    // AnyIP supports country targeting via username suffix: user_440259_country-US
-    const user = countryCode
-      ? `${username}_country-${countryCode.toUpperCase()}`
-      : username;
+    // username may already contain session params (e.g. user_440259,sesstime_10080,session_xyz)
+    // append country targeting if requested AND not already in username
+    let user = username;
+    if (countryCode && !username.includes("country-")) {
+      // AnyIP country targeting: append _country-XX to the base username part
+      const base = username.split(",")[0] ?? username;
+      const rest = username.includes(",") ? `,${username.split(",").slice(1).join(",")}` : "";
+      user = `${base}_country-${countryCode.toUpperCase()}${rest}`;
+    }
 
-    return `http://${user}:${password}@${host}:${port}`;
+    return `http://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}`;
   }
 
   /**
