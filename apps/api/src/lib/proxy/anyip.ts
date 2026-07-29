@@ -70,14 +70,15 @@ export class AnyIPProxy {
   static async test(proxyUrl: string): Promise<ProxyTestResult> {
     const start = Date.now();
     try {
-      // Dynamic import — https-proxy-agent is optional peer dependency
       const { HttpsProxyAgent } = await import("https-proxy-agent");
+      // Use node-fetch — native fetch doesn't tunnel HTTP correctly through SOCKS/HTTP proxies
+      const { default: nodeFetch } = await import("node-fetch");
       const agent = new HttpsProxyAgent(proxyUrl);
 
-      const res = await fetch("http://ip-api.com/json", {
-        // @ts-expect-error — node-fetch agent compat
+      const res = await nodeFetch("http://ip-api.com/json", {
+        // @ts-expect-error — node-fetch agent type
         agent,
-        signal: AbortSignal.timeout(10_000),
+        timeout: 10_000,
       });
 
       if (!res.ok) {
