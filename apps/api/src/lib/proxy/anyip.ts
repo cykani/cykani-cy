@@ -33,13 +33,18 @@ export class AnyIPProxy {
   private static readonly DEFAULT_PORT = 1080;
 
   /**
-   * Returns the proxy URL for the given country exit node.
-   * Supports AnyIP's session-sticky format:
-   *   user_440259,sesstime_10080,session_gk9s6pxjxo
+   * Returns the proxy config in Playwright's native format.
+   * Use this when launching browsers — avoids URL parsing issues with
+   * AnyIP's comma-containing username (sesstime, session params).
    *
-   * If ANYIP_USERNAME / ANYIP_PASSWORD are not set, returns null.
+   * Example:
+   *   const browser = await chromium.launch({ proxy: AnyIPProxy.getPlaywrightConfig() });
    */
-  static getUrl(countryCode?: string): string | null {
+  static getPlaywrightConfig(countryCode?: string): {
+    server: string;
+    username: string;
+    password: string;
+  } | null {
     const username = process.env["ANYIP_USERNAME"];
     const password = process.env["ANYIP_PASSWORD"];
     const host = process.env["ANYIP_HOST"] ?? this.DEFAULT_HOST;
@@ -47,17 +52,30 @@ export class AnyIPProxy {
 
     if (!username || !password) return null;
 
-    // username may already contain session params (e.g. user_440259,sesstime_10080,session_xyz)
-    // append country targeting if requested AND not already in username
     let user = username;
     if (countryCode && !username.includes("country-")) {
-      // AnyIP country targeting: append _country-XX to the base username part
       const base = username.split(",")[0] ?? username;
       const rest = username.includes(",") ? `,${username.split(",").slice(1).join(",")}` : "";
       user = `${base}_country-${countryCode.toUpperCase()}${rest}`;
     }
 
-    return `http://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}`;
+    return {
+      server: `http://${host}:${port}`,
+      username: user,
+      password,
+    };
+  }
+
+  /**
+   * Returns the proxy URL for the given country exit node.
+   * NOTE: For browser automation use getPlaywrightConfig() instead —
+   * URL embedding of AnyIP's comma-containing username breaks Chrome's
+   * proxy auth. This method is suitable for node-fetch / HTTP clients only.
+   */
+  static getUrl(countryCode?: string): string | null {
+    const config = this.getPlaywrightConfig(countryCode);
+    if (!config) return null;
+    return `${config.server.replace("http://", `http://${encodeURIComponent(config.username)}:${encodeURIComponent(config.password)}@`)}`;
   }
 
   /**
