@@ -1,0 +1,56 @@
+---
+title: Headless vs Headed Mode
+description: Choose between headless and headed browser modes for your use case.
+---
+
+Cykani supports two browser modes. Headless runs without a visible window (faster, suitable for servers). Headed shows the browser window (useful for debugging, CAPTCHA solving, and avoiding detection).
+
+## Headless Mode
+
+Default mode. No visible browser window.
+
+```typescript
+const session = await strike({
+  binary: "path/to/chrome",
+  headless: true,
+});
+```
+
+Under the hood, cykani uses Playwright's `chromium.launch()` with a temp profile. The User-Agent is overridden to remove the `HeadlessChrome` indicator that detection scripts look for.
+
+**When to use:** Scraping, data extraction, automated testing, server-side automation.
+
+## Headed Mode
+
+Shows the browser window. Uses `launchPersistentContext()` with a real user data directory — this avoids "Incognito Window" detection that pixelscan and similar tools flag.
+
+```typescript
+const session = await strike({
+  binary: "path/to/chrome",
+  headless: false,
+});
+```
+
+**When to use:** CAPTCHA solving, visual debugging, sessions that need to look like a real user, situations where detection sites flag incognito profiles.
+
+## Detection Behavior
+
+| Signal | Headless | Headed |
+|--------|----------|--------|
+| `navigator.webdriver` | `undefined` (patched) | `undefined` (patched) |
+| User-Agent | `Chrome/150.0.0.0` (overridden) | `Chrome/150.0.0.0` |
+| Incognito detection | Temp profile (may flag) | Real profile (passes) |
+| Window visibility | No window | Visible window |
+| Performance | Faster | Slightly slower |
+
+## Switching Modes
+
+```typescript
+// Headless for batch processing
+const headless = await strike({ headless: true });
+
+// Headed for interactive tasks
+const headed = await strike({ headless: false });
+```
+
+Both modes share the same stealth patches, fingerprint spoofing, and human-like behavior. The only difference is the browser window and profile management.

@@ -1,0 +1,105 @@
+---
+title: Troubleshooting
+description: Common issues and solutions for cykani-stealth.
+---
+
+## Binary Issues
+
+### Binary not found
+
+**Error:** `CYKANI_BINARY_PATH environment variable is required or pass entity.binary`
+
+**Fix:** Either set the env var or pass `binary` in the launch options:
+
+```typescript
+const session = await strike({
+  binary: "/path/to/chrome",
+});
+```
+
+### Binary download fails
+
+**Error:** Network timeout during first launch
+
+**Fix:**
+1. Check internet connectivity
+2. Try downloading the binary manually from GitHub Releases
+3. Set `CYKANI_BINARY_PATH` to the local copy
+
+### Wrong architecture
+
+**Error:** Binary fails to start on ARM when using x64 binary
+
+**Fix:** Use the correct binary for your platform. Currently supported: x64 only.
+
+## Detection Issues
+
+### navigator.webdriver still true
+
+**Cause:** Using `page.addInitScript()` instead of `context.addInitScript()`
+
+**Fix:** cykani handles this automatically. If you're connecting via CDP, make sure to use the session's built-in stealth injection.
+
+### Pixelscan shows "Incognito Window"
+
+**Cause:** Headless mode uses a temp profile
+
+**Fix:** Use headed mode for sessions that need to pass incognito detection:
+
+```typescript
+const session = await strike({ headless: false });
+```
+
+### HeadlessChrome in User-Agent
+
+**Cause:** Chromium's headless mode adds "HeadlessChrome" to the UA
+
+**Fix:** cykani automatically overrides this. If you see it, make sure you're using the latest version.
+
+## Connection Issues
+
+### Playwright connection refused
+
+**Error:** `connect ECONNREFUSED 127.0.0.1:9222`
+
+**Fix:**
+1. Check the binary path is correct
+2. Ensure no other Chrome instances are using the same port
+3. Try killing existing Chrome processes
+
+### Session closes immediately
+
+**Cause:** Browser process exits due to missing dependencies (Linux)
+
+**Fix:** Install required system libraries:
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install -y libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 \
+  libxcomposite1 libxdamage1 libxrandr2 libgbm1 libasound2 libpango-1.0-0 \
+  libcairo2 libatspi2.0-0 libcups2
+```
+
+## Performance Issues
+
+### Slow launch
+
+**Cause:** Binary download on first run, or cold filesystem cache
+
+**Fix:**
+1. First launch is slower (binary download). Subsequent launches are fast.
+2. On Linux, keep the binary on an SSD
+
+### High memory usage
+
+**Cause:** Multiple concurrent sessions
+
+**Fix:** Close sessions promptly. Each session holds a browser process.
+
+## Getting Help
+
+If your issue isn't covered here:
+
+1. Check the [GitHub Issues](https://github.com/cykani/cykani-stealth/issues)
+2. Run with verbose logging
+3. Share the error message and your launch options

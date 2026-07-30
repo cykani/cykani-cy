@@ -12,6 +12,12 @@
     "sdk/humor-mode",
     "sdk/cdp-connection",
     "---Guides---",
-    "guides/stealth-mode"
+    "guides/stealth-mode",
+    "guides/headless-headed",
+    "guides/proxy-configuration",
+    "guides/persistent-profiles",
+    "guides/geoip-resolution",
+    "guides/binary-management",
+    "guides/troubleshooting"
   ]
 }

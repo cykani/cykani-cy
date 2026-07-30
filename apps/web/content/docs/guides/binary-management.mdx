@@ -1,0 +1,83 @@
+---
+title: Binary Management
+description: Manage the patched Chromium binary for cykani-stealth.
+---
+
+Cykani uses a patched Chromium binary with C++ level fingerprint spoofing. The binary manages itself by default, but you can override the path or run in air-gapped environments.
+
+## Auto-Download
+
+On first `strike()` call, cykani automatically downloads the correct binary from GitHub Releases to a local cache directory. No configuration needed.
+
+```typescript
+const session = await strike({
+  // Binary auto-downloads on first run
+  timezone: "America/New_York",
+});
+```
+
+## Custom Binary Path
+
+Point to your own binary build or a local copy:
+
+```typescript
+const session = await strike({
+  binary: "/path/to/chrome",
+});
+```
+
+Or set the environment variable:
+
+```bash
+export CYKANI_BINARY_PATH=/path/to/chrome
+```
+
+```typescript
+// Uses CYKANI_BINARY_PATH automatically
+const session = await strike();
+```
+
+## Supported Platforms
+
+| Platform | Architecture | Binary |
+|----------|-------------|--------|
+| Windows | x64 | `chrome.exe` |
+| Linux | x64 | `chrome` |
+
+## Binary Size
+
+The patched binary is approximately 300MB (chrome.dll) + 4MB (chrome.exe). The auto-download is a one-time operation — subsequent launches use the cached binary.
+
+## Air-Gapped / Offline
+
+For environments without internet access:
+
+1. Download the binary from GitHub Releases on a machine with internet
+2. Copy it to the target machine
+3. Set `CYKANI_BINARY_PATH` to the binary location
+
+```bash
+# On the target machine
+export CYKANI_BINARY_PATH=/opt/cykani/chrome
+```
+
+## Docker
+
+When running in Docker, copy the binary into the image or mount it:
+
+```dockerfile
+FROM node:20-slim
+COPY --from=ghcr.io/cykani/cykani-browser:latest /usr/local/bin/chrome /usr/local/bin/chrome
+ENV CYKANI_BINARY_PATH=/usr/local/bin/chrome
+```
+
+## Verifying the Binary
+
+```typescript
+import { strike } from "cykani-stealth";
+
+const session = await strike();
+const version = await session.evaluate(() => navigator.userAgent);
+console.log(version); // Should show Chrome/150.0.x.x
+await session.close();
+```

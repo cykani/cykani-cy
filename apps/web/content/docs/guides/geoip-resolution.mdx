@@ -1,0 +1,70 @@
+---
+title: GeoIP Auto-Resolution
+description: Automatically configure locale, timezone, and headers based on proxy geolocation.
+---
+
+When using proxies in different countries, your browser fingerprint should match the proxy's location. GeoIP auto-resolution handles this automatically.
+
+## How It Works
+
+```typescript
+const session = await strike({
+  proxy: "http://za-proxy.example.com:8080",
+  geoip: true,
+});
+```
+
+When `geoip: true`:
+
+1. cykani queries the proxy IP's geolocation via a public IP API
+2. Sets `locale` to the country's primary language (e.g., `en-ZA` for South Africa)
+3. Sets `timezone` to the IP's timezone (e.g., `Africa/Johannesburg`)
+4. Sets `Accept-Language` header to match (e.g., `en-ZA,en;q=0.9`)
+
+## What Gets Set
+
+| Property | Source | Example (South Africa proxy) |
+|----------|--------|-----|
+| `locale` | Country language code | `en-ZA` |
+| `timezone` | IP timezone | `Africa/Johannesburg` |
+| `Accept-Language` | Language + quality | `en-ZA,en;q=0.9` |
+| `navigator.language` | Via locale | `en-ZA` |
+
+## Why It Matters
+
+Detection sites check for consistency between:
+- Your IP address location
+- Your timezone
+- Your locale
+- Your Accept-Language header
+
+A mismatch is a strong bot signal. For example, a South African IP with `America/New_York` timezone is suspicious.
+
+```typescript
+// Good: Everything matches
+const session = await strike({
+  proxy: "http://za-proxy:8080",
+  geoip: true,
+});
+
+// Bad: Mismatched
+const session = await strike({
+  proxy: "http://za-proxy:8080",
+  locale: "en-US", // South African proxy, US locale
+  timezone: "America/New_York",
+});
+```
+
+## Without GeoIP
+
+If you prefer manual control:
+
+```typescript
+const session = await strike({
+  proxy: "http://proxy.example.com:8080",
+  locale: "de-DE",
+  timezone: "Europe/Berlin",
+});
+```
+
+GeoIP is disabled by default — you must explicitly set `geoip: true`.

@@ -1,0 +1,66 @@
+---
+title: Persistent Profiles
+description: Maintain browser state across sessions with persistent profiles.
+---
+
+By default, each `strike()` call creates a fresh browser profile. Persistent profiles let you reuse cookies, localStorage, and session state across launches.
+
+## UserDataDir
+
+Point to a directory that persists between sessions:
+
+```typescript
+const session = await strike({
+  userDataDir: "/path/to/my-profile",
+});
+```
+
+On the next launch with the same directory, the browser picks up where it left off — cookies, session tokens, localStorage all preserved.
+
+## Why This Matters
+
+### Detection Evasion
+
+Detection sites like pixelscan check for incognito/temp profiles. Headed mode with `launchPersistentContext()` uses a real user data directory, which avoids this flag.
+
+### Session Continuity
+
+```typescript
+// Session 1: Log in
+const s1 = await strike({ userDataDir: "./profiles/site-a" });
+await s1.goto("https://example.com/login");
+await s1.fill("#email", "user@example.com");
+await s1.fill("#password", "password123");
+await s1.click("button[type=submit]");
+await s1.close();
+
+// Session 2: Still logged in
+const s2 = await strike({ userDataDir: "./profiles/site-a" });
+await s2.goto("https://example.com/dashboard"); // Still authenticated
+```
+
+### Multi-Account Management
+
+Each profile is isolated:
+
+```typescript
+const account1 = await strike({ userDataDir: "./profiles/account-1" });
+const account2 = await strike({ userDataDir: "./profiles/account-2" });
+// Completely separate cookies, sessions, state
+```
+
+## Best Practices
+
+- Use descriptive directory names: `./profiles/twitter-us`, `./profiles/linkedin-eu`
+- One profile per use case — don't share profiles across unrelated sites
+- Clean up old profiles periodically to avoid disk bloat
+- Profiles are tied to a specific binary version — after upgrading, test that profiles still work
+
+## Headed vs Headless
+
+| Mode | Profile Behavior |
+|------|-----------------|
+| Headed | Uses `launchPersistentContext()` — real user data dir, passes incognito detection |
+| Headless | Uses `chromium.launch()` with temp profile — add `userDataDir` via `--user-data-dir` arg for persistence |
+
+For persistent headed sessions, the `userDataDir` option is the recommended approach.

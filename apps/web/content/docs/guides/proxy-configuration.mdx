@@ -1,0 +1,96 @@
+---
+title: Proxy Configuration
+description: Configure proxy servers for IP rotation and geographic targeting.
+---
+
+Route browser traffic through proxy servers for IP rotation, geographic targeting, and avoiding rate limits.
+
+## Basic Proxy
+
+```typescript
+const session = await strike({
+  proxy: "http://proxy.example.com:8080",
+});
+```
+
+## Authenticated Proxy
+
+```typescript
+const session = await strike({
+  proxy: "http://user:pass@proxy.example.com:8080",
+});
+```
+
+## SOCKS5 Proxy
+
+```typescript
+const session = await strike({
+  proxy: "socks5://proxy.example.com:1080",
+});
+```
+
+## GeoIP Auto-Resolution
+
+Automatically match locale, timezone, and Accept-Language to the proxy's geolocation:
+
+```typescript
+const session = await strike({
+  proxy: "http://za-proxy.example.com:8080",
+  geoip: true, // Auto-detects South Africa → sets locale en-ZA, timezone Africa/Johannesburg
+});
+```
+
+When `geoip: true`, cykani:
+1. Queries the proxy IP's geolocation
+2. Sets `locale` to the country's language code
+3. Sets `timezone` to the IP's timezone
+4. Sets `Accept-Language` header to match
+
+## Proxy Rotation
+
+For rotating through multiple proxies, use the pool system:
+
+```typescript
+import { createMaestro } from "cykani-stealth";
+
+const maestro = createMaestro({
+  proxies: [
+    "http://proxy1.example.com:8080",
+    "http://proxy2.example.com:8080",
+    "http://proxy3.example.com:8080",
+  ],
+});
+
+const session1 = await maestro.launch({ geoip: true });
+const session2 = await maestro.launch({ geoip: true });
+// Each session gets a different proxy from the pool
+```
+
+## Proxy + Fingerprint Consistency
+
+Always match your fingerprint to your proxy location. A user in Germany with a US timezone is a detection signal.
+
+```typescript
+// Good: German proxy + German locale/timezone
+const session = await strike({
+  proxy: "http://de-proxy.example.com:8080",
+  geoip: true, // Automatically sets de-DE, Europe/Berlin
+});
+
+// Bad: German proxy + US settings
+const session = await strike({
+  proxy: "http://de-proxy.example.com:8080",
+  locale: "en-US", // Mismatch!
+  timezone: "America/New_York",
+});
+```
+
+## Per-Session Proxies
+
+Each session can use a different proxy:
+
+```typescript
+const session1 = await strike({ proxy: "http://us-proxy:8080" });
+const session2 = await strike({ proxy: "http://uk-proxy:8080" });
+const session3 = await strike({ proxy: "http://jp-proxy:8080" });
+```
